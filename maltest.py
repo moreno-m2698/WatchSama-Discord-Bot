@@ -85,9 +85,6 @@ class MALSeleniumWrapper():
         result = random.randint(initial, final)
         return result
         
-        
-            
-
     def findRange(driver): #Assume we are not finding a new webpage
         animeTable = driver.find_elements(By.CLASS_NAME, 'completed')
         parentTest = lambda data: data.parent #This returns the driver
@@ -105,6 +102,24 @@ class MALSeleniumWrapper():
 # This will be the test
 
 #----------------------------------------------------------------------------------------------------
+
+#Choicing random anime feature
+
+#Create a view to interact with embed
+#synthesize embed
+#Needs to have a single track reroll thats tracked with date
+
+
+
+def createEmbed(data):
+    color = discord.Color.from_str('#FFB7C5')
+    description = data['status']
+    title= data['name']
+    result = discord.Embed(title=title,color=color, description=description)
+    result.set_image(url=data['image'])
+    return result
+
+#----------------------------------------------------------------------------------
 
 
 @watchsama.event
@@ -131,5 +146,12 @@ async def test(ctx):
 
     #await ctx.send(f"Here are the no Wathc {noWatch}")
     driver.close()
+
+@watchsama.command()
+async def embed(ctx):
+    
+    testCase = [{'name': 'A Silent Voice', 'status': 'completed', 'image': 'https://cdn.myanimelist.net/r/192x272/images/anime/1122/96435.webp?s=f8162c1735ac8075df9ba9974c934b24'}]
+    embed = createEmbed(testCase[0])
+    await ctx.send(embed=embed)
 
 watchsama.run('MTEwMzM5NDU4OTQ3NTM0ODU2Nw.G2x86i.U4d9iaNSjTC93aMEA10hHiK1k_7C-w4baw4C3A')
