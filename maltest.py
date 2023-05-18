@@ -9,7 +9,6 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-import requests
 
 #---------------------------------------------------------------------------
 
@@ -66,21 +65,33 @@ class MALSeleniumWrapper():
         rawData = self.getEntries(driver)
         result = []
         for element in rawData:
-            refinement = [self.getTitle(element), self.getStatus(element), self.getImage(element)]
+            refinement = {
+                'name': self.getTitle(element),
+                'status': self.getStatus(element),
+                'image': self.getImage(element)
+            }
             result.append(refinement)
         
         return result
-
+    
+    def randomizerRange(self, data):
+        initial = 0
+        final = len(data) - 1
+        for i in range(0, len(data)):
+            if data[i]['status'] == 'plantowatch':
+                initial = i
+                break
+            i += 1
+        result = random.randint(initial, final)
+        return result
+        
+        
+            
 
     def findRange(driver): #Assume we are not finding a new webpage
         animeTable = driver.find_elements(By.CLASS_NAME, 'completed')
         parentTest = lambda data: data.parent #This returns the driver
 
-        #Need to combine into tuple or list to process
-        #Will create big list and then prune:
-        # Must cache this list
-        #[status,number,image,title]
-        # Might want to look at beautifulsoup lib so that we arent brute forcing this
         testArray = list(map(parentTest, animeTable[1:]))
         parentTagTest = lambda data: type(data)
         testArray2 = list(map(parentTagTest, testArray))
@@ -90,6 +101,8 @@ class MALSeleniumWrapper():
         print(testArray2)
         return testArray
 
+# [['A Silent Voice', 'completed', 'https://cdn.myanimelist.net/r/192x272/images/anime/1122/96435.webp?s=f8162c1735ac8075df9ba9974c934b24']] 
+# This will be the test
 
 #----------------------------------------------------------------------------------------------------
 
@@ -112,6 +125,8 @@ async def test(ctx):
     wrapper.accountLogin(driver=driver, url=url, username=mal_username, password=mal_password)
     data = wrapper.getData(driver)
     await ctx.send(f"Successful MAL login: Check Log")
+    firstwatch = wrapper.randomizerRange(data)
+    await ctx.send(f"Watching: {firstwatch}")
     print(data)
 
     #await ctx.send(f"Here are the no Wathc {noWatch}")
