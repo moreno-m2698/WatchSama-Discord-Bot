@@ -11,21 +11,15 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import requests
 
+#---------------------------------------------------------------------------
+
 mal_username = "gabslittlepogger"
 mal_password = 'qaz890poimnb'
 intents = discord.Intents.default()
 intents.message_content = True
 watchsama = commands.Bot(command_prefix="!", intents=intents)
 
-
-@watchsama.event
-async def on_ready():
-    print('Watchsama is watching')
-
-@watchsama.command()
-async def stop(ctx):
-    await ctx.send(f'Goodbye {ctx.author.name}!')
-    await watchsama.close()
+#-------------------------------------------------------------------------
 
 class MALSeleniumWrapper():
     def __init__(self):
@@ -45,6 +39,12 @@ class MALSeleniumWrapper():
         loginButton.click()
         time.sleep(2)
         driver.get('https://myanimelist.net/animelist/gabslittlepogger')
+
+    def getTitle(element):
+        rawTitle = element.find_element(By.CLASS_NAME, 'title')
+        title = rawTitle.find_element(By.TAG_NAME, 'a').title
+        return title
+
         
     
     def titlesArray(driver):
@@ -64,6 +64,10 @@ class MALSeleniumWrapper():
         parentTest = lambda data: data.parent #This returns the driver
 
         #Need to combine into tuple or list to process
+        #Will create big list and then prune:
+        # Must cache this list
+        #[status,number,image,title]
+        # Might want to look at beautifulsoup lib so that we arent brute forcing this
         testArray = list(map(parentTest, animeTable[1:]))
         parentTagTest = lambda data: type(data)
         testArray2 = list(map(parentTagTest, testArray))
@@ -73,11 +77,19 @@ class MALSeleniumWrapper():
         print(testArray2)
         return testArray
 
-        
+
+#----------------------------------------------------------------------------------------------------
 
 
+@watchsama.event
+async def on_ready():
+    print('Watchsama is watching')
 
-    
+@watchsama.command()
+async def stop(ctx):
+    await ctx.send(f'Goodbye {ctx.author.name}!')
+    await watchsama.close()
+  
 @watchsama.command()
 
 async def test(ctx):
