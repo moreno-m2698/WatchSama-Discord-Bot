@@ -57,11 +57,16 @@ class MALSeleniumWrapper():
 
         return status
     
+    def getImage(self, element):
+        rawImage = element.find_element(By.CLASS_NAME, 'image')
+        image = rawImage.find_element(By.TAG_NAME, 'img').get_attribute('src')
+        return image
+    
     def getData(self, driver):
         rawData = self.getEntries(driver)
         result = []
         for element in rawData:
-            refinement = [self.getTitle(element), self.getStatus(element)]
+            refinement = [self.getTitle(element), self.getStatus(element), self.getImage(element)]
             result.append(refinement)
         
         return result
