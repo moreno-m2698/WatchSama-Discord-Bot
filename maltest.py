@@ -13,7 +13,7 @@ from dataclasses import dataclass
 
 mal_username: str = "gabslittlepogger"
 mal_password: str = 'qaz890poimnb'
-intents = discord.Intents.default()
+intents: discord.Intents = discord.Intents.default()
 intents.message_content = True
 watchsama = commands.Bot(command_prefix="!", intents=intents)
 
@@ -32,7 +32,7 @@ class AnimeEntry():
 class MALSeleniumWrapper(): #This class acts as a "namespace"  
     @staticmethod
     def get_WebDriver() -> WebDriver:
-        driver = webdriver.Chrome()
+        driver: WebDriver = webdriver.Chrome()
         return driver
     
     @staticmethod
@@ -106,10 +106,10 @@ class WatchingView(discord.ui.View):
         super().__init__(timeout = 180)
 
 def create_embed(data: AnimeEntry):
-    color = discord.Color.from_str('#FFB7C5')
-    description = data.status
-    title= data.title
-    result = discord.Embed(title=title,color=color, description=description)
+    color: discord.Colour = discord.Colour.from_str('#FFB7C5')
+    description: str= data.status
+    title: str = data.title
+    result: discord.Embed = discord.Embed(title=title,color=color, description=description)
     result.set_image(url=data.image)
     return result
 
@@ -117,17 +117,17 @@ def create_embed(data: AnimeEntry):
 
 
 @watchsama.event
-async def on_ready():
+async def on_ready() -> None:
     print('Watchsama is watching')
 
 @watchsama.command()
-async def stop(ctx: commands.Context):
+async def stop(ctx: commands.Context) -> None:
     await ctx.send(f'Goodbye {ctx.author.name}!')
     await watchsama.close()
   
 @watchsama.command()
 #TODO: TYPE HINT THIS SHIT
-async def test(ctx: commands.Context):
+async def test(ctx: commands.Context) -> None:
     url: str ='https://myanimelist.net/login.php?from=%2F&'
     wrapper = MALSeleniumWrapper
     driver: WebDriver = wrapper.get_WebDriver()
@@ -140,9 +140,9 @@ async def test(ctx: commands.Context):
     driver.close()
 
 @watchsama.command()
-async def embed(ctx: commands.Context):
+async def embed(ctx: commands.Context) -> None:
     testCase = [{'name': 'A Silent Voice', 'status': 'completed', 'image': 'https://cdn.myanimelist.net/r/192x272/images/anime/1122/96435.webp?s=f8162c1735ac8075df9ba9974c934b24'}]
-    embed = create_embed(testCase[0])
+    embed: discord.Embed = create_embed(testCase[0])
     await ctx.send(embed=embed)
 
 #TODO: ADD TO ENV VARIABLE
