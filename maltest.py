@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from discord.ui import View, Button
 import random
 import time
 from selenium import webdriver
@@ -13,7 +14,7 @@ from dataclasses import dataclass
 
 mal_username: str = "gabslittlepogger"
 mal_password: str = 'qaz890poimnb'
-intents: discord.Intents = discord.Intents.default()
+intents = discord.Intents.default()
 intents.message_content = True
 watchsama = commands.Bot(command_prefix="!", intents=intents)
 
@@ -32,7 +33,7 @@ class AnimeEntry():
 class MALSeleniumWrapper(): #This class acts as a "namespace"  
     @staticmethod
     def get_WebDriver() -> WebDriver:
-        driver: WebDriver = webdriver.Chrome()
+        driver = webdriver.Chrome()
         return driver
     
     @staticmethod
@@ -95,6 +96,8 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
 #----------------------------------------------------------------------------------------------------
 
 #TODO: Choicing random anime feature
+#Create reroll button
+#Create url to gabslittlepogger button
 
 #Create a view to interact with embed
 #synthesize embed
@@ -105,16 +108,28 @@ class WatchingView(discord.ui.View):
     def __init__(self):
         super().__init__(timeout = 180)
 
+
 def create_embed(data: AnimeEntry):
-    color: discord.Colour = discord.Colour.from_str('#FFB7C5')
-    description: str= data.status
+    color = discord.Colour.from_str('#FFB7C5')
+    description: str = data.status
     title: str = data.title
-    result: discord.Embed = discord.Embed(title=title,color=color, description=description)
+    result = discord.Embed(title=title,color=color, description=description)
     result.set_image(url=data.image)
     return result
 
-#----------------------------------------------------------------------------------
+@watchsama.command()
+async def button(ctx: commands.Context) -> None:
+    button = Button(label = 'reroll', style=discord.ButtonStyle.green)
+    async def button_callback(interaction: discord.Interaction) -> None:
+        await interaction.response.edit_message(content="teehee")
 
+    button.callback = button_callback
+
+    view = View()
+    view.add_item(button)
+    await ctx.send("Hi", view =  view)
+
+#----------------------------------------------------------------------------------
 
 @watchsama.event
 async def on_ready() -> None:
@@ -140,10 +155,13 @@ async def test(ctx: commands.Context) -> None:
     driver.close()
 
 @watchsama.command()
-async def embed(ctx: commands.Context) -> None:
-    testCase = [{'name': 'A Silent Voice', 'status': 'completed', 'image': 'https://cdn.myanimelist.net/r/192x272/images/anime/1122/96435.webp?s=f8162c1735ac8075df9ba9974c934b24'}]
+async def view_test(ctx: commands.Context) -> None:
+    testCase = [AnimeEntry('A Silent Voice', 'completed', 'https://cdn.myanimelist.net/r/192x272/images/anime/1122/96435.webp?s=f8162c1735ac8075df9ba9974c934b24')]
     embed: discord.Embed = create_embed(testCase[0])
-    await ctx.send(embed=embed)
+    view = View()
+    url_button = Button(label = 'Anime List', url = "https://myanimelist.net/animelist/gabslittlepogger")
+    view.add_item(url_button)
+    await ctx.send(content = 'testing', embed=embed, view = view)
 
 #TODO: ADD TO ENV VARIABLE
 watchsama.run('MTEwMzM5NDU4OTQ3NTM0ODU2Nw.G2x86i.U4d9iaNSjTC93aMEA10hHiK1k_7C-w4baw4C3A')
