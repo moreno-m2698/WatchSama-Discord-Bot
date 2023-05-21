@@ -109,8 +109,14 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
 #Should I synthesize or make from a cached list
 
 class WatchingView(discord.ui.View):
-    def __init__(self):
-        super().__init__(timeout = 180)
+    def __init__(self, *, timeout: float | None = 180):
+        super().__init__(timeout=timeout)
+        
+    def message_awareness(self, message) -> None:
+        self.message = message
+    
+    def embeds_awareness(self, embeds: list[discord.Embed]) -> None:
+        self.embeds = embeds
 
 class ReRollButton(discord.ui.Button):
     def __init__(self, *, style: ButtonStyle = ButtonStyle.secondary, label: str | None = None, disabled: bool = False, custom_id: str | None = None, url: str | None = None, emoji: str | Emoji | PartialEmoji | None = None, row: int | None = None):
@@ -144,13 +150,13 @@ async def on_ready() -> None:
     print('Watchsama is watching')
 
 @watchsama.command()
-async def stop(ctx: commands.Context) -> None:
+async def stop(ctx: commands.Context) -> discord.Message:
     await ctx.send(f'Goodbye {ctx.author.name}!')
     await watchsama.close()
   
 @watchsama.command()
 #TODO: TYPE HINT THIS SHIT
-async def test(ctx: commands.Context) -> None:
+async def test(ctx: commands.Context) -> discord.Message:
     url: str ='https://myanimelist.net/login.php?from=%2F&'
     wrapper = MALSeleniumWrapper
     driver: WebDriver = wrapper.get_WebDriver()
@@ -163,18 +169,21 @@ async def test(ctx: commands.Context) -> None:
     driver.close()
 
 @watchsama.command()
-async def view_test(ctx: commands.Context) -> None:
+async def view_test(ctx: commands.Context) -> discord.Message:
     testCase: list[AnimeEntry] = [
         AnimeEntry('A Silent Voice', 'completed', 'https://cdn.myanimelist.net/r/192x272/images/anime/1122/96435.webp?s=f8162c1735ac8075df9ba9974c934b24'),
         AnimeEntry('Anohana: The Flower We Saw That Day', 'plantowatch', 'https://cdn.myanimelist.net/r/192x272/images/anime/5/79697.webp?s=b7a205166ab0d014ee1978c3ead75a52')
         ]
     embeds: list[discord.Embed] = list(map(create_embed, testCase))
-    view = View()
+    view = WatchingView()
     reroll_button=ReRollButton(style=discord.ButtonStyle.green, label="hi")
     url_button = Button(label = 'Anime List', url = "https://myanimelist.net/animelist/gabslittlepogger")
     view.add_item(reroll_button)
     view.add_item(url_button)
-    await ctx.send(embed=embeds[1], view = view)
+    message = ctx.send(embed=embeds[1], view = view)
+    view.message_awareness(message)
+    view.embeds_awareness(embeds)
+    await message
     
 
 
