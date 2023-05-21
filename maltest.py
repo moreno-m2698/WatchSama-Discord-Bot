@@ -1,5 +1,9 @@
+from typing import Optional, Union
 import discord
+from discord.emoji import Emoji
+from discord.enums import ButtonStyle
 from discord.ext import commands
+from discord.partial_emoji import PartialEmoji
 from discord.ui import View, Button
 import random
 import time
@@ -98,15 +102,19 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
 #TODO: Choicing random anime feature
 #Create reroll button
 #Create url to gabslittlepogger button
+#Add timeout
 
 #Create a view to interact with embed
-#synthesize embed
 #Needs to have a single track reroll thats tracked with date
 #Should I synthesize or make from a cached list
 
 class WatchingView(discord.ui.View):
     def __init__(self):
         super().__init__(timeout = 180)
+
+class ReRollButton(discord.ui.Button):
+    def __init__(self, *, style: ButtonStyle = ButtonStyle.secondary, label: str | None = None, disabled: bool = False, custom_id: str | None = None, url: str | None = None, emoji: str | Emoji | PartialEmoji | None = None, row: int | None = None):
+        super().__init__(style=style, label=label, disabled=disabled, custom_id=custom_id, url=url, emoji=emoji, row=row)
 
 
 def create_embed(data: AnimeEntry):
@@ -156,12 +164,19 @@ async def test(ctx: commands.Context) -> None:
 
 @watchsama.command()
 async def view_test(ctx: commands.Context) -> None:
-    testCase = [AnimeEntry('A Silent Voice', 'completed', 'https://cdn.myanimelist.net/r/192x272/images/anime/1122/96435.webp?s=f8162c1735ac8075df9ba9974c934b24')]
-    embed: discord.Embed = create_embed(testCase[0])
+    testCase: list[AnimeEntry] = [
+        AnimeEntry('A Silent Voice', 'completed', 'https://cdn.myanimelist.net/r/192x272/images/anime/1122/96435.webp?s=f8162c1735ac8075df9ba9974c934b24'),
+        AnimeEntry('Anohana: The Flower We Saw That Day', 'plantowatch', 'https://cdn.myanimelist.net/r/192x272/images/anime/5/79697.webp?s=b7a205166ab0d014ee1978c3ead75a52')
+        ]
+    embeds: list[discord.Embed] = list(map(create_embed, testCase))
     view = View()
+    reroll_button=ReRollButton(style=discord.ButtonStyle.green, label="hi")
     url_button = Button(label = 'Anime List', url = "https://myanimelist.net/animelist/gabslittlepogger")
+    view.add_item(reroll_button)
     view.add_item(url_button)
-    await ctx.send(content = 'testing', embed=embed, view = view)
+    await ctx.send(embed=embeds[1], view = view)
+    
+
 
 #TODO: ADD TO ENV VARIABLE
 watchsama.run('MTEwMzM5NDU4OTQ3NTM0ODU2Nw.G2x86i.U4d9iaNSjTC93aMEA10hHiK1k_7C-w4baw4C3A')
