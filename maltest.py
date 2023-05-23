@@ -21,7 +21,7 @@ mal_password: str = 'qaz890poimnb'
 intents = discord.Intents.default()
 intents.message_content = True
 watchsama = commands.Bot(command_prefix="!", intents=intents)
-
+watchsama.watchinganime: list[discord.Embed] = []
 #-------------------------------------------------------------------------
 
 @dataclass
@@ -85,7 +85,7 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         return result
     
     @staticmethod
-    def randomizerRange(data: list[dict]) -> int:
+    def getRandomizerRange(data: list[dict]) -> int:
         initial: int = 0
         final: int = len(data) - 1
         for i in range(0, len(data)):
@@ -93,7 +93,7 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
                 initial = i 
                 break
             i += 1
-        result: int = random.randint(initial, final)
+        result: tuple = (initial, final)
         return result
         
 
@@ -132,9 +132,6 @@ class ReRollButton(discord.ui.Button):
         
     
     async def callback(self, interaction: discord.Interaction):
-        embed_index: int = self.watching_view.embed_index
-        watching_view: WatchingView = self.watching_view
-        print(self.watching_view.embed_index)
         if self.watching_view.embed_index == 0:
             self.watching_view.embed_index = 1
             
@@ -142,15 +139,13 @@ class ReRollButton(discord.ui.Button):
         elif self.watching_view.embed_index == 1:
             self.watching_view.embed_index = 0
         
-        print(self.watching_view.embed_index)
         await interaction.response.edit_message(content="embed swap",embed = self.watching_view.embeds[self.watching_view.embed_index], view=self.watching_view)
         
 
 def create_embed(data: AnimeEntry):
     color = discord.Colour.from_str('#FFB7C5')
-    description: str = data.status
     title: str = data.title
-    result = discord.Embed(title=title,color=color, description=description)
+    result = discord.Embed(title=title,color=color)
     result.set_image(url=data.image)
     return result
 
@@ -159,6 +154,15 @@ def create_embed(data: AnimeEntry):
 @watchsama.event
 async def on_ready() -> None:
     print('Watchsama is watching')
+    url: str ='https://myanimelist.net/login.php?from=%2F&'
+    wrapper = MALSeleniumWrapper
+    driver: WebDriver = wrapper.get_WebDriver()
+    wrapper.account_Login(driver=driver, url=url, username=mal_username, password=mal_password)
+    data: list[AnimeEntry] = wrapper.get_Data(driver)
+    embeds: list[discord.Embed] = list(map(create_embed, data))
+    watchsama.watchinganime = embeds
+    driver.close()
+    await watchsama.guilds[0].text_channels[0].send('Watch-sama is running')
 
 @watchsama.command()
 async def stop(ctx: commands.Context) -> discord.Message:
@@ -166,26 +170,21 @@ async def stop(ctx: commands.Context) -> discord.Message:
     await watchsama.close()
   
 @watchsama.command()
-#TODO: TYPE HINT THIS SHIT
-async def test(ctx: commands.Context) -> discord.Message:
+async def refresh(ctx: commands.Context) -> discord.Message: #Allows user to refresh embed list if there was a manual updte to MAL after startup
     url: str ='https://myanimelist.net/login.php?from=%2F&'
     wrapper = MALSeleniumWrapper
     driver: WebDriver = wrapper.get_WebDriver()
     wrapper.account_Login(driver=driver, url=url, username=mal_username, password=mal_password)
     data: list[AnimeEntry] = wrapper.get_Data(driver)
     await ctx.send(f"Successful MAL login: Check Log")
-    firstwatch: int = wrapper.randomizerRange(data)
-    await ctx.send(f"Watching: {firstwatch}")
-    print(data)
+    embeds: list[discord.Embed] = list(map(create_embed, data))
+    watchsama.watchinganime = embeds
     driver.close()
 
 @watchsama.command()
 async def view_test(ctx: commands.Context) -> discord.Message:
-    testCase: list[AnimeEntry] = [
-        AnimeEntry('A Silent Voice', 'completed', 'https://cdn.myanimelist.net/r/192x272/images/anime/1122/96435.webp?s=f8162c1735ac8075df9ba9974c934b24'),
-        AnimeEntry('Anohana: The Flower We Saw That Day', 'plantowatch', 'https://cdn.myanimelist.net/r/192x272/images/anime/5/79697.webp?s=b7a205166ab0d014ee1978c3ead75a52')
-        ]
-    embeds: list[discord.Embed] = list(map(create_embed, testCase))
+    
+    embeds: list[discord.Embed] = watchsama.watchinganime
     view = WatchingView()
     index = 0
     message: discord.Message = ctx.send(embed=embeds[index], view = view)
@@ -194,6 +193,10 @@ async def view_test(ctx: commands.Context) -> discord.Message:
     view.embed_index_awareness(index)
     await message
     
+@watchsama.command()
+async def watch(ctx: commands.Context) -> discord.Message:
+    pass
+
 
 
 #TODO: ADD TO ENV VARIABLE
