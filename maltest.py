@@ -111,6 +111,10 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
 class WatchingView(discord.ui.View):
     def __init__(self, *, timeout: float | None = 180):
         super().__init__(timeout=timeout)
+        reroll_button=ReRollButton(style=discord.ButtonStyle.green, label="switch", watching_view=self)
+        url_button = Button(label = 'Anime List', url = "https://myanimelist.net/animelist/gabslittlepogger")
+        self.add_item(reroll_button)
+        self.add_item(url_button)
         
     def message_awareness(self, message) -> None:
         self.message = message
@@ -118,10 +122,29 @@ class WatchingView(discord.ui.View):
     def embeds_awareness(self, embeds: list[discord.Embed]) -> None:
         self.embeds = embeds
 
-class ReRollButton(discord.ui.Button):
-    def __init__(self, *, style: ButtonStyle = ButtonStyle.secondary, label: str | None = None, disabled: bool = False, custom_id: str | None = None, url: str | None = None, emoji: str | Emoji | PartialEmoji | None = None, row: int | None = None):
-        super().__init__(style=style, label=label, disabled=disabled, custom_id=custom_id, url=url, emoji=emoji, row=row)
+    def embed_index_awareness(self, index: int) -> None:
+        self.embed_index = index
 
+class ReRollButton(discord.ui.Button):
+    def __init__(self, *, style: ButtonStyle = ButtonStyle.secondary, label: str | None = None, disabled: bool = False, custom_id: str | None = None, url: str | None = None, emoji: str | Emoji | PartialEmoji | None = None, row: int | None = None, watching_view: WatchingView):
+        super().__init__(style=style, label=label, disabled=disabled, custom_id=custom_id, url=url, emoji=emoji, row=row)
+        self.watching_view = watching_view
+        
+    
+    async def callback(self, interaction: discord.Interaction):
+        embed_index: int = self.watching_view.embed_index
+        watching_view: WatchingView = self.watching_view
+        print(self.watching_view.embed_index)
+        if self.watching_view.embed_index == 0:
+            self.watching_view.embed_index = 1
+            
+            
+        elif self.watching_view.embed_index == 1:
+            self.watching_view.embed_index = 0
+        
+        print(self.watching_view.embed_index)
+        await interaction.response.edit_message(content="embed swap",embed = self.watching_view.embeds[self.watching_view.embed_index], view=self.watching_view)
+        
 
 def create_embed(data: AnimeEntry):
     color = discord.Colour.from_str('#FFB7C5')
@@ -130,18 +153,6 @@ def create_embed(data: AnimeEntry):
     result = discord.Embed(title=title,color=color, description=description)
     result.set_image(url=data.image)
     return result
-
-@watchsama.command()
-async def button(ctx: commands.Context) -> None:
-    button = Button(label = 'reroll', style=discord.ButtonStyle.green)
-    async def button_callback(interaction: discord.Interaction) -> None:
-        await interaction.response.edit_message(content="teehee")
-
-    button.callback = button_callback
-
-    view = View()
-    view.add_item(button)
-    await ctx.send("Hi", view =  view)
 
 #----------------------------------------------------------------------------------
 
@@ -176,13 +187,11 @@ async def view_test(ctx: commands.Context) -> discord.Message:
         ]
     embeds: list[discord.Embed] = list(map(create_embed, testCase))
     view = WatchingView()
-    reroll_button=ReRollButton(style=discord.ButtonStyle.green, label="hi")
-    url_button = Button(label = 'Anime List', url = "https://myanimelist.net/animelist/gabslittlepogger")
-    view.add_item(reroll_button)
-    view.add_item(url_button)
-    message = ctx.send(embed=embeds[1], view = view)
+    index = 0
+    message: discord.Message = ctx.send(embed=embeds[index], view = view)
     view.message_awareness(message)
     view.embeds_awareness(embeds)
+    view.embed_index_awareness(index)
     await message
     
 
