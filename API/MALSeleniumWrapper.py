@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 from dataclasses import dataclass
+import time
 
 @dataclass
 class AnimeEntry():
@@ -67,7 +68,7 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         return result
     
     @staticmethod
-    def getRandomizerRange(data: list[dict]) -> int:
+    def getRandomizerRange(data: list[dict]) -> int: 
         initial: int = 0
         final: int = len(data) - 1
         for i in range(0, len(data)):

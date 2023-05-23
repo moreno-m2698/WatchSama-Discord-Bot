@@ -6,7 +6,7 @@ from discord.ext import commands
 from discord.partial_emoji import PartialEmoji
 from discord.ui import View, Button
 import random
-import time
+
 
 
 
@@ -23,7 +23,8 @@ mal_password: str = 'qaz890poimnb'
 intents = discord.Intents.default()
 intents.message_content = True
 watchsama = commands.Bot(command_prefix="!", intents=intents)
-watchsama.watchinganime: list[discord.Embed] = []
+watchsama.possible_anime_embeds: list[discord.Embed] = []
+watchsama.possible_anime_index_range: tuple = ()
 #-------------------------------------------------------------------------
 
 
@@ -59,8 +60,11 @@ async def on_ready() -> None:
     wrapper.account_Login(driver=driver, url=url, username=mal_username, password=mal_password)
     data: list[AnimeEntry] = wrapper.get_Data(driver)
     embeds: list[discord.Embed] = list(map(create_embed, data))
-    watchsama.watchinganime = embeds
+    watchsama.possible_anime_embeds = embeds
     driver.close()
+    watchsama.possible_anime_index_range = wrapper.getRandomizerRange(data)
+    print(watchsama.possible_anime_index_range)
+
     await watchsama.guilds[0].text_channels[0].send('Watch-sama is running')
 
 @watchsama.command()
@@ -77,24 +81,22 @@ async def refresh(ctx: commands.Context) -> discord.Message: #Allows user to ref
     data: list[AnimeEntry] = wrapper.get_Data(driver)
     await ctx.send(f"Successful MAL login: Check Log")
     embeds: list[discord.Embed] = list(map(create_embed, data))
-    watchsama.watchinganime = embeds
+    watchsama.possible_anime_embeds = embeds
+    watchsama.possible_anime_index_range = wrapper.getRandomizerRange(data)
     driver.close()
 
 @watchsama.command()
-async def view_test(ctx: commands.Context) -> discord.Message:
-    
-    embeds: list[discord.Embed] = watchsama.watchinganime
+async def watch(ctx: commands.Context) -> discord.Message: #Look into making this a singleton instance so that it cant be cheesed
+    anime_range: tuple = watchsama.possible_anime_index_range
+    embeds: list[discord.Embed] = watchsama.possible_anime_embeds
     view = WatchingView()
-    index = 0
+    index = random.randint(anime_range[0], anime_range[1])
     message: discord.Message = ctx.send(embed=embeds[index], view = view)
     view.message_awareness(message)
     view.embeds_awareness(embeds)
     view.embed_index_awareness(index)
+    view.embed_range_awareness(watchsama.possible_anime_index_range)
     await message
-    
-@watchsama.command()
-async def watch(ctx: commands.Context) -> discord.Message:
-    pass
 
 
 

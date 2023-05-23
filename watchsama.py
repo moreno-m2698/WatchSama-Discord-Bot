@@ -1,107 +1,88 @@
-# This example requires the 'message_content' intent.
-
 import discord
 from discord.ext import commands
 import random
-import datetime
+from selenium.webdriver.remote.webdriver import WebDriver
 
-from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
+from view.WatchingView import WatchingView
+from API.MALSeleniumWrapper import MALSeleniumWrapper, AnimeEntry
 
-#-----------------------------------------------------------------------------------------------------------------------------------------------
-mal_username = "gabslittlepogger"
+#---------------------------------------------------------------------------
+
+mal_username: str = "gabslittlepogger"
+mal_password: str = 'qaz890poimnb'
 intents = discord.Intents.default()
 intents.message_content = True
 watchsama = commands.Bot(command_prefix="!", intents=intents)
+watchsama.possible_anime_embeds: list[discord.Embed] = []
+watchsama.possible_anime_index_range: tuple = ()
+#-------------------------------------------------------------------------
 
-#------------------------------------------------------------------------------------------------------------------------------------------------
+#TODO: Choicing random anime feature
+#Create reroll button
+#Create url to gabslittlepogger button
+#Add timeout
 
-# Add gabs kicking function
-# add more cringe dialogue
-# Create embed for user interface
-# 
+#Create a view to interact with embed
+#Needs to have a single track reroll thats tracked with date
+#Should I synthesize or make from a cached list
 
-#---------------------------------------------------------------------------------------------------------------------------
+def create_embed(data: AnimeEntry):
+    color = discord.Colour.from_str('#FFB7C5')
+    title: str = data.title
+    result = discord.Embed(title=title,color=color)
+    result.set_image(url=data.image)
+    return result
 
-def create_embed(title: str, description: str):
-    cherry_blossom = discord.Color.from_str('#FFB7C5')
-    return discord.Embed(colour=cherry_blossom, title=title, description=description)
-
-
+#----------------------------------------------------------------------------------
 
 @watchsama.event
-async def on_ready():
+async def on_ready() -> None:
+    print('Watchsama is watching')
+    url: str ='https://myanimelist.net/login.php?from=%2F&'
+    wrapper = MALSeleniumWrapper
+    driver: WebDriver = wrapper.get_WebDriver()
+    wrapper.account_Login(driver=driver, url=url, username=mal_username, password=mal_password)
+    data: list[AnimeEntry] = wrapper.get_Data(driver)
+    embeds: list[discord.Embed] = list(map(create_embed, data))
+    watchsama.possible_anime_embeds = embeds
+    driver.close()
+    watchsama.possible_anime_index_range = wrapper.getRandomizerRange(data)
+    print(watchsama.possible_anime_index_range)
+
     await watchsama.guilds[0].text_channels[0].send('Watch-sama is running')
 
-
 @watchsama.command()
-async def stop(ctx):
+async def stop(ctx: commands.Context) -> discord.Message:
     await ctx.send(f'Goodbye {ctx.author.name}!')
     await watchsama.close()
-    
+  
+@watchsama.command()
+async def refresh(ctx: commands.Context) -> discord.Message: #Allows user to refresh embed list if there was a manual updte to MAL after startup
+    url: str ='https://myanimelist.net/login.php?from=%2F&'
+    wrapper = MALSeleniumWrapper
+    driver: WebDriver = wrapper.get_WebDriver()
+    wrapper.account_Login(driver=driver, url=url, username=mal_username, password=mal_password)
+    data: list[AnimeEntry] = wrapper.get_Data(driver)
+    await ctx.send(f"Successful MAL login: Check Log")
+    embeds: list[discord.Embed] = list(map(create_embed, data))
+    watchsama.possible_anime_embeds = embeds
+    watchsama.possible_anime_index_range = wrapper.getRandomizerRange(data)
+    driver.close()
 
 @watchsama.command()
-async def info(ctx):
-    await ctx.send(ctx.author)
-    user = await watchsama.fetch_user(ctx.author.id)
-    await ctx.send(user.banner)
-    
-
-#------------------------------------------------------------------------------------------------------------------------------------------------------------------
-   
-
-@watchsama.command()
-async def repeat(ctx, *args): 
-    #args is stored as a tuple
-    repetition = ' '.join(args)
-    await ctx.send(repetition)
-
-@watchsama.command()
-async def repeat2(ctx, *, arg):
-    await ctx.send(arg)
-
-@watchsama.command()
-async def currentguild(ctx):
-    await ctx.send(ctx.guild.text_channels)
+async def watch(ctx: commands.Context) -> discord.Message: #Look into making this a singleton instance so that it cant be cheesed
+    anime_range: tuple = watchsama.possible_anime_index_range
+    embeds: list[discord.Embed] = watchsama.possible_anime_embeds
+    view = WatchingView()
+    index = random.randint(anime_range[0], anime_range[1])
+    message: discord.Message = ctx.send(embed=embeds[index], view = view)
+    view.message_awareness(message)
+    view.embeds_awareness(embeds)
+    view.embed_index_awareness(index)
+    view.embed_range_awareness(watchsama.possible_anime_index_range)
+    await message
 
 
 
-class Slapper(commands.Converter):
-    async def convert(self, ctx, argument):
-        to_slap = random.choice(ctx.guild.members)
-        return f'{ctx.author} slapped {to_slap} because *{argument}*'
-
-@watchsama.command()
-async def slap(ctx, *, reason: Slapper):
-    await ctx.send(reason)
-
-
-#$-------------------------------------------------------------------------------------------------------------------------
-
-def create_view():
-    return discord.ui.View()
-
-@watchsama.command()
-async def test(ctx):
-    title = 'Anime Night'
-    embed = create_embed(title, 'test')
-    view =  create_view()
-    test_button = discord.ui.Button(label='test')
-    view.add_item(test_button)
-    await ctx.send(embed = embed, view = view)
-
-@watchsama.command()
-async def connection(ctx):
-    pass
-
-# hold onto session token from cookies
-# shif to selenium
-
-
-
-
-
+#TODO: ADD TO ENV VARIABLE
 watchsama.run('MTEwMzM5NDU4OTQ3NTM0ODU2Nw.G2x86i.U4d9iaNSjTC93aMEA10hHiK1k_7C-w4baw4C3A')
-
