@@ -98,7 +98,5 @@ async def watch(ctx: commands.Context) -> discord.Message: #Look into making thi
     view.embed_range_awareness(watchsama.possible_anime_index_range)
     await message
 
-
-
 #TODO: ADD TO ENV VARIABLE
 watchsama.run('MTEwMzM5NDU4OTQ3NTM0ODU2Nw.G2x86i.U4d9iaNSjTC93aMEA10hHiK1k_7C-w4baw4C3A')

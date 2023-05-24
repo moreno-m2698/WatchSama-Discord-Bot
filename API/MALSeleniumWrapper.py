@@ -76,5 +76,5 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
                 initial = i 
                 break
             i += 1
-        result: tuple = (initial, final)
+        result: range = range(initial, final)
         return result

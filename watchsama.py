@@ -13,8 +13,8 @@ mal_password: str = 'qaz890poimnb'
 intents = discord.Intents.default()
 intents.message_content = True
 watchsama = commands.Bot(command_prefix="!", intents=intents)
-watchsama.possible_anime_embeds: list[discord.Embed] = []
-watchsama.possible_anime_index_range: tuple = ()
+watchsama.anime_embeds: list[discord.Embed] = []
+watchsama.plantowatch_range: range | None = None
 #-------------------------------------------------------------------------
 
 #TODO: Choicing random anime feature
@@ -44,12 +44,12 @@ async def on_ready() -> None:
     wrapper.account_Login(driver=driver, url=url, username=mal_username, password=mal_password)
     data: list[AnimeEntry] = wrapper.get_Data(driver)
     embeds: list[discord.Embed] = list(map(create_embed, data))
-    watchsama.possible_anime_embeds = embeds
+    watchsama.anime_embeds = embeds
     driver.close()
-    watchsama.possible_anime_index_range = wrapper.getRandomizerRange(data)
-    print(watchsama.possible_anime_index_range)
+    watchsama.plantowatch_range = wrapper.getRandomizerRange(data)
+    print(watchsama.plantowatch_range)
 
-    await watchsama.guilds[0].text_channels[0].send('Watch-sama is running')
+    await watchsama.guilds[0].text_channels[0].send('Watch-sama is running') #Find out how to get her to talk properly
 
 @watchsama.command()
 async def stop(ctx: commands.Context) -> discord.Message:
@@ -58,6 +58,8 @@ async def stop(ctx: commands.Context) -> discord.Message:
   
 @watchsama.command()
 async def refresh(ctx: commands.Context) -> discord.Message: #Allows user to refresh embed list if there was a manual updte to MAL after startup
+    #TODO: create json to store embeds
+
     url: str ='https://myanimelist.net/login.php?from=%2F&'
     wrapper = MALSeleniumWrapper
     driver: WebDriver = wrapper.get_WebDriver()
@@ -65,21 +67,23 @@ async def refresh(ctx: commands.Context) -> discord.Message: #Allows user to ref
     data: list[AnimeEntry] = wrapper.get_Data(driver)
     await ctx.send(f"Successful MAL login: Check Log")
     embeds: list[discord.Embed] = list(map(create_embed, data))
-    watchsama.possible_anime_embeds = embeds
-    watchsama.possible_anime_index_range = wrapper.getRandomizerRange(data)
+    watchsama.anime_embeds = embeds
+    watchsama.plantowatch_range = wrapper.getRandomizerRange(data)
     driver.close()
 
 @watchsama.command()
 async def watch(ctx: commands.Context) -> discord.Message: #Look into making this a singleton instance so that it cant be cheesed
-    anime_range: tuple = watchsama.possible_anime_index_range
-    embeds: list[discord.Embed] = watchsama.possible_anime_embeds
+    #TODO: persist datetime into text
+
+    anime_range: tuple = watchsama.plantowatch_range
+    embeds: list[discord.Embed] = watchsama.anime_embeds
     view = WatchingView()
     index = random.randint(anime_range[0], anime_range[1])
     message: discord.Message = ctx.send(embed=embeds[index], view = view)
     view.message_awareness(message)
     view.embeds_awareness(embeds)
     view.embed_index_awareness(index)
-    view.embed_range_awareness(watchsama.possible_anime_index_range)
+    view.embed_range_awareness(watchsama.plantowatch_range)
     await message
 
 

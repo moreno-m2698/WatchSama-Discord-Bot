@@ -23,7 +23,7 @@ class WatchingView(View):
     def embed_index_awareness(self, index: int) -> None:
         self.embed_index = index
 
-    def embed_range_awareness(self, range: tuple) -> None:
+    def embed_range_awareness(self, range: range) -> None:
         self.range = range
 
 class ReRollButton(discord.ui.Button):
@@ -33,8 +33,8 @@ class ReRollButton(discord.ui.Button):
         
     
     async def callback(self, interaction: discord.Interaction):
-        new_index = random.randint(self.watching_view.range[0], self.watching_view.range[1])
+        new_index = random.sample(self.watching_view.range, 1)[0]
         self.watching_view.embed_index = new_index
-        self.disabled = True
+        # self.disabled = True
         await interaction.response.edit_message(content="embed swap",embed = self.watching_view.embeds[self.watching_view.embed_index], view=self.watching_view)
         
