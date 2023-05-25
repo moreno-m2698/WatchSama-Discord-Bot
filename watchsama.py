@@ -14,18 +14,34 @@ mal_password: str = 'qaz890poimnb'
 intents = discord.Intents.default()
 intents.message_content = True
 watchsama = commands.Bot(command_prefix="!", intents=intents)
-watchsama.anime_embeds: list[discord.Embed] = []
 watchsama.plantowatch_range: range | None = None
 #-------------------------------------------------------------------------
 
 #TODO: Choicing random anime feature
-#Create reroll button
-#Create url to gabslittlepogger button
 #Add timeout
 
 #Create a view to interact with embed
 #Needs to have a single track reroll thats tracked with date
 #Should I synthesize or make from a cached list
+
+def get_to_anime_list():
+    url: str ='https://myanimelist.net/login.php?from=%2F&'
+    wrapper = MALSeleniumWrapper
+    driver: WebDriver = wrapper.get_WebDriver()
+    wrapper.account_Login(driver=driver, url=url, username=mal_username, password=mal_password)
+    return driver
+
+def cache_anime_embeds()-> None:
+    wrapper = MALSeleniumWrapper
+    driver = get_to_anime_list()
+    data: list[AnimeEntry] = wrapper.get_Data(driver)
+    embeds: list[discord.Embed] = list(map(create_embed, data))
+    embeds_dict: list[dict] = list(map(discord.Embed.to_dict, embeds))
+    embeds_json = json.dumps(embeds_dict, indent=4)
+    with open("anime_embed.json", "w") as outfile:
+        outfile.write(embeds_json)
+    driver.close()
+    watchsama.plantowatch_range = wrapper.getRandomizerRange(data)
 
 def create_embed(data: AnimeEntry):
     color = discord.Colour.from_str('#FFB7C5')
@@ -39,22 +55,7 @@ def create_embed(data: AnimeEntry):
 @watchsama.event
 async def on_ready() -> None:
     print('Watchsama is watching')
-    url: str ='https://myanimelist.net/login.php?from=%2F&'
-    wrapper = MALSeleniumWrapper
-    driver: WebDriver = wrapper.get_WebDriver()
-    wrapper.account_Login(driver=driver, url=url, username=mal_username, password=mal_password)
-    data: list[AnimeEntry] = wrapper.get_Data(driver)
-    embeds: list[discord.Embed] = list(map(create_embed, data))
-    embeds_dict: list[dict] = list(map(discord.Embed.to_dict, embeds))
-    embeds_json = json.dumps(embeds_dict, indent=4)
-    with open("anime_embed.json", "w") as outfile:
-        outfile.write(embeds_json)
-
-    driver.close()
-    watchsama.plantowatch_range = wrapper.getRandomizerRange(data)
-
-    print(watchsama.plantowatch_range)
-
+    cache_anime_embeds()
     await watchsama.guilds[0].text_channels[0].send('Watch-sama is running') #Find out how to get her to talk properly
 
 @watchsama.command()
@@ -64,21 +65,8 @@ async def stop(ctx: commands.Context) -> discord.Message:
   
 @watchsama.command()
 async def refresh(ctx: commands.Context) -> discord.Message: #Allows user to refresh embed list if there was a manual updte to MAL after startup
-    #TODO: create json to store embeds
-
-    url: str ='https://myanimelist.net/login.php?from=%2F&'
-    wrapper = MALSeleniumWrapper
-    driver: WebDriver = wrapper.get_WebDriver()
-    wrapper.account_Login(driver=driver, url=url, username=mal_username, password=mal_password)
-    data: list[AnimeEntry] = wrapper.get_Data(driver)
-    await ctx.send(f"Successful MAL login: Check Log")
-    embeds: list[discord.Embed] = list(map(create_embed, data))
-    embeds_dict: list[dict] = list(map(discord.Embed.to_dict, embeds))
-    embeds_json = json.dumps(embeds_dict, indent=4)
-    with open("anime_embed.json", "w") as outfile:
-        outfile.write(embeds_json)
-    watchsama.plantowatch_range = wrapper.getRandomizerRange(data)
-    driver.close()
+    cache_anime_embeds()
+    await ctx.send("Anime List has been updated")
 
 @watchsama.command()
 async def watch(ctx: commands.Context) -> discord.Message: #Look into making this a singleton instance so that it cant be cheesed
