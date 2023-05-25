@@ -5,6 +5,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from view.WatchingView import WatchingView
 from API.MALSeleniumWrapper import MALSeleniumWrapper, AnimeEntry
+import json
 
 #---------------------------------------------------------------------------
 
@@ -44,9 +45,14 @@ async def on_ready() -> None:
     wrapper.account_Login(driver=driver, url=url, username=mal_username, password=mal_password)
     data: list[AnimeEntry] = wrapper.get_Data(driver)
     embeds: list[discord.Embed] = list(map(create_embed, data))
+    embeds_dict: list[dict] = list(map(discord.Embed.to_dict, embeds))
+    embeds_json = json.dumps(embeds_dict, indent=4)
+    with open("anime_embed.json", "w") as outfile:
+        outfile.write(embeds_json)
     watchsama.anime_embeds = embeds
     driver.close()
     watchsama.plantowatch_range = wrapper.getRandomizerRange(data)
+
     print(watchsama.plantowatch_range)
 
     await watchsama.guilds[0].text_channels[0].send('Watch-sama is running') #Find out how to get her to talk properly

@@ -1,0 +1,594 @@
+[
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/2/83188.webp?s=06117f4cae3021d7636365f28feec754"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "KonoSuba: God's Blessing on This Wonderful World! 2"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1122/96435.webp?s=f8162c1735ac8075df9ba9974c934b24"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "A Silent Voice"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1244/111115.webp?s=306c3befee05f84110f9429d32f38475"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Angel Beats!"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/5/71553.webp?s=9ff22a629b680f6051e9aceb312e88d6"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Death Parade"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1286/99889.webp?s=ebf7111941928e3b31b60bd6bb2e591a"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Demon Slayer: Kimetsu no Yaiba"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1613/102576.webp?s=18ec186ce9b809b0ad99304b8d4bdb1a"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Dr. Stone"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1711/110614.webp?s=4eb3d1724a3c016c584916ea83c00427"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Dr. Stone: Stone Wars"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1208/94745.webp?s=ab4b84dcc8c8a250b92a5589e9485152"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Fullmetal Alchemist: Brotherhood"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1085/90759.webp?s=24ad977c2643b17b94a5e04b5ff6a98d"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "No Game No Life: Zero"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1074/111944.webp?s=7fb42be821490307863943a6ef9574f0"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "No Game, No Life"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1254/134212.webp?s=8f559b7a157bca9923a4b79c1d7ae7e3"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Perfect Blue"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1522/128039.webp?s=e10afb77e19f035c7a7fffd08cbf8fdb"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Re:ZERO -Starting Life in Another World-"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/5/82890.webp?s=32dc1c3a3492daab6d37daf7dd10f113"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Saga of Tanya the Evil"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/6/79597.webp?s=c4c202aabe122887a67494f47979ac92"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Spirited Away"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/13/73973.webp?s=2938c4a821a228b46d7301f04d33cea5"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Major S1"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/12/80032.webp?s=edd22e4a813ef89f61ec8f28158736c9"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Kaiji: Ultimate Survivor"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/5/79697.webp?s=b7a205166ab0d014ee1978c3ead75a52"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Anohana: The Flower We Saw That Day"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/5/75639.webp?s=c9e9ff4daffc484e48e0da2fc6e3e0c8"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Assassination Classroom"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/11/75274.webp?s=9c210e927bb08363c0352b588f822982"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Bakemonogatari"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/10/75195.webp?s=a5c447e0c2de011955b7754c90dac0fd"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Blue Exorcist"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1448/127956.webp?s=6232ebd3e1611b1d7f8f8e0e6f627a49"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Bocchi the Rock!"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1579/113812.webp?s=71d6c77665a3eff3e37fec6f261b37d9"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "BOFURI: I Don't Want to Get Hurt, so I'll Max Out My Defense."
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1661/131889.webp?s=e8fbd05eb823544e0116603f609d6194"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Campfire Cooking in Another World with My Absurd Skill"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1611/96157.webp?s=857a132ce6cc53e9a8b923bea9d4cd76"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Carole & Tuesday"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1806/126216.webp?s=3a636c2578f49cc009d4e4a805a762a3"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Chainsaw Man"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/4/19644.webp?s=831d007067a43b7877108a4f52f8293d"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Cowboy Bebop"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1704/106947.webp?s=91d04e2788f6149205c86e7424158431"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Demon Slayer: Kimetsu no Yaiba - The Movie: Mugen Train"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1255/135158.webp?s=5980a640f5de8394be2455be3d13b805"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Dr. Stone: New World"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/10/77957.webp?s=73b31bbd0867ef7ec4792f93d47578ad"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "ERASED"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1887/117644.webp?s=6e0e182a77d303d521cf5fea718f752a"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Fate/Zero"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/3/72943.webp?s=c47b0484afe8a08cab82dbb2a133f128"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Food Wars! Shokugeki no Soma"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/6/51107.webp?s=274f254bd133261ef3712bdd0c951b0a"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Free! - Iwatobi Swim Club"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1447/99827.webp?s=2a95ec450a357efbb9bc4a6a9d2aeac0"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Fruits Basket 1st Season"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/7/76014.webp?s=a749e34e931c68b89493bfe7564e230f"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Haikyu!!"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1075/131925.webp?s=342717058379f1b42309e27530747b33"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Hell's Paradise"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1580/93526.webp?s=030d9e7c89aec791fc1669e4263443e6"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Hinamatsuri"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1695/111486.webp?s=c4df99e863d929103bf02c6819f8b1a7"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Horimiya"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/5/75810.webp?s=4734f63a13b1c180755c11bac6c50f53"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Howl's Moving Castle"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1295/106551.webp?s=dd18da27b33f817632a6d57282c3ba16"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Kaguya-sama: Love is War"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/10/75916.webp?s=ac60615b615bfe065c4de53eb8a46fd7"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Kiki's Delivery Service"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/13/87235.webp?s=ac1a2a3d539f1596e73b24f15e005240"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Kino's Journey -the Beautiful World- the Animated Series"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1899/117237.webp?s=bfe2d2987942e2ae3f094b2f31839a29"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Komi Can't Communicate"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1413/110712.webp?s=af6bc72852ef0e2480a8ba15be3fdf5d"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Kuma Kuma Kuma Bear"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/11/50453.webp?s=6fc8ad3eb8655108ab4bd5bed8ef08e3"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Kuroko's Basketball"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/4/89877.webp?s=d86468729aea64b818d53056693a4549"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Laid-Back Camp"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/6/86733.webp?s=27b20b0a541ac540280bd51adaf240a0"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Made in Abyss"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1218/135107.webp?s=3b8c0c197ee5238df0d98d1dce29935d"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Mashle: Magic and Muscles"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1958/93533.webp?s=90535ec7eaee6cd674bce916d251c918"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Megalobox"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/8/80356.webp?s=5853f0bb731c4e7ceb19d52be7ac480c"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Mob Psycho 100"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/9/68095.webp?s=595b73d0e8d2115f28cff074376494de"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Mushi-shi: Next Passage Part 2"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/4/39779.webp?s=a5c6231bfcc2723dc7a1beabc5ce707e"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "My Little Monster"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1298/134178.webp?s=a0bd39b4c2061e0c211de542938a13f0"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "My Love Story with Yamada-kun at Lv999"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1399/128318.webp?s=428ea73f13ce6d778747d0b055473672"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "NieR:Automata Ver1.1a"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/12/76049.webp?s=3a6c696f2db8bbd8862c9d5928608e2d"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "One Punch Man"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/3/73178.webp?s=4b4a74169cc95d79ae263d63da87dec7"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Parasyte: The Maxim"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/7/75919.webp?s=1be366851d87b9d3fa105e6aae06d13b"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Princess Mononoke"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/11/55225.webp?s=54c3e686d95c8be446a7a4758aaa530e"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Puella Magi Madoka Magica"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1347/117616.webp?s=3fe953700249ce6c4a6e0fb55556042d"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Ranking of Kings"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1301/93586.webp?s=547ab090c3303e8216945234df3cd0cd"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Rascal Does Not Dream of Bunny Girl Senpai"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1444/108005.webp?s=810b34a1296c605fd18090ad21692df2"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Re:ZERO -Starting Life in Another World- Season 2"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/3/86666.webp?s=aca49632167ad2e90bf61a63fefce027"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Restaurant to Another World"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1375/121599.webp?s=4f06212688db7b18566dd19ee6e61d3e"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Samurai Champloo"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1355/133785.webp?s=c1cf682b3fdf1f0b4a85cd982d468537"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Skip and Loafer"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/12/86890.webp?s=5a22e14f2e47dd3751508f58eac15d12"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Slam Dunk"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1441/122795.webp?s=98c5633d975f0492750c26eb940488b8"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Spy x Family"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1069/123309.webp?s=fd6d6827ae4801a3452b1d3c0dfb027f"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "That Time I Got Reincarnated as a Slime"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/3/50177.webp?s=7a078e6918e2712bb45323b799f6f37a"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "The Devil is a Part-Timer!"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1490/101365.webp?s=970a1128e724bde267cb1b7a1f7592cd"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "The Rising of the Shield Hero"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1795/95088.webp?s=ef6a8f39e9c495159e8e1906088000f9"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Violet Evergarden"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/1864/93518.webp?s=296e1c766042374ca0d3f8c1e491178b"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Wotakoi: Love is Hard for Otaku"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/9/64225.webp?s=c35e001628f21e679538b3eec64a9582"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Yona of the Dawn"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/3/67177.webp?s=3097b215dfec6e6dca4205b615dcfd06"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Your Lie in April"
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/5/87048.webp?s=9b98886f1f5ac1d02f63b0b81a6287e1"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Your Name."
+    },
+    {
+        "image": {
+            "url": "https://cdn.myanimelist.net/r/192x272/images/anime/6/81149.webp?s=19d7d87a2b87e5db833899090ad9e347"
+        },
+        "color": 16758725,
+        "type": "rich",
+        "title": "Yuri!!! On ICE"
+    }
+]

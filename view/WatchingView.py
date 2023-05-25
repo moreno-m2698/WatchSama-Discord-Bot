@@ -33,7 +33,7 @@ class ReRollButton(discord.ui.Button):
         
     
     async def callback(self, interaction: discord.Interaction):
-        new_index = random.sample(self.watching_view.range, 1)[0]
+        new_index: int = random.sample(self.watching_view.range, 1)[0]
         self.watching_view.embed_index = new_index
         # self.disabled = True
         await interaction.response.edit_message(content="embed swap",embed = self.watching_view.embeds[self.watching_view.embed_index], view=self.watching_view)

@@ -78,3 +78,10 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
             i += 1
         result: range = range(initial, final)
         return result
+    
+
+    #TODO: 
+    #yellow: on-hold
+    #red: dropped
+    #green: watching
+    #order: green, blue, yellow, red, grey
