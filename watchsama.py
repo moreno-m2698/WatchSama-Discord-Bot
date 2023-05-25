@@ -6,6 +6,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from view.WatchingView import WatchingView
 from API.MALSeleniumWrapper import MALSeleniumWrapper, AnimeEntry
 import json
+import os
 
 #---------------------------------------------------------------------------
 
@@ -24,7 +25,7 @@ watchsama.plantowatch_range: range | None = None
 #Needs to have a single track reroll thats tracked with date
 #Should I synthesize or make from a cached list
 
-def get_to_anime_list():
+def get_to_anime_list() -> WebDriver:
     url: str ='https://myanimelist.net/login.php?from=%2F&'
     wrapper = MALSeleniumWrapper
     driver: WebDriver = wrapper.get_WebDriver()
@@ -56,6 +57,13 @@ def create_embed(data: AnimeEntry):
 async def on_ready() -> None:
     print('Watchsama is watching')
     cache_anime_embeds()
+
+    #TODO: find a way to cache the range so u dont wanna die
+    
+    # check_file = os.stat('anime_embed.json').st_size
+    # if check_file == 0 or check_file == 2:
+    #     cache_anime_embeds()
+    #     print("populating json")
     await watchsama.guilds[0].text_channels[0].send('Watch-sama is running') #Find out how to get her to talk properly
 
 @watchsama.command()
@@ -72,19 +80,20 @@ async def refresh(ctx: commands.Context) -> discord.Message: #Allows user to ref
 async def watch(ctx: commands.Context) -> discord.Message: #Look into making this a singleton instance so that it cant be cheesed
     #TODO: persist datetime into text
 
-    anime_range: tuple = watchsama.plantowatch_range
-    #TODO access json info to make embeds
+    anime_range: range = watchsama.plantowatch_range
+    
     with open('anime_embed.json', 'r') as openfile:
         embed_jsons: list[dict] = json.load(openfile)
     
     embeds: list[discord.Embed] = list(map(discord.Embed.from_dict, embed_jsons))
     view = WatchingView()
-    index = random.randint(anime_range[0], anime_range[1])
+    index = random.sample(anime_range,1)[0]
+    print(index)
     message: discord.Message = ctx.send(embed=embeds[index], view = view)
     view.message_awareness(message)
     view.embeds_awareness(embeds)
     view.embed_index_awareness(index)
-    view.embed_range_awareness(watchsama.plantowatch_range)
+    view.embed_range_awareness(anime_range)
     await message
 
 

@@ -68,7 +68,7 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         return result
     
     @staticmethod
-    def getRandomizerRange(data: list[dict]) -> int: 
+    def getRandomizerRange(data: list[dict]) -> range: 
         initial: int = 0
         final: int = len(data) - 1
         for i in range(0, len(data)):

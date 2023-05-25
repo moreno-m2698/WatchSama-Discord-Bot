@@ -87,7 +87,7 @@ async def refresh(ctx: commands.Context) -> discord.Message: #Allows user to ref
 
 @watchsama.command()
 async def watch(ctx: commands.Context) -> discord.Message: #Look into making this a singleton instance so that it cant be cheesed
-    anime_range: tuple = watchsama.possible_anime_index_range
+    anime_range: range = watchsama.possible_anime_index_range
     embeds: list[discord.Embed] = watchsama.possible_anime_embeds
     view = WatchingView()
     index = random.randint(anime_range[0], anime_range[1])
