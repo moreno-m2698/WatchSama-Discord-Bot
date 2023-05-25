@@ -49,7 +49,7 @@ async def on_ready() -> None:
     embeds_json = json.dumps(embeds_dict, indent=4)
     with open("anime_embed.json", "w") as outfile:
         outfile.write(embeds_json)
-    watchsama.anime_embeds = embeds
+
     driver.close()
     watchsama.plantowatch_range = wrapper.getRandomizerRange(data)
 
@@ -73,7 +73,10 @@ async def refresh(ctx: commands.Context) -> discord.Message: #Allows user to ref
     data: list[AnimeEntry] = wrapper.get_Data(driver)
     await ctx.send(f"Successful MAL login: Check Log")
     embeds: list[discord.Embed] = list(map(create_embed, data))
-    watchsama.anime_embeds = embeds
+    embeds_dict: list[dict] = list(map(discord.Embed.to_dict, embeds))
+    embeds_json = json.dumps(embeds_dict, indent=4)
+    with open("anime_embed.json", "w") as outfile:
+        outfile.write(embeds_json)
     watchsama.plantowatch_range = wrapper.getRandomizerRange(data)
     driver.close()
 
@@ -82,7 +85,11 @@ async def watch(ctx: commands.Context) -> discord.Message: #Look into making thi
     #TODO: persist datetime into text
 
     anime_range: tuple = watchsama.plantowatch_range
-    embeds: list[discord.Embed] = watchsama.anime_embeds
+    #TODO access json info to make embeds
+    with open('anime_embed.json', 'r') as openfile:
+        embed_jsons: list[dict] = json.load(openfile)
+    
+    embeds: list[discord.Embed] = list(map(discord.Embed.from_dict, embed_jsons))
     view = WatchingView()
     index = random.randint(anime_range[0], anime_range[1])
     message: discord.Message = ctx.send(embed=embeds[index], view = view)
