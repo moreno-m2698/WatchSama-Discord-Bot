@@ -27,12 +27,6 @@ watchsama.possible_anime_embeds: list[discord.Embed] = []
 watchsama.possible_anime_index_range: tuple = ()
 #-------------------------------------------------------------------------
 
-
-
-        
-
-#----------------------------------------------------------------------------------------------------
-
 #TODO: Choicing random anime feature
 #Create reroll button
 #Create url to gabslittlepogger button
