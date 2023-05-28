@@ -40,14 +40,14 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 async def on_ready() -> None:
     print("Connected to discord API")
     watchsama.cogs.cmds.__init__(bot)
-    watchsama.cogs.mal.MAL.setup(bot)
+    await watchsama.cogs.mal.MAL.setup(bot)
 
     #TODO: find a way to cache the range so u dont wanna die
 
     check_file = os.stat('watchsama/cogs/mal/anime_embed.json').st_size
     if check_file == 0 or check_file == 2:
-        watchsama.cogs.mal.API.MalSeleniumWrapper.cache_anime_embeds()
-        print("populating json")
+        watchsama.cogs.mal.API.MALSeleniumWrapper.cache_anime_embeds()
+        print("Creating embeds json")
     await bot.guilds[0].text_channels[0].send('Watch-sama is running') #Find out how to get her to talk properly
 
     await bot.change_presence(status = discord.Status.online)

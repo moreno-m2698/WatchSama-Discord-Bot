@@ -38,13 +38,15 @@ def cache_anime_embeds()-> None:
     data: list[AnimeEntry] = wrapper.get_Data(driver)
     embeds: list[discord.Embed] = list(map(create_embed, data))
     embeds_dict: list[dict] = list(map(discord.Embed.to_dict, embeds))
-
-
-    embeds_json = json.dumps(embeds_dict, indent=4)
-    with open("anime_embed.json", "w") as outfile:
+    plan_to_watch_range = wrapper.getRandomizerRange(data)
+    json_prototype = { 
+        'embeds': embeds_dict,
+        'plan_to_watch_range': plan_to_watch_range           
+    }
+    embeds_json = json.dumps(json_prototype, indent=4)
+    with open("watchsama/cogs/mal/anime_embed.json", "w") as outfile:
         outfile.write(embeds_json)
     driver.close()
-    watchsama.plantowatch_range = wrapper.getRandomizerRange(data)
 
 def create_embed(data: AnimeEntry):
     color = discord.Colour.from_str('#FFB7C5')
@@ -115,7 +117,7 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
                 initial = i 
                 break
             i += 1
-        result: range = range(initial, final)
+        result: list = [initial, final]
         return result
     
 

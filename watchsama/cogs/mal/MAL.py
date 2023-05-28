@@ -21,11 +21,12 @@ class MAL(commands.Cog):
 
         anime_range: range = self.bot.plantowatch_range
         with open('anime_embed.json', 'r') as openfile:
-            embed_jsons: list[dict] = json.load(openfile)
+            embed_jsons: list[dict] = json.load(openfile)['embeds']
+            anime_range: list[int] = json.load(openfile)['plan_to_watch_range']
         
         embeds: list[discord.Embed] = list(map(discord.Embed.from_dict, embed_jsons))
         view = WatchingView()
-        index = random.sample(anime_range,1)[0]
+        index = random.randint(anime_range[0], anime_range[1])
         print(index)
         message: discord.Message = ctx.send(embed=embeds[index], view = view)
         view.message_awareness(message)
@@ -40,5 +41,5 @@ class MAL(commands.Cog):
         await ctx.send("Anime List has been updated")
 
 
-def setup(bot):
-    bot.add_cog(MAL(bot))
+async def setup(bot):
+    await bot.add_cog(MAL(bot))
