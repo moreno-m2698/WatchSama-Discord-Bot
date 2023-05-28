@@ -44,7 +44,7 @@ def cache_anime_embeds()-> None:
         'plan_to_watch_range': plan_to_watch_range           
     }
     embeds_json = json.dumps(json_prototype, indent=4)
-    with open("watchsama/cogs/mal/anime_embed.json", "w") as outfile:
+    with open("watchsama/cogs/mal/JSON/anime_embed.json", "w") as outfile:
         outfile.write(embeds_json)
     driver.close()
 

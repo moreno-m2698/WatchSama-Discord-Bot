@@ -8,6 +8,10 @@ from discord.ext import commands
 from .view.WatchingView import WatchingView
 from .API.MALSeleniumWrapper import cache_anime_embeds
 
+#TODO: Access different lists using different jsons by adjusting url path
+# Currently Watching: ?status=1 ,Completed =2, On Hold =3, Dropped =4, Plan To Watch =5
+
+
 
 class MAL(commands.Cog):
     
@@ -19,7 +23,6 @@ class MAL(commands.Cog):
     async def watch(self, ctx: commands.Context) -> discord.Message: #Look into making this a singleton instance so that it cant be cheesed
     #TODO: persist datetime into text
 
-        anime_range: range = self.bot.plantowatch_range
         with open('anime_embed.json', 'r') as openfile:
             embed_jsons: list[dict] = json.load(openfile)['embeds']
             anime_range: list[int] = json.load(openfile)['plan_to_watch_range']
