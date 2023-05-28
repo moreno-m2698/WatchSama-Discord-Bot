@@ -1,10 +1,7 @@
-import discord
-from discord.ext import commands
-from selenium.webdriver.remote.webdriver import WebDriver
 import json
 import random
 
-#-----------------------
+
 import discord
 from discord.ext import commands
 
@@ -12,9 +9,7 @@ from .view.WatchingView import WatchingView
 from .API.MALSeleniumWrapper import cache_anime_embeds
 
 
-
-
-class PlanToWatch(commands.Cog):
+class MAL(commands.Cog):
     
     def __init__(self, bot):
         self.bot = bot
@@ -46,4 +41,4 @@ class PlanToWatch(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(PlanToWatch(bot))
+    bot.add_cog(MAL(bot))
