@@ -1,10 +1,19 @@
+from dataclasses import dataclass
+import time
+import json
+
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
-from dataclasses import dataclass
-import time
+import discord
+
+
+from ....config import mal_password, mal_user
+
+#-------------------------------------------------------------------------------------------------------------------------------------------
 
 @dataclass
 class AnimeEntry():
@@ -15,6 +24,36 @@ class AnimeEntry():
         self.title: str =title
         self.status: str =status
         self.image: str =image
+
+def get_to_anime_list() -> WebDriver:
+    url: str ='https://myanimelist.net/login.php?from=%2F&'
+    wrapper = MALSeleniumWrapper
+    driver: WebDriver = wrapper.get_WebDriver()
+    wrapper.account_Login(driver=driver, url=url, username=mal_user(), password=mal_password())
+    return driver
+
+def cache_anime_embeds()-> None:
+    wrapper = MALSeleniumWrapper
+    driver = get_to_anime_list()
+    data: list[AnimeEntry] = wrapper.get_Data(driver)
+    embeds: list[discord.Embed] = list(map(create_embed, data))
+    embeds_dict: list[dict] = list(map(discord.Embed.to_dict, embeds))
+
+
+    embeds_json = json.dumps(embeds_dict, indent=4)
+    with open("anime_embed.json", "w") as outfile:
+        outfile.write(embeds_json)
+    driver.close()
+    watchsama.plantowatch_range = wrapper.getRandomizerRange(data)
+
+def create_embed(data: AnimeEntry):
+    color = discord.Colour.from_str('#FFB7C5')
+    title: str = data.title
+    result = discord.Embed(title=title,color=color)
+    result.set_image(url=data.image)
+    return result
+
+
 
 
 class MALSeleniumWrapper(): #This class acts as a "namespace"  
