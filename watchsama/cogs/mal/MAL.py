@@ -8,8 +8,8 @@ import random
 import discord
 from discord.ext import commands
 
-from ..view.WatchingView import WatchingView
-from ..API.MALSeleniumWrapper import cache_anime_embeds
+from .view.WatchingView import WatchingView
+from .API.MALSeleniumWrapper import cache_anime_embeds
 
 
 
