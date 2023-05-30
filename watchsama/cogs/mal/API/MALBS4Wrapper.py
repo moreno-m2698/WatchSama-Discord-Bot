@@ -3,7 +3,7 @@ import requests
 
 from bs4 import BeautifulSoup
 
-import config
+import watchsama
 
 class MALBS4Wrapper():
 
@@ -11,7 +11,7 @@ class MALBS4Wrapper():
     def get_anime_list_html(status: int):
         '''Gets html for anime based on status number'''
 
-        username = config.mal_user()
+        username = watchsama.config.mal_user()
         url = f'myanimelist.net/animelist/{username}?status={status}'
         request = requests.get(url)
 

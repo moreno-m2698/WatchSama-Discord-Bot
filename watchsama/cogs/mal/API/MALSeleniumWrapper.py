@@ -11,7 +11,7 @@ from selenium.webdriver.remote.webelement import WebElement
 import discord
 
 
-from ....config import mal_password, mal_user
+import watchsama
 
 #-------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -29,7 +29,7 @@ def get_to_anime_list() -> WebDriver:
     url: str ='https://myanimelist.net/login.php?from=%2F&'
     wrapper = MALSeleniumWrapper
     driver: WebDriver = wrapper.get_WebDriver()
-    wrapper.account_Login(driver=driver, url=url, username=mal_user(), password=mal_password())
+    wrapper.account_Login(driver=driver, url=url, username=watchsama.config.mal_user(), password=watchsama.mal_password())
     return driver
 
 def cache_anime_embeds()-> None:

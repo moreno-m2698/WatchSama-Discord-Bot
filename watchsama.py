@@ -4,13 +4,8 @@ import time
 import discord
 from discord.ext import commands
 
-import watchsama.config
-import watchsama.cogs.cmds
-import watchsama.cogs.mal.MAL
-import watchsama.cogs.mal.API.MALSeleniumWrapper
+import watchsama
 
-# from watchsama.cogs.mal.MAL import setup
-# from watchsama.cogs.mal.API.MALSeleniumWrapper import cache_anime_embeds
 
 
 #TODO: Choicing random anime feature
@@ -40,11 +35,11 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 async def on_ready() -> None:
     print("Connected to discord API")
     watchsama.cogs.cmds.__init__(bot)
-    await watchsama.cogs.mal.MAL.setup(bot)
+    await watchsama.cogs.mal.MAL.cog_setup(bot)
 
     #TODO: find a way to cache the range so u dont wanna die
 
-    check_file = os.stat('watchsama/cogs/mal/anime_embed.json').st_size
+    check_file = os.stat('watchsama/cogs/mal/JSON/anime_embed.json').st_size
     if check_file == 0 or check_file == 2:
         watchsama.cogs.mal.API.MALSeleniumWrapper.cache_anime_embeds()
         print("Creating embeds json")
@@ -53,8 +48,6 @@ async def on_ready() -> None:
     await bot.change_presence(status = discord.Status.online)
 
 
-
-#TODO: ADD TO ENV VARIABLE
 try:
 
     bot.run(watchsama.config.bot_token())

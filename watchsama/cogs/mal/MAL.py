@@ -13,7 +13,7 @@ from .API.MALSeleniumWrapper import cache_anime_embeds
 
 
 
-class MAL(commands.Cog):
+class MALCog(commands.Cog):
     
     def __init__(self, bot):
         self.bot = bot
@@ -44,5 +44,5 @@ class MAL(commands.Cog):
         await ctx.send("Anime List has been updated")
 
 
-async def setup(bot):
-    await bot.add_cog(MAL(bot))
+async def cog_setup(bot: commands.Bot):
+    await bot.add_cog(MALCog(bot))
