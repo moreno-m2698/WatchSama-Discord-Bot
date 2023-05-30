@@ -23,11 +23,14 @@ class MALCog(commands.Cog):
     async def watch(self, ctx: commands.Context) -> discord.Message: #Look into making this a singleton instance so that it cant be cheesed
     #TODO: persist datetime into text
 
-        with open('anime_embed.json', 'r') as openfile:
-            embed_jsons: list[dict] = json.load(openfile)['embeds']
-            anime_range: list[int] = json.load(openfile)['plan_to_watch_range']
+        with open('watchsama/cogs/mal/JSON/anime_embed.json', 'r') as openfile:
+            cache_json = json.load(openfile)
+
+
+        embed_dict = cache_json['embeds']
+        anime_range = cache_json["plan_to_watch_range"]
         
-        embeds: list[discord.Embed] = list(map(discord.Embed.from_dict, embed_jsons))
+        embeds: list[discord.Embed] = list(map(discord.Embed.from_dict, embed_dict))
         view = WatchingView()
         index = random.randint(anime_range[0], anime_range[1])
         print(index)

@@ -8,6 +8,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver import ChromeOptions
 import discord
 
 
@@ -59,13 +60,17 @@ def create_embed(data: AnimeEntry):
 
 
 class MALSeleniumWrapper(): #This class acts as a "namespace"  
+
     @staticmethod
     def get_WebDriver() -> WebDriver:
+        # options = ChromeOptions()
+        # options.headless=True
+        # driver = webdriver.Chrome(options=options)
         driver = webdriver.Chrome()
         return driver
     
     @staticmethod
-    def account_Login(driver: WebDriver, url: str, username: str, password: str) -> None:
+    def account_Login(driver: WebDriver, url: str, username: str, password: str) -> None: #Only call if we need to adjust something
         driver.get(url)
         login_element: WebElement = driver.find_element(By.ID, 'loginUserName')
         password_element: WebElement = driver.find_element(By.ID, 'login-password')
@@ -87,6 +92,7 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         title: str = raw_title.find_element(By.TAG_NAME, 'a').text
         return title
     
+    
     @staticmethod
     def get_Status(element: WebElement) -> str:
         status_element: WebElement = element.find_element(By.CLASS_NAME, 'status')
@@ -102,11 +108,39 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         return image
     
     @staticmethod
+    #TODO: convert to dict
     def get_Data(driver: WebDriver) -> list[AnimeEntry]:
         m = MALSeleniumWrapper
         raw_data: WebElement = m.get_WebElements(driver)
         result: list[AnimeEntry] = [AnimeEntry(m.get_Title(element), m.get_Status(element), m.get_Image(element)) for element in raw_data]
         return result
+    
+    @staticmethod
+    def get_Entry_URL(element:WebElement) -> str:
+        raw_title: WebElement = element.find_element(By.CLASS_NAME, 'title')
+        a_tag:WebElement = raw_title.find_element(By.TAG_NAME, 'a')
+        result: str = a_tag.get_attribute('href')
+        return result
+    
+    @staticmethod
+    def get_Media_Type(element: WebElement) -> str:
+        type_class: WebElement = element.find_element(By.CLASS_NAME, 'type')
+        result: str = type_class.text
+        return result
+    
+    @staticmethod
+    def get_Progress(element: WebElement) -> list: #Only use this method when calling watch on currently watching
+        progress_class: WebElement = element.find_element(By.CLASS_NAME, 'progress')
+        elements: list[WebElement] =  progress_class.find_elements(By.TAG_NAME, 'span')
+        initial_element: WebElement = elements[0].find_element(By.TAG_NAME, 'a')
+        initial: str = initial_element.text
+        if initial == '-':
+            initial = '0'
+        final: str = elements[1].text
+        initial = int(initial)
+        final = int(final)
+        return [initial, final]
+
     
     @staticmethod
     def getRandomizerRange(data: list[dict]) -> range: 
@@ -120,6 +154,8 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         result: list = [initial, final]
         return result
     
+
+
 
     #TODO: 
     #yellow: on-hold
