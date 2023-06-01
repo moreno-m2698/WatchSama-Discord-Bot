@@ -16,39 +16,51 @@ import watchsama
 
 #-------------------------------------------------------------------------------------------------------------------------------------------
 
-def get_to_anime_list() -> WebDriver:
+def write_to_anime_list() -> WebDriver:
     url: str ='https://myanimelist.net/login.php?from=%2F&'
     wrapper = MALSeleniumWrapper
     driver: WebDriver = wrapper.get_WebDriver()
     wrapper.account_Login(driver=driver, url=url, username=watchsama.config.mal_user(), password=watchsama.mal_password())
     return driver
 
+def get_to_anime_list():
+    wrapper=MALSeleniumWrapper
+    driver: WebDriver = wrapper.get_WebDriver()
+    wrapper.get_MAL_Anime(username=watchsama.config.mal_user(), driver=driver)
+    return driver
 
 
-def cache_anime_embeds()-> None:
+
+def cache_anime_meta() -> None:
+
+    #TODO break up the json
+    
     wrapper = MALSeleniumWrapper
     driver = get_to_anime_list()
-    data: list[AnimeEntry] = wrapper.get_Data(driver)
-    embeds: list[discord.Embed] = list(map(create_embed, data))
-    embeds_dict: list[dict] = list(map(discord.Embed.to_dict, embeds))
-    plan_to_watch_range = wrapper.getRandomizerRange(data)
-    json_prototype = { 
-        'embeds': embeds_dict,
-        'plan_to_watch_range': plan_to_watch_range           
+    #Need to write code to make the json
+    data: dict = {
+        "Watching": None,
+        "Completed": None,
+        'Hold': None,
+        "Dropped": None,
+        "Planning": None
     }
-    embeds_json = json.dumps(json_prototype, indent=4)
-    with open("watchsama/cogs/mal/JSON/anime_embed.json", "w") as outfile:
+
+
+    data: list[dict] = wrapper.get_Data(username=watchsama.config.mal_user(), driver=driver)
+    embeds_json = json.dumps(data, indent=4)
+    with open("watchsama/cogs/mal/JSON/anime_data.json", "w") as outfile:
         outfile.write(embeds_json)
     driver.close()
 
 
 #TODO: FIX THIS.
-def create_embed(data: AnimeEntry):
-    color = discord.Colour.from_str('#FFB7C5')
-    title: str = data.title
-    result = discord.Embed(title=title,color=color)
-    result.set_image(url=data.image)
-    return result
+# def create_embed(data: AnimeEntry):
+#     color = discord.Colour.from_str('#FFB7C5')
+#     title: str = data.title
+#     result = discord.Embed(title=title,color=color)
+#     result.set_image(url=data.image)
+#     return result
 
 
 
@@ -64,6 +76,8 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         return driver
     
     @staticmethod
+    #TODO: Take in int so that we can perform this based on watchtype
+
     def get_MAL_Anime(username: str, driver: WebDriver) -> WebDriver:
         driver.get(f'https://myanimelist.net/animelist/{username}')
         return driver
@@ -130,9 +144,9 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         if initial == '-':
             initial = '0'
         final: str = elements[1].text
-        initial = int(initial)
-        final = int(final)
-        return [initial, final]
+        result = [initial, final]
+        result = list(map(int,result))
+        return result
     
     #---------------------------------------------------------------------------------------------
     
@@ -172,13 +186,9 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         result['progress'] = m.get_Progress(element)
         return result
 
-        
-
-
-
 
     #TODO: 
     #yellow: on-hold
     #red: dropped
     #green: watching
-    #order: green, blue, yellow, red, grey
+    #order: green 1, blue 2, yellow 3, red 4, grey 6

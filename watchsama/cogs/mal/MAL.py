@@ -6,7 +6,7 @@ import discord
 from discord.ext import commands
 
 from .view.WatchingView import WatchingView
-from .API.MALSeleniumWrapper import cache_anime_embeds
+from .API.MALSelenium import cache_anime_meta
 
 #TODO: Access different lists using different jsons by adjusting url path
 # Currently Watching: ?status=1 ,Completed =2, On Hold =3, Dropped =4, Plan To Watch =5
@@ -43,7 +43,7 @@ class MALCog(commands.Cog):
 
     @commands.command()
     async def refresh(self, ctx: commands.Context) -> discord.Message: #Allows user to refresh embed list if there was a manual updte to MAL after startup
-        cache_anime_embeds()
+        cache_anime_meta()
         await ctx.send("Anime List has been updated")
 
 

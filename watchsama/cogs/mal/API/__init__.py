@@ -1,2 +1,2 @@
 
-from .MALSeleniumWrapper import *
+from .MALSelenium import *

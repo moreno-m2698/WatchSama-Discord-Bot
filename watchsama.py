@@ -12,7 +12,6 @@ import watchsama
 #Add timeout
 #Add description to first <br>
 
-#Create a view to interact with embed
 #Needs to have a single track reroll thats tracked with date
 #Should I synthesize or make from a cached list
 #----------------------------------------------------------------------------------
@@ -39,9 +38,9 @@ async def on_ready() -> None:
 
     #TODO: find a way to cache the range so u dont wanna die
 
-    check_file = os.stat('watchsama/cogs/mal/JSON/anime_embed.json').st_size
+    check_file = os.stat('watchsama/cogs/mal/JSON/anime_data.json').st_size
     if check_file == 0 or check_file == 2:
-        watchsama.cogs.mal.API.MALSeleniumWrapper.cache_anime_embeds()
+        watchsama.cogs.mal.API.MALSelenium.cache_anime_meta()
         print("Creating embeds json")
     await bot.guilds[0].text_channels[0].send('Watch-sama is running') #Find out how to get her to talk properly
 
