@@ -16,22 +16,14 @@ import watchsama
 
 #-------------------------------------------------------------------------------------------------------------------------------------------
 
-@dataclass
-class AnimeEntry():
-    title: str
-    status: str
-    image: str
-    def __init__(self, title, status, image):
-        self.title: str =title
-        self.status: str =status
-        self.image: str =image
-
 def get_to_anime_list() -> WebDriver:
     url: str ='https://myanimelist.net/login.php?from=%2F&'
     wrapper = MALSeleniumWrapper
     driver: WebDriver = wrapper.get_WebDriver()
     wrapper.account_Login(driver=driver, url=url, username=watchsama.config.mal_user(), password=watchsama.mal_password())
     return driver
+
+
 
 def cache_anime_embeds()-> None:
     wrapper = MALSeleniumWrapper
@@ -49,6 +41,8 @@ def cache_anime_embeds()-> None:
         outfile.write(embeds_json)
     driver.close()
 
+
+#TODO: FIX THIS.
 def create_embed(data: AnimeEntry):
     color = discord.Colour.from_str('#FFB7C5')
     title: str = data.title
@@ -70,6 +64,11 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         return driver
     
     @staticmethod
+    def get_MAL_Anime(username: str, driver: WebDriver) -> WebDriver:
+        driver.get(f'https://myanimelist.net/animelist/{username}')
+        return driver
+    
+    @staticmethod
     def account_Login(driver: WebDriver, url: str, username: str, password: str) -> None: #Only call if we need to adjust something
         driver.get(url)
         login_element: WebElement = driver.find_element(By.ID, 'loginUserName')
@@ -80,6 +79,8 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         login_button.click()
         time.sleep(1)
         driver.get(f'https://myanimelist.net/animelist/{username}')
+
+    #===============================================================================
 
     @staticmethod
     def get_WebElements(driver: WebDriver) -> list:
@@ -108,14 +109,6 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         return image
     
     @staticmethod
-    #TODO: convert to dict
-    def get_Data(driver: WebDriver) -> list[AnimeEntry]:
-        m = MALSeleniumWrapper
-        raw_data: WebElement = m.get_WebElements(driver)
-        result: list[AnimeEntry] = [AnimeEntry(m.get_Title(element), m.get_Status(element), m.get_Image(element)) for element in raw_data]
-        return result
-    
-    @staticmethod
     def get_Entry_URL(element:WebElement) -> str:
         raw_title: WebElement = element.find_element(By.CLASS_NAME, 'title')
         a_tag:WebElement = raw_title.find_element(By.TAG_NAME, 'a')
@@ -140,7 +133,15 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         initial = int(initial)
         final = int(final)
         return [initial, final]
-
+    
+    #---------------------------------------------------------------------------------------------
+    
+    @staticmethod
+    def get_Data(driver:WebDriver, username: str) -> list[dict]:
+        m = MALSeleniumWrapper
+        raw_data: WebElement = m.get_WebElements(driver)
+        result: list[dict] = [m.create_Base_Entry_Dict(username, element) for element in raw_data]
+        return result
     
     @staticmethod
     def getRandomizerRange(data: list[dict]) -> range: 
@@ -154,6 +155,25 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         result: list = [initial, final]
         return result
     
+    def create_Base_Entry_Dict(username: str, element: WebElement) -> dict:
+        m = MALSeleniumWrapper
+        result = {
+            'name': m.get_Title(element),
+            "reference": m.get_Entry_URL(element),
+            'status': m.get_Status(element),
+            "image": m.get_Image(element),
+            "type": m.get_Media_Type(element)
+        }
+        return result
+    
+    def create_Currently_Watching_Dict(username: str, element: WebElement) -> dict:
+        m=MALSeleniumWrapper
+        result = m.create_Base_Entry_Dict(username, element)
+        result['progress'] = m.get_Progress(element)
+        return result
+
+        
+
 
 
 
