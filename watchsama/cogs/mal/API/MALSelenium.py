@@ -27,9 +27,6 @@ def write_to_anime_list() -> WebDriver: #This allows us to get to the anime list
 def get_to_anime_list(driver:WebDriver, status:int): #This only gets us to the pages that have the anime list
     wrapper=MALSeleniumWrapper
     wrapper.get_MAL_Anime_List(username=watchsama.config.mal_user(), driver=driver, status=status)
-    
-
-
 
 def cache_anime_meta() -> None:
     
@@ -48,8 +45,6 @@ def cache_anime_meta() -> None:
     get_to_anime_list(driver=driver, status=6)
     planning=wrapper.get_Data(username=username,driver=driver)
 
-
-    #Need to write code to make the json
     data: dict = {
         "Watching": watching,
         "Completed": complete,
@@ -58,24 +53,10 @@ def cache_anime_meta() -> None:
         "Planning": planning
     }
 
-    #order: green 1, blue 2, yellow 3, red 4, grey 6
-
     embeds_json = json.dumps(data, indent=4)
     with open("watchsama/cogs/mal/JSON/anime_data.json", "w") as outfile:
         outfile.write(embeds_json)
     driver.close()
-
-
-#TODO: FIX THIS.
-# def create_embed(data: AnimeEntry):
-#     color = discord.Colour.from_str('#FFB7C5')
-#     title: str = data.title
-#     result = discord.Embed(title=title,color=color)
-#     result.set_image(url=data.image)
-#     return result
-
-
-
 
 class MALSeleniumWrapper(): #This class acts as a "namespace"  
 
@@ -203,10 +184,10 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         result = m.create_Base_Entry_Dict(username, element)
         result['progress'] = m.get_Progress(element)
         return result
-
-
-    #TODO: 
-    #yellow: on-hold
-    #red: dropped
-    #green: watching
-    #order: green 1, blue 2, yellow 3, red 4, grey 6
+    
+    def get_Description(driver: WebDriver, url: str):
+        driver.get(url)
+        table_element = driver.find_element(By.TAG_NAME, 'table')
+        p_tag = table_element.find_element(By.TAG_NAME, 'p')
+        result = p_tag.text
+        return result
