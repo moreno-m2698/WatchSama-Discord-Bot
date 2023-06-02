@@ -11,6 +11,9 @@ from .API.MALSelenium import cache_anime_meta
 #TODO: Access different lists using different jsons by adjusting url path
 # Currently Watching: ?status=1 ,Completed =2, On Hold =3, Dropped =4, Plan To Watch =5
 
+#TODO: think of how we can safely edit the number of episodes that that have been watched
+
+
 
 
 class MALCog(commands.Cog):

@@ -16,38 +16,50 @@ import watchsama
 
 #-------------------------------------------------------------------------------------------------------------------------------------------
 
-def write_to_anime_list() -> WebDriver:
+def write_to_anime_list() -> WebDriver: #This allows us to get to the anime list after logging in
+
     url: str ='https://myanimelist.net/login.php?from=%2F&'
     wrapper = MALSeleniumWrapper
     driver: WebDriver = wrapper.get_WebDriver()
     wrapper.account_Login(driver=driver, url=url, username=watchsama.config.mal_user(), password=watchsama.mal_password())
     return driver
 
-def get_to_anime_list():
+def get_to_anime_list(driver:WebDriver, status:int): #This only gets us to the pages that have the anime list
     wrapper=MALSeleniumWrapper
-    driver: WebDriver = wrapper.get_WebDriver()
-    wrapper.get_MAL_Anime(username=watchsama.config.mal_user(), driver=driver)
-    return driver
+    wrapper.get_MAL_Anime_List(username=watchsama.config.mal_user(), driver=driver, status=status)
+    
 
 
 
 def cache_anime_meta() -> None:
-
-    #TODO break up the json
     
+    #TODO break up the json
+    username=watchsama.config.mal_user()
     wrapper = MALSeleniumWrapper
-    driver = get_to_anime_list()
+    driver: WebDriver = wrapper.get_WebDriver()
+    get_to_anime_list(driver=driver, status=1)
+    watching: list[dict] = wrapper.get_Extended_Data(username=username, driver=driver)
+    get_to_anime_list(driver=driver, status=2)
+    complete = wrapper.get_Data(username=username,driver=driver)
+    get_to_anime_list(driver=driver, status=3)
+    hold = wrapper.get_Data(username=username, driver=driver)
+    get_to_anime_list(driver=driver, status=4)
+    dropped=wrapper.get_Data(username=username, driver=driver)
+    get_to_anime_list(driver=driver, status=6)
+    planning=wrapper.get_Data(username=username,driver=driver)
+
+
     #Need to write code to make the json
     data: dict = {
-        "Watching": None,
-        "Completed": None,
-        'Hold': None,
-        "Dropped": None,
-        "Planning": None
+        "Watching": watching,
+        "Completed": complete,
+        'Hold': hold,
+        "Dropped": dropped,
+        "Planning": planning
     }
 
+    #order: green 1, blue 2, yellow 3, red 4, grey 6
 
-    data: list[dict] = wrapper.get_Data(username=watchsama.config.mal_user(), driver=driver)
     embeds_json = json.dumps(data, indent=4)
     with open("watchsama/cogs/mal/JSON/anime_data.json", "w") as outfile:
         outfile.write(embeds_json)
@@ -78,8 +90,8 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
     @staticmethod
     #TODO: Take in int so that we can perform this based on watchtype
 
-    def get_MAL_Anime(username: str, driver: WebDriver) -> WebDriver:
-        driver.get(f'https://myanimelist.net/animelist/{username}')
+    def get_MAL_Anime_List(username: str, driver: WebDriver, status: int) -> WebDriver:
+        driver.get(f'https://myanimelist.net/animelist/{username}?status={status}')
         return driver
     
     @staticmethod
@@ -155,6 +167,12 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         m = MALSeleniumWrapper
         raw_data: WebElement = m.get_WebElements(driver)
         result: list[dict] = [m.create_Base_Entry_Dict(username, element) for element in raw_data]
+        return result
+    
+    def get_Extended_Data(driver:WebDriver, username: str) -> list[dict]:
+        m = MALSeleniumWrapper
+        raw_data: WebElement = m.get_WebElements(driver)
+        result: list[dict] = [m.create_Currently_Watching_Dict(username, element) for element in raw_data]
         return result
     
     @staticmethod
