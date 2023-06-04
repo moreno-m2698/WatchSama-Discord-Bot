@@ -7,6 +7,7 @@ from discord.ext import commands
 
 from .view.WatchingView import WatchingView
 from .API.MALSelenium import cache_anime_meta
+from .API.WatchsamaEmbed import make_embeds
 
 #TODO: Access different lists using different jsons by adjusting url path
 # Currently Watching: ?status=1 ,Completed =2, On Hold =3, Dropped =4, Plan To Watch =5
@@ -29,11 +30,8 @@ class MALCog(commands.Cog):
         with open('watchsama/cogs/mal/JSON/anime_embed.json', 'r') as openfile:
             cache_json = json.load(openfile)
 
-
-        embed_dict = cache_json['embeds']
         anime_range = cache_json["plan_to_watch_range"]
-        
-        embeds: list[discord.Embed] = list(map(discord.Embed.from_dict, embed_dict))
+        embeds = make_embeds(2)
         view = WatchingView()
         index = random.randint(anime_range[0], anime_range[1])
         print(index)
@@ -49,6 +47,18 @@ class MALCog(commands.Cog):
         cache_anime_meta()
         await ctx.send("Anime List has been updated")
 
+    @commands.command()
+    async def test(self, ctx: commands.Context) -> discord.Message:
+        key = 'Planning'
+        #if too many embeds might now work |10|
+        embeds = make_embeds(key)
+        rand = random.randint(0, len(embeds)-1)
+        test=embeds[rand]
+        await ctx.send(content=f"Here is an example embed of {key}", embed=test)
+        
+        #TODO: talk to marcel about if im being blocked or if something else is happening that is killing this feature
+        #Maybe leave the embed creation to the view to slow down load
+        #Has to do with blocking?
 
 async def cog_setup(bot: commands.Bot):
     await bot.add_cog(MALCog(bot))

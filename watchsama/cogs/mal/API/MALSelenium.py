@@ -185,9 +185,3 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         result['progress'] = m.get_Progress(element)
         return result
     
-    def get_Description(driver: WebDriver, url: str):
-        driver.get(url)
-        table_element = driver.find_element(By.TAG_NAME, 'table')
-        p_tag = table_element.find_element(By.TAG_NAME, 'p')
-        result = p_tag.text
-        return result
