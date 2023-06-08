@@ -7,7 +7,7 @@ from discord.ext import commands
 
 from .view.WatchingView import WatchingView
 from .API.MALSelenium import cache_anime_meta
-from .API.WatchsamaEmbed import make_embeds
+from .API.WatchsamaEmbed import make_general_embeds
 
 #TODO: Access different lists using different jsons by adjusting url path
 # Currently Watching: ?status=1 ,Completed =2, On Hold =3, Dropped =4, Plan To Watch =5
@@ -31,7 +31,7 @@ class MALCog(commands.Cog):
             cache_json = json.load(openfile)
 
         anime_range = cache_json["plan_to_watch_range"]
-        embeds = make_embeds(2)
+        embeds = make_general_embeds(2)
         view = WatchingView()
         index = random.randint(anime_range[0], anime_range[1])
         print(index)
@@ -51,7 +51,7 @@ class MALCog(commands.Cog):
     async def test(self, ctx: commands.Context) -> discord.Message:
         key = 'Planning'
         #if too many embeds might now work |10|
-        embeds = make_embeds(key)
+        embeds = make_general_embeds(key)
         rand = random.randint(0, len(embeds)-1)
         test=embeds[rand]
         await ctx.send(content=f"Here is an example embed of {key}", embed=test)

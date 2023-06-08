@@ -11,6 +11,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver import ChromeOptions
 
 import watchsama.cogs.mal.API.MALSelenium as SeleniumWrapper
+from Watchsama import get_emotes
 
 def get_Description(driver: WebDriver, url: str) -> str:
     driver.get(url)
@@ -20,7 +21,7 @@ def get_Description(driver: WebDriver, url: str) -> str:
     
     return result
 
-def embed_from_dict(data: dict, driver: WebDriver) -> discord.Embed:
+def general_embed_from_dict(data: dict, driver: WebDriver) -> discord.Embed:
     description:str = get_Description(driver=driver, url=data['reference'])
     embed = discord.Embed(title=data['name'],
                           url=data['reference'],
@@ -31,15 +32,42 @@ def embed_from_dict(data: dict, driver: WebDriver) -> discord.Embed:
     return embed
     
 
-def make_embeds(key: str) -> list[discord.Embed]: # Take a list from the json and create the embeds
-    driver = SeleniumWrapper.MALSeleniumWrapper.get_WebDriver()    
+def make_general_embeds(key: str) -> list[discord.Embed]: # Take a list from the json and create the general embeds
+    driver: WebDriver = SeleniumWrapper.MALSeleniumWrapper.get_WebDriver()    
     with open('watchsama/cogs/mal/JSON/anime_data.json', 'r') as openfile:
         anime_json = json.load(openfile)
     anime_list: list[dict] = anime_json[key]
     embeds =[]
     for entry in anime_list:
-        embed = embed_from_dict(data=entry, driver=driver)
+        embed = general_embed_from_dict(data=entry, driver=driver)
         embeds.append(embed)
     # embeds = [embed_from_dict(data=entry, driver=driver) for entry in anime_list]
     driver.close()
     return embeds
+
+
+#TODO: WORk on these later
+
+# def make_watching_embeds() -> list[discord.Embed]:
+#     driver: WebDriver = SeleniumWrapper.MALSeleniumWrapper.get_WebDriver()
+#     with open('watchsama/cogs/mal/JSON/anime_data.json', 'r') as openfile:
+#         anime_json = json.load(openfile)
+#     anime_list: list[dict] = anime_json["Watching"]
+#     embeds = []
+#     for entry in anime_list:
+#         pass
+
+
+# def progress_bar(current:int, end: int):
+#     emojis = get_emotes()
+#     hs = emojis[0]
+#     hm = emojis[1]
+#     he = emojis[2]
+#     em = emojis[3]
+#     ee = emojis[4]
+#     fs = emojis[5]
+#     fm = emojis[6]
+#     #10 length 
+#     percent = (current/end *10) // 1 + 1
+#     if percent == 0:
+#         pass
