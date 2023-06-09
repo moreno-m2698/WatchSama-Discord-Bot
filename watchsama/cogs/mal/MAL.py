@@ -43,6 +43,11 @@ class MALCog(commands.Cog):
         await message
 
     @commands.command()
+    async def hold(self, ctx: commands.Context) -> discord.Message:
+        embeds = make_general_embeds(3)
+        
+
+    @commands.command()
     async def refresh(self, ctx: commands.Context) -> discord.Message: #Allows user to refresh embed list if there was a manual updte to MAL after startup
         cache_anime_meta()
         await ctx.send("Anime List has been updated")
@@ -59,6 +64,12 @@ class MALCog(commands.Cog):
         #TODO: talk to marcel about if im being blocked or if something else is happening that is killing this feature
         #Maybe leave the embed creation to the view to slow down load
         #Has to do with blocking?
+
+    # @commands.command()
+    # async def hold(self, ctx: commands.Context) -> discord.Message:
+    #     embeds: list[discord.Embed] = make_general_embeds(3)
+    #     view = discord.ui.View()
+    #     index=0
 
 async def cog_setup(bot: commands.Bot):
     await bot.add_cog(MALCog(bot))

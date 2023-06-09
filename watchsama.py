@@ -34,9 +34,6 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 async def on_ready() -> None:
     print("Connected to discord API")
 
-    usable_emotes: discord.Guild = bot.get_guild(1103400705995329566).emojis
-    
-
     watchsama.cogs.cmds.__init__(bot)
     await watchsama.cogs.mal.MAL.cog_setup(bot)
 
@@ -62,6 +59,6 @@ except Exception as e:
     exit(1)
 
 #TODO: find a way to implement into the file structure instead of the bot connection
-def get_emotes(): 
-    emojis = bot.get_guild(1103400705995329566).emojis
-    return emojis
+# def get_emotes(): 
+#     emojis = bot.get_guild(1103400705995329566).emojis
+#     return emojis

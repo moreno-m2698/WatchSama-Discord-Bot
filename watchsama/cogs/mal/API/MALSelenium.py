@@ -62,10 +62,10 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
 
     @staticmethod
     def get_WebDriver() -> WebDriver:
-        # options = ChromeOptions()
-        # options.headless=True
-        # driver = webdriver.Chrome(options=options)
-        driver = webdriver.Chrome()
+        options = ChromeOptions()
+        options.headless=True
+        driver = webdriver.Chrome(options=options)
+        # driver = webdriver.Chrome()
         return driver
     
     @staticmethod
