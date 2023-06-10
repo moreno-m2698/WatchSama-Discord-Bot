@@ -39,7 +39,7 @@ def make_general_embeds(key: str) -> list[discord.Embed]: # Take a list from the
                 '2': 'watchsama/cogs/mal/JSON/anime_complete_data.json',
                 '3': 'watchsama/cogs/mal/JSON/anime_hold_data.json',
                 '4': 'watchsama/cogs/mal/JSON/anime_dropped_data.json',
-                '6': 'watchsama/cogs/mal/JSON/anime_watching_data.json'
+                '6': 'watchsama/cogs/mal/JSON/anime_planned_data.json'
     }
     map_key = str(key)
     cache_json = json_map[map_key]

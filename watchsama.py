@@ -42,8 +42,8 @@ async def on_ready() -> None:
     print(bot.guilds)
 
     #TODO: find another way to figure out if there is already stuff in the cache
-    
-    check_file = os.stat('watchsama/cogs/mal/JSON/anime_data.json').st_size
+
+    check_file = os.stat('watchsama/cogs/mal/JSON/anime_complete_data.json').st_size
     if check_file == 0 or check_file == 2:
         watchsama.cogs.mal.API.MALSelenium.cache_anime_meta()
         print("Creating embeds json")
