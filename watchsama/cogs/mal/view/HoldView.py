@@ -4,7 +4,7 @@ from discord.emoji import Emoji
 from discord.enums import ButtonStyle
 from discord.ext import commands
 
-from discord.ui import View, Button
+from discord.ui import Button
 import random
 
 from .MALView import MALView

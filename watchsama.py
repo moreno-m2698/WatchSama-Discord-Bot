@@ -37,9 +37,6 @@ async def on_ready() -> None:
     watchsama.cogs.cmds.__init__(bot)
     await watchsama.cogs.mal.MAL.cog_setup(bot)
 
-    #TODO: find a way to cache the range so u dont wanna die
-
-    print(bot.guilds)
 
     #TODO: find another way to figure out if there is already stuff in the cache
 

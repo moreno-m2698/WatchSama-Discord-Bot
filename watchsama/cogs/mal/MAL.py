@@ -6,6 +6,7 @@ import discord
 from discord.ext import commands
 
 from .view.WatchingView import WatchingView
+from .view.MALView import MALView
 from .API.MALSelenium import cache_anime_meta
 from .API.WatchsamaEmbed import make_general_embeds
 
@@ -45,7 +46,12 @@ class MALCog(commands.Cog):
     @commands.command()
     async def hold(self, ctx: commands.Context) -> discord.Message:
         embeds = make_general_embeds(3)
-        
+        view = MALView()
+        message: discord.Message = ctx.send(content = 'Here are the series that you have on hold.', embed=embeds[0], view = view)
+        view.message_awareness(message)
+        view.embeds_awareness(embeds)
+        view.embed_index_awareness(0)
+        await message
 
     @commands.command()
     async def refresh(self, ctx: commands.Context) -> discord.Message: #Allows user to refresh embed list if there was a manual updte to MAL after startup

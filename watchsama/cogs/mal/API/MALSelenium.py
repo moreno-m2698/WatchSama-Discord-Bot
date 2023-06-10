@@ -56,28 +56,6 @@ def cache_anime_meta() -> None:
         with open(json_status_map[key], "w") as outfile:
             outfile.write(embeds_json)
 
-    # get_to_anime_list(driver=driver, status=1)
-    # watching: list[dict] = wrapper.get_Extended_Data(username=username, driver=driver)
-    # get_to_anime_list(driver=driver, status=2)
-    # complete = wrapper.get_Data(username=username,driver=driver)
-    # get_to_anime_list(driver=driver, status=3)
-    # hold = wrapper.get_Data(username=username, driver=driver)
-    # get_to_anime_list(driver=driver, status=4)
-    # dropped=wrapper.get_Data(username=username, driver=driver)
-    # get_to_anime_list(driver=driver, status=6)
-    # planning=wrapper.get_Data(username=username,driver=driver)
-
-    # data: dict = {
-    #     "Watching": watching,
-    #     "Completed": complete,
-    #     'Hold': hold,
-    #     "Dropped": dropped,
-    #     "Planning": planning
-    # }
-
-    # embeds_json = json.dumps(data, indent=4)
-    # with open("watchsama/cogs/mal/JSON/anime_data.json", "w") as outfile:
-    #     outfile.write(embeds_json)
     driver.close()
 
 class MALSeleniumWrapper(): #This class acts as a "namespace"  
