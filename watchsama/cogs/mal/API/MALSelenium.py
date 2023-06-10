@@ -28,44 +28,66 @@ def get_to_anime_list(driver:WebDriver, status:int): #This only gets us to the p
     wrapper=MALSeleniumWrapper
     wrapper.get_MAL_Anime_List(username=watchsama.config.mal_user(), driver=driver, status=status)
 
+    #TODO: REFACTOR THIS
+
 def cache_anime_meta() -> None:
     
     #TODO break up the json
     username=watchsama.config.mal_user()
     wrapper = MALSeleniumWrapper
     driver: WebDriver = wrapper.get_WebDriver()
-    get_to_anime_list(driver=driver, status=1)
-    watching: list[dict] = wrapper.get_Extended_Data(username=username, driver=driver)
-    get_to_anime_list(driver=driver, status=2)
-    complete = wrapper.get_Data(username=username,driver=driver)
-    get_to_anime_list(driver=driver, status=3)
-    hold = wrapper.get_Data(username=username, driver=driver)
-    get_to_anime_list(driver=driver, status=4)
-    dropped=wrapper.get_Data(username=username, driver=driver)
-    get_to_anime_list(driver=driver, status=6)
-    planning=wrapper.get_Data(username=username,driver=driver)
 
-    data: dict = {
-        "Watching": watching,
-        "Completed": complete,
-        'Hold': hold,
-        "Dropped": dropped,
-        "Planning": planning
-    }
+    json_status_map = {
+        '1': 'watchsama/cogs/mal/JSON/anime_watching_data.json',
+        '2': 'watchsama/cogs/mal/JSON/anime_complete_data.json',
+        '3': 'watchsama/cogs/mal/JSON/anime_hold_data.json',
+        '4': 'watchsama/cogs/mal/JSON/anime_dropped_data.json',
+        '6': 'watchsama/cogs/mal/JSON/anime_watching_data.json'
+        }
+    for key in json_status_map:
+        if key == '1':
+            get_to_anime_list(driver=driver, status=key)
+            data_dict = wrapper.get_Extended_Data(username=username, driver=driver)
+        else:
+            get_to_anime_list(driver=driver, status=key)
+            data_dict = wrapper.get_Data(username=username,driver=driver)
+        
+        embeds_json = json.dumps(data_dict, indent=4)
+        with open(json_status_map[key], "w") as outfile:
+            outfile.write(embeds_json)
 
-    embeds_json = json.dumps(data, indent=4)
-    with open("watchsama/cogs/mal/JSON/anime_data.json", "w") as outfile:
-        outfile.write(embeds_json)
+    # get_to_anime_list(driver=driver, status=1)
+    # watching: list[dict] = wrapper.get_Extended_Data(username=username, driver=driver)
+    # get_to_anime_list(driver=driver, status=2)
+    # complete = wrapper.get_Data(username=username,driver=driver)
+    # get_to_anime_list(driver=driver, status=3)
+    # hold = wrapper.get_Data(username=username, driver=driver)
+    # get_to_anime_list(driver=driver, status=4)
+    # dropped=wrapper.get_Data(username=username, driver=driver)
+    # get_to_anime_list(driver=driver, status=6)
+    # planning=wrapper.get_Data(username=username,driver=driver)
+
+    # data: dict = {
+    #     "Watching": watching,
+    #     "Completed": complete,
+    #     'Hold': hold,
+    #     "Dropped": dropped,
+    #     "Planning": planning
+    # }
+
+    # embeds_json = json.dumps(data, indent=4)
+    # with open("watchsama/cogs/mal/JSON/anime_data.json", "w") as outfile:
+    #     outfile.write(embeds_json)
     driver.close()
 
 class MALSeleniumWrapper(): #This class acts as a "namespace"  
 
     @staticmethod
     def get_WebDriver() -> WebDriver:
-        options = ChromeOptions()
-        options.headless=True
-        driver = webdriver.Chrome(options=options)
-        # driver = webdriver.Chrome()
+        # options = ChromeOptions()
+        # options.headless=True
+        # driver = webdriver.Chrome(options=options)
+        driver = webdriver.Chrome()
         return driver
     
     @staticmethod

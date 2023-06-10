@@ -1,114 +1,16 @@
 [
     {
-        "name": "Doukyusei -Classmates-",
-        "reference": "https://myanimelist.net/anime/30346/Doukyuusei_Movie",
-        "status": "watching",
-        "image": "https://cdn.myanimelist.net/r/192x272/images/anime/3/78606.webp?s=42f5151159cac069694ffcb2fa3d9592",
-        "type": "Movie"
-    },
-    {
         "name": "A Silent Voice",
         "reference": "https://myanimelist.net/anime/28851/Koe_no_Katachi",
-        "status": "completed",
+        "status": "plantowatch",
         "image": "https://cdn.myanimelist.net/r/192x272/images/anime/1122/96435.webp?s=f8162c1735ac8075df9ba9974c934b24",
         "type": "Movie"
     },
     {
         "name": "Angel Beats!",
         "reference": "https://myanimelist.net/anime/6547/Angel_Beats",
-        "status": "completed",
+        "status": "plantowatch",
         "image": "https://cdn.myanimelist.net/r/192x272/images/anime/1244/111115.webp?s=306c3befee05f84110f9429d32f38475",
-        "type": "TV"
-    },
-    {
-        "name": "Death Parade",
-        "reference": "https://myanimelist.net/anime/28223/Death_Parade",
-        "status": "completed",
-        "image": "https://cdn.myanimelist.net/r/192x272/images/anime/5/71553.webp?s=9ff22a629b680f6051e9aceb312e88d6",
-        "type": "TV"
-    },
-    {
-        "name": "Demon Slayer: Kimetsu no Yaiba",
-        "reference": "https://myanimelist.net/anime/38000/Kimetsu_no_Yaiba",
-        "status": "completed",
-        "image": "https://cdn.myanimelist.net/r/192x272/images/anime/1286/99889.webp?s=ebf7111941928e3b31b60bd6bb2e591a",
-        "type": "TV"
-    },
-    {
-        "name": "Dr. Stone",
-        "reference": "https://myanimelist.net/anime/38691/Dr_Stone",
-        "status": "completed",
-        "image": "https://cdn.myanimelist.net/r/192x272/images/anime/1613/102576.webp?s=18ec186ce9b809b0ad99304b8d4bdb1a",
-        "type": "TV"
-    },
-    {
-        "name": "Dr. Stone: Stone Wars",
-        "reference": "https://myanimelist.net/anime/40852/Dr_Stone__Stone_Wars",
-        "status": "completed",
-        "image": "https://cdn.myanimelist.net/r/192x272/images/anime/1711/110614.webp?s=4eb3d1724a3c016c584916ea83c00427",
-        "type": "TV"
-    },
-    {
-        "name": "Fullmetal Alchemist: Brotherhood",
-        "reference": "https://myanimelist.net/anime/5114/Fullmetal_Alchemist__Brotherhood",
-        "status": "completed",
-        "image": "https://cdn.myanimelist.net/r/192x272/images/anime/1208/94745.webp?s=ab4b84dcc8c8a250b92a5589e9485152",
-        "type": "TV"
-    },
-    {
-        "name": "No Game No Life: Zero",
-        "reference": "https://myanimelist.net/anime/33674/No_Game_No_Life__Zero",
-        "status": "completed",
-        "image": "https://cdn.myanimelist.net/r/192x272/images/anime/1085/90759.webp?s=24ad977c2643b17b94a5e04b5ff6a98d",
-        "type": "Movie"
-    },
-    {
-        "name": "No Game, No Life",
-        "reference": "https://myanimelist.net/anime/19815/No_Game_No_Life",
-        "status": "completed",
-        "image": "https://cdn.myanimelist.net/r/192x272/images/anime/1074/111944.webp?s=7fb42be821490307863943a6ef9574f0",
-        "type": "TV"
-    },
-    {
-        "name": "Perfect Blue",
-        "reference": "https://myanimelist.net/anime/437/Perfect_Blue",
-        "status": "completed",
-        "image": "https://cdn.myanimelist.net/r/192x272/images/anime/1254/134212.webp?s=8f559b7a157bca9923a4b79c1d7ae7e3",
-        "type": "Movie"
-    },
-    {
-        "name": "Re:ZERO -Starting Life in Another World-",
-        "reference": "https://myanimelist.net/anime/31240/Re_Zero_kara_Hajimeru_Isekai_Seikatsu",
-        "status": "completed",
-        "image": "https://cdn.myanimelist.net/r/192x272/images/anime/1522/128039.webp?s=e10afb77e19f035c7a7fffd08cbf8fdb",
-        "type": "TV"
-    },
-    {
-        "name": "Saga of Tanya the Evil",
-        "reference": "https://myanimelist.net/anime/32615/Youjo_Senki",
-        "status": "completed",
-        "image": "https://cdn.myanimelist.net/r/192x272/images/anime/5/82890.webp?s=32dc1c3a3492daab6d37daf7dd10f113",
-        "type": "TV"
-    },
-    {
-        "name": "Spirited Away",
-        "reference": "https://myanimelist.net/anime/199/Sen_to_Chihiro_no_Kamikakushi",
-        "status": "completed",
-        "image": "https://cdn.myanimelist.net/r/192x272/images/anime/6/79597.webp?s=c4c202aabe122887a67494f47979ac92",
-        "type": "Movie"
-    },
-    {
-        "name": "Major S1",
-        "reference": "https://myanimelist.net/anime/627/Major_S1",
-        "status": "onhold",
-        "image": "https://cdn.myanimelist.net/r/192x272/images/anime/13/73973.webp?s=2938c4a821a228b46d7301f04d33cea5",
-        "type": "TV"
-    },
-    {
-        "name": "Kaiji: Ultimate Survivor",
-        "reference": "https://myanimelist.net/anime/3002/Gyakkyou_Burai_Kaiji__Ultimate_Survivor",
-        "status": "dropped",
-        "image": "https://cdn.myanimelist.net/r/192x272/images/anime/12/80032.webp?s=edd22e4a813ef89f61ec8f28158736c9",
         "type": "TV"
     },
     {
@@ -182,6 +84,13 @@
         "type": "TV"
     },
     {
+        "name": "Death Note",
+        "reference": "https://myanimelist.net/anime/1535/Death_Note",
+        "status": "plantowatch",
+        "image": "https://cdn.myanimelist.net/r/192x272/images/anime/9/9453.webp?s=3fd1567443005f1d5d6b17fb57da0f0b",
+        "type": "TV"
+    },
+    {
         "name": "Demon Slayer: Kimetsu no Yaiba - The Movie: Mugen Train",
         "reference": "https://myanimelist.net/anime/40456/Kimetsu_no_Yaiba_Movie__Mugen_Ressha-hen",
         "status": "plantowatch",
@@ -193,6 +102,13 @@
         "reference": "https://myanimelist.net/anime/48549/Dr_Stone__New_World",
         "status": "plantowatch",
         "image": "https://cdn.myanimelist.net/r/192x272/images/anime/1316/136268.webp?s=02bae8a58447118a945daf507115bddc",
+        "type": "TV"
+    },
+    {
+        "name": "Dr. Stone: Stone Wars",
+        "reference": "https://myanimelist.net/anime/40852/Dr_Stone__Stone_Wars",
+        "status": "plantowatch",
+        "image": "https://cdn.myanimelist.net/r/192x272/images/anime/1711/110614.webp?s=4eb3d1724a3c016c584916ea83c00427",
         "type": "TV"
     },
     {
@@ -294,6 +210,13 @@
         "type": "TV"
     },
     {
+        "name": "KonoSuba: God's Blessing on This Wonderful World!",
+        "reference": "https://myanimelist.net/anime/30831/Kono_Subarashii_Sekai_ni_Shukufuku_wo",
+        "status": "plantowatch",
+        "image": "https://cdn.myanimelist.net/r/192x272/images/anime/8/77831.webp?s=2ddd4caf4e774ab7f75c511efe6434ba",
+        "type": "TV"
+    },
+    {
         "name": "Kuma Kuma Kuma Bear",
         "reference": "https://myanimelist.net/anime/40974/Kuma_Kuma_Kuma_Bear",
         "status": "plantowatch",
@@ -336,6 +259,13 @@
         "type": "TV"
     },
     {
+        "name": "Miss Kobayashi's Dragon Maid",
+        "reference": "https://myanimelist.net/anime/33206/Kobayashi-san_Chi_no_Maid_Dragon",
+        "status": "plantowatch",
+        "image": "https://cdn.myanimelist.net/r/192x272/images/anime/5/85434.webp?s=b1a4fbef8bb1d2fe60068ca550a4f739",
+        "type": "TV"
+    },
+    {
         "name": "Mob Psycho 100",
         "reference": "https://myanimelist.net/anime/32182/Mob_Psycho_100",
         "status": "plantowatch",
@@ -371,6 +301,13 @@
         "type": "TV"
     },
     {
+        "name": "No Game, No Life",
+        "reference": "https://myanimelist.net/anime/19815/No_Game_No_Life",
+        "status": "plantowatch",
+        "image": "https://cdn.myanimelist.net/r/192x272/images/anime/1074/111944.webp?s=7fb42be821490307863943a6ef9574f0",
+        "type": "TV"
+    },
+    {
         "name": "One Punch Man",
         "reference": "https://myanimelist.net/anime/30276/One_Punch_Man",
         "status": "plantowatch",
@@ -383,6 +320,13 @@
         "status": "plantowatch",
         "image": "https://cdn.myanimelist.net/r/192x272/images/anime/3/73178.webp?s=4b4a74169cc95d79ae263d63da87dec7",
         "type": "TV"
+    },
+    {
+        "name": "Perfect Blue",
+        "reference": "https://myanimelist.net/anime/437/Perfect_Blue",
+        "status": "plantowatch",
+        "image": "https://cdn.myanimelist.net/r/192x272/images/anime/1254/134212.webp?s=8f559b7a157bca9923a4b79c1d7ae7e3",
+        "type": "Movie"
     },
     {
         "name": "Princess Mononoke",
@@ -481,6 +425,13 @@
         "status": "plantowatch",
         "image": "https://cdn.myanimelist.net/r/192x272/images/anime/1795/95088.webp?s=ef6a8f39e9c495159e8e1906088000f9",
         "type": "TV"
+    },
+    {
+        "name": "Violet Evergarden: The Movie",
+        "reference": "https://myanimelist.net/anime/37987/Violet_Evergarden_Movie",
+        "status": "plantowatch",
+        "image": "https://cdn.myanimelist.net/r/192x272/images/anime/1825/110716.webp?s=35443db41ef0f435f8894cce354bcac5",
+        "type": "Movie"
     },
     {
         "name": "Wotakoi: Love is Hard for Otaku",

@@ -35,9 +35,17 @@ def general_embed_from_dict(data: dict, driver: WebDriver) -> discord.Embed:  # 
 def make_general_embeds(key: str) -> list[discord.Embed]: # Take a list from the json and create the general embeds
 
     #TODO: Make this into a generator so that we can get 10 everytime!
+    json_map = {'1': 'watchsama/cogs/mal/JSON/anime_watching_data.json',
+                '2': 'watchsama/cogs/mal/JSON/anime_complete_data.json',
+                '3': 'watchsama/cogs/mal/JSON/anime_hold_data.json',
+                '4': 'watchsama/cogs/mal/JSON/anime_dropped_data.json',
+                '6': 'watchsama/cogs/mal/JSON/anime_watching_data.json'
+    }
+    map_key = str(key)
+    cache_json = json_map[map_key]
 
     driver: WebDriver = SeleniumWrapper.MALSeleniumWrapper.get_WebDriver()    
-    with open('watchsama/cogs/mal/JSON/anime_data.json', 'r') as openfile:
+    with open(cache_json, 'r') as openfile:
         anime_json = json.load(openfile)
     anime_list: list[dict] = anime_json[key]
     embeds =[]

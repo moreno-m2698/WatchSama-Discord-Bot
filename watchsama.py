@@ -40,6 +40,9 @@ async def on_ready() -> None:
     #TODO: find a way to cache the range so u dont wanna die
 
     print(bot.guilds)
+
+    #TODO: find another way to figure out if there is already stuff in the cache
+    
     check_file = os.stat('watchsama/cogs/mal/JSON/anime_data.json').st_size
     if check_file == 0 or check_file == 2:
         watchsama.cogs.mal.API.MALSelenium.cache_anime_meta()

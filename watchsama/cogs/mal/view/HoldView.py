@@ -1,10 +1,9 @@
-from typing import Optional, Union
+
 import discord
 from discord.emoji import Emoji
 from discord.enums import ButtonStyle
 from discord.ext import commands
-from discord.partial_emoji import PartialEmoji
-from discord.types.components import ButtonComponent as ButtonComponentPayload
+
 from discord.ui import View, Button
 import random
 
@@ -16,8 +15,8 @@ class HoldView(MALView):
 
 
 class UnholdButton(discord.ui.Button):
-    def __init__(self, *, style: ButtonStyle = ButtonStyle.secondary, label: str | None = None, disabled: bool = False, custom_id: str | None = None, url: str | None = None, emoji: str | Emoji | PartialEmoji | None = None, row: int | None = None):
-        super().__init__(style=style, label=label, disabled=disabled, custom_id=custom_id, url=url, emoji=emoji, row=row)
+    def __init__(self):
+        super().__init__()
 
     async def callback():
         pass

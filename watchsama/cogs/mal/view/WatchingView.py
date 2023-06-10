@@ -6,7 +6,7 @@ from discord.partial_emoji import PartialEmoji
 from discord.ui import View, Button
 import random
 
-from view.MALView import MALView
+from watchsama.cogs.mal.view.MALView import MALView
 class WatchingView(MALView):
     def __init__(self, *, timeout: float | None = 180):
         super().__init__(timeout=timeout)
