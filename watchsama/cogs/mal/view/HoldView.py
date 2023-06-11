@@ -7,6 +7,7 @@ from discord.partial_emoji import PartialEmoji
 from discord.ui import Button
 from selenium.webdriver.remote.webdriver import WebDriver
 
+
 from .MALView import MALView
 from watchsama.cogs.mal.API.MALSelenium import MALSeleniumWrapper
 from watchsama.config import mal_user, mal_password
@@ -25,17 +26,19 @@ class UnholdButton(discord.ui.Button):
           
     async def callback(self, interaction: discord.Interaction):
         v: HoldView = self.watching_view
+        m = MALSeleniumWrapper
         self.disabled=True
         await interaction.response.edit_message(content="This is a test", view = v)
-        driver: WebDriver = MALSeleniumWrapper.get_WebDriver()
-        MALSeleniumWrapper.account_Login(driver=driver,username = mal_user(), password=mal_password())
+        driver: WebDriver = m.get_WebDriver()
+        m.account_Login(driver=driver,username = mal_user(), password=mal_password())
 
         #Not sure if i should use this or go the followup webhook route
 
-        MALSeleniumWrapper.get_MAL_Anime_List(username = mal_user(), driver=driver, status = '3')
+        m.get_MAL_Anime_List(username = mal_user(), driver=driver, status = '3')
         await interaction.edit_original_response(content="Successful connect", view = v)
-        
+        m.edit_Anime_Status(driver=driver, embed_index=v.embed_index, status=0)
         driver.close()
+
 
         #See about having a waiting embed while this is occuring
 
