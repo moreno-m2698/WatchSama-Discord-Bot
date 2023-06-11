@@ -9,6 +9,7 @@ from .view.WatchingView import WatchingView
 from .view.MALView import MALView
 from .API.MALSelenium import cache_anime_meta
 from .API.WatchsamaEmbed import make_general_embeds
+from .view.HoldView import HoldView
 
 #TODO: Access different lists using different jsons by adjusting url path
 # Currently Watching: ?status=1 ,Completed =2, On Hold =3, Dropped =4, Plan To Watch =5
@@ -46,7 +47,7 @@ class MALCog(commands.Cog):
     @commands.command()
     async def hold(self, ctx: commands.Context) -> discord.Message:
         embeds = make_general_embeds(3)
-        view = MALView()
+        view = HoldView()
         message: discord.Message = ctx.send(content = 'Here are the series that you have on hold.', embed=embeds[0], view = view)
         view.message_awareness(message)
         view.embeds_awareness(embeds)

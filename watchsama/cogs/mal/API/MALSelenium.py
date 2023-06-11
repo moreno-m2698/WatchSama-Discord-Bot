@@ -42,8 +42,9 @@ def cache_anime_meta() -> None:
         '2': 'watchsama/cogs/mal/JSON/anime_complete_data.json',
         '3': 'watchsama/cogs/mal/JSON/anime_hold_data.json',
         '4': 'watchsama/cogs/mal/JSON/anime_dropped_data.json',
-        '6': 'watchsama/cogs/mal/JSON/anime_watching_data.json'
+        '6': 'watchsama/cogs/mal/JSON/anime_planned_data.json'
         }
+    
     for key in json_status_map:
         if key == '1':
             get_to_anime_list(driver=driver, status=key)
@@ -76,8 +77,8 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         return driver
     
     @staticmethod
-    def account_Login(driver: WebDriver, url: str, username: str, password: str) -> None: #Only call if we need to adjust something
-        driver.get(url)
+    def account_Login(driver: WebDriver, username: str, password: str) -> None: #Only call if we need to adjust something
+        driver.get('https://myanimelist.net/login.php?from=%2F&')
         login_element: WebElement = driver.find_element(By.ID, 'loginUserName')
         password_element: WebElement = driver.find_element(By.ID, 'login-password')
         login_button: WebElement = driver.find_element(By.CLASS_NAME, "btn-recaptcha-submit")
@@ -85,7 +86,6 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         password_element.send_keys(password)
         login_button.click()
         time.sleep(1)
-        driver.get(f'https://myanimelist.net/animelist/{username}')
 
     #===============================================================================
 
@@ -141,6 +141,11 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         result = list(map(int,result))
         return result
     
+    def press_Edit_Button(element: WebElement):
+        button_div: WebElement =  element.find_element(By.CLASS_NAME, 'add-edit-more')
+        button_a_tag: WebElement =  button_div.find_element(By.TAG_NAME, 'a')
+        button_a_tag.click()
+    
     #---------------------------------------------------------------------------------------------
     
     @staticmethod
@@ -156,17 +161,11 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         result: list[dict] = [m.create_Currently_Watching_Dict(username, element) for element in raw_data]
         return result
     
-    @staticmethod
-    def getRandomizerRange(data: list[dict]) -> range: 
-        initial: int = 0
-        final: int = len(data) - 1
-        for i in range(0, len(data)):
-            if data[i].status == 'plantowatch':
-                initial = i 
-                break
-            i += 1
-        result: list = [initial, final]
-        return result
+    def edit_Anime_Status(driver: WebDriver, index: int) -> None:
+        m = MALSeleniumWrapper
+        raw_data: list[WebElement] = m.get_WebElements(driver)
+        element: WebElement = raw_data[index]
+        pass
     
     def create_Base_Entry_Dict(username: str, element: WebElement) -> dict:
         m = MALSeleniumWrapper

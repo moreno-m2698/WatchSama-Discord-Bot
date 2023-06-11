@@ -1,9 +1,9 @@
 import discord
 from discord.emoji import Emoji
 from discord.enums import ButtonStyle
-from discord.ext import commands
+
 from discord.partial_emoji import PartialEmoji
-from discord.ui import View, Button
+from discord.ui import Button
 import random
 
 from watchsama.cogs.mal.view.MALView import MALView
@@ -25,6 +25,6 @@ class ReRollButton(discord.ui.Button):
     async def callback(self, interaction: discord.Interaction):
         new_index: int = random.randint(self.watching_view.range[0], self.watching_view.range[1])
         self.watching_view.embed_index = new_index
-        # self.disabled = True
+        self.disabled = True
         await interaction.response.edit_message(content="embed swap",embed = self.watching_view.embeds[self.watching_view.embed_index], view=self.watching_view)
         
