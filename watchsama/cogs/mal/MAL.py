@@ -57,7 +57,9 @@ class MALCog(commands.Cog):
 
     @commands.command()
     async def refresh(self, ctx: commands.Context) -> discord.Message: #Allows user to refresh embed list if there was a manual updte to MAL after startup
-        cache_anime_meta()
+        keys = ['1', '2', '3', '4', '6']
+        for key in keys:
+            cache_anime_meta(key)
         await ctx.send("Anime List has been updated")
 
     @commands.command()

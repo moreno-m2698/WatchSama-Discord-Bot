@@ -29,9 +29,9 @@ def get_to_anime_list(driver:WebDriver, status:int): #This only gets us to the p
     wrapper=MALSeleniumWrapper
     wrapper.get_MAL_Anime_List(username=watchsama.config.mal_user(), driver=driver, status=status)
 
-    #TODO: REFACTOR THIS
 
-def cache_anime_meta() -> None:
+#TODO: MAKE THIS INTO A STATIC METHOD THAT PASSES IN A DRIVER
+def cache_anime_meta(key: str) -> None:
     
     #TODO break up the json
     username=watchsama.config.mal_user()
@@ -46,17 +46,17 @@ def cache_anime_meta() -> None:
         '6': 'watchsama/cogs/mal/JSON/anime_planned_data.json'
         }
     
-    for key in json_status_map:
-        if key == '1':
-            get_to_anime_list(driver=driver, status=key)
-            data_dict = wrapper.get_Extended_Data(username=username, driver=driver)
-        else:
-            get_to_anime_list(driver=driver, status=key)
-            data_dict = wrapper.get_Data(username=username,driver=driver)
-        
-        embeds_json = json.dumps(data_dict, indent=4)
-        with open(json_status_map[key], "w") as outfile:
-            outfile.write(embeds_json)
+   
+    if key == '1':
+        get_to_anime_list(driver=driver, status=key)
+        data_dict = wrapper.get_Extended_Data(username=username, driver=driver)
+    else:
+        get_to_anime_list(driver=driver, status=key)
+        data_dict = wrapper.get_Data(username=username,driver=driver)
+    
+    embeds_json = json.dumps(data_dict, indent=4)
+    with open(json_status_map[key], "w") as outfile:
+        outfile.write(embeds_json)
 
     driver.close()
 

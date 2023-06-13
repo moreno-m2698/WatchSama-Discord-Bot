@@ -9,7 +9,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 
 from .MALView import MALView
-from watchsama.cogs.mal.API.MALSelenium import MALSeleniumWrapper
+from watchsama.cogs.mal.API.MALSelenium import MALSeleniumWrapper, cache_anime_meta
 from watchsama.config import mal_user, mal_password
 
 class HoldView(MALView):
@@ -27,8 +27,9 @@ class UnholdButton(discord.ui.Button):
     async def callback(self, interaction: discord.Interaction):
         self.disabled=True
         v: HoldView = self.watching_view
-        hold: str = '3'
-        watching: int = 0
+        hold_status: str = '3'
+        watching_status: str = '1'
+        watching_select_index: int = 0
         m = MALSeleniumWrapper
         await interaction.response.edit_message(content="This is a test", view = v)
         driver: WebDriver = m.get_WebDriver()
@@ -36,16 +37,20 @@ class UnholdButton(discord.ui.Button):
 
         #Not sure if i should use this or go the followup webhook route
 
-        m.get_MAL_Anime_List(username = mal_user(), driver=driver, status = hold)
-        m.edit_Anime_Status(driver=driver, embed_index=v.embed_index, status = watching)
+        m.get_MAL_Anime_List(username = mal_user(), driver=driver, status = hold_status)
+        m.edit_Anime_Status(driver=driver, embed_index=v.embed_index, status = watching_select_index)
         v.embeds.pop(v.embed_index)
+        cache_anime_meta(hold_status)
+        cache_anime_meta(watching_status)
+        print('ran cache')
+
 
         await interaction.edit_original_response(content="Button located", view =v)
 
         #Button is located, implement press once we have finished task
 
         driver.close()
-        print(v.embeds)
+
 
         #See about having a waiting embed while this is occuring
 
