@@ -46,12 +46,13 @@ class MALCog(commands.Cog):
 
     @commands.command()
     async def hold(self, ctx: commands.Context) -> discord.Message:
-        embeds = make_general_embeds(3)
+        embeds: list[discord.Embed] = make_general_embeds(3)
+        embed_index: int = 0
         view = HoldView()
-        message: discord.Message = ctx.send(content = 'Here are the series that you have on hold.', embed=embeds[0], view = view)
+        message: discord.Message = ctx.send(content = 'Here are the series that you have on hold.', embed=embeds[embed_index], view = view)
         view.message_awareness(message)
         view.embeds_awareness(embeds)
-        view.embed_index_awareness(0)
+        view.embed_index_awareness(embed_index)
         await message
 
     @commands.command()

@@ -167,16 +167,15 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         raw_data: list[WebElement] = m.get_WebElements(driver)
         element: WebElement = raw_data[embed_index]
         m.press_Edit_Button(element)
-        time.sleep(3)
-
-        #Might be a separate window/frame?
         driver.switch_to.frame(driver.find_element(By.ID, "fancybox-frame"))
         status_select  = Select(driver.find_element(By.NAME, 'add_anime[status]'))
         status_select.select_by_index(status)
-        time.sleep(5)
+        driver.find_element(By.CLASS_NAME, 'main_submit')
 
+        print('button located')
+        #TODO: press button later
+        time.sleep(5)
         
-        print('button pressed')
 
     
     def create_Base_Entry_Dict(username: str, element: WebElement) -> dict:

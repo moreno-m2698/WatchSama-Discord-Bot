@@ -25,20 +25,27 @@ class UnholdButton(discord.ui.Button):
         self.watching_view = watching_view
           
     async def callback(self, interaction: discord.Interaction):
-        v: HoldView = self.watching_view
-        m = MALSeleniumWrapper
         self.disabled=True
+        v: HoldView = self.watching_view
+        hold: str = '3'
+        watching: int = 0
+        m = MALSeleniumWrapper
         await interaction.response.edit_message(content="This is a test", view = v)
         driver: WebDriver = m.get_WebDriver()
         m.account_Login(driver=driver,username = mal_user(), password=mal_password())
 
         #Not sure if i should use this or go the followup webhook route
 
-        m.get_MAL_Anime_List(username = mal_user(), driver=driver, status = '3')
-        await interaction.edit_original_response(content="Successful connect", view = v)
-        m.edit_Anime_Status(driver=driver, embed_index=v.embed_index, status=0)
-        driver.close()
+        m.get_MAL_Anime_List(username = mal_user(), driver=driver, status = hold)
+        m.edit_Anime_Status(driver=driver, embed_index=v.embed_index, status = watching)
+        v.embeds.pop(v.embed_index)
 
+        await interaction.edit_original_response(content="Button located", view =v)
+
+        #Button is located, implement press once we have finished task
+
+        driver.close()
+        print(v.embeds)
 
         #See about having a waiting embed while this is occuring
 
