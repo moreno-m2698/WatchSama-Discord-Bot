@@ -52,7 +52,7 @@ class MALCog(commands.Cog):
         embeds: list[discord.Embed]
 
     @commands.command()
-    async def refresh(self, ctx: commands.Context) -> discord.Message: #Allows user to refresh embed list if there was a manual updte to MAL after startup
+    async def refresh(self, ctx: commands.Context) -> discord.Message: #Allows user to refresh embed list if there was a manual update to MAL after startup
         keys = ['1', '2', '3', '4', '6']
         for key in keys:
             cache_anime_meta(key)
@@ -61,7 +61,7 @@ class MALCog(commands.Cog):
     @commands.command()
     async def test(self, ctx: commands.Context) -> discord.Message:
         key = 'Planning'
-        #if too many embeds might now work |10|
+        #if too many embeds might not work |10|
         embeds = make_general_embeds(key)
         rand = random.randint(0, len(embeds)-1)
         test=embeds[rand]
