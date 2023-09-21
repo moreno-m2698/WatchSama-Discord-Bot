@@ -183,6 +183,17 @@ class MAL_Manager():
         result = [initial, final]
         result = list(map(int,result))
         return result
+    
+    @staticmethod
+    def get_Description(driver: WebDriver, entry_url: str) -> str: #This uses the webdriver to connect and get the url
+
+        ''' This method navigates a webdriver to the url an anime entries information page and returns its description'''
+        
+        driver.get(entry_url)
+        table_element: WebElement = driver.find_element(By.TAG_NAME, 'table')
+        p_tag: WebElement = table_element.find_element(By.TAG_NAME, 'p')
+        result = p_tag.text
+        return result
 
     @staticmethod
     def press_Entry_Edit_Button(element: WebElement):
@@ -245,90 +256,6 @@ def cache_anime_meta(key: str) -> None:
 
 class MALSeleniumWrapper():  
 
-    @staticmethod
-    def get_WebDriver(isTesting = False) -> WebDriver:
-        if not isTesting:
-            options = ChromeOptions()
-            options.headless=True
-            driver = webdriver.Chrome(options=options)
-        else:
-            driver = webdriver.Chrome()
-        return driver
-    
-    @staticmethod
-    #TODO: Take in int so that we can perform this based on watchtype
-
-    def get_MAL_Anime_List(username: str, driver: WebDriver, status: int) -> WebDriver:
-        driver.get(f'https://myanimelist.net/animelist/{username}?status={status}')
-        return driver
-    
-    @staticmethod
-    def account_Login(driver: WebDriver, username: str, password: str) -> None: #Only call if we need to adjust something
-        driver.get('https://myanimelist.net/login.php?from=%2F&')
-        login_element: WebElement = driver.find_element(By.ID, 'loginUserName')
-        password_element: WebElement = driver.find_element(By.ID, 'login-password')
-        login_button: WebElement = driver.find_element(By.CLASS_NAME, "btn-recaptcha-submit")
-        login_element.send_keys(username)
-        password_element.send_keys(password)
-        login_button.click()
-        time.sleep(1)
-
-    #===============================================================================
-
-    @staticmethod
-    def get_WebElements(driver: WebDriver) -> list:
-        anime_list = driver.find_elements(By.CLASS_NAME, 'list-item')
-        return anime_list
-
-    @staticmethod
-    def get_Title(element: WebElement) -> str:
-        raw_title: WebElement = element.find_element(By.CLASS_NAME, 'title')
-        title: str = raw_title.find_element(By.TAG_NAME, 'a').text
-        return title
-    
-    @staticmethod
-    def get_Status(element: WebElement) -> str:
-        status_element: WebElement = element.find_element(By.CLASS_NAME, 'status')
-        raw_classes: str = status_element.get_attribute('class')
-        class_list: list[str] = list(raw_classes.split(" "))
-        status: str = class_list[2]
-        return status
-    
-    @staticmethod
-    def get_Image(element: WebElement) -> str:
-        raw_image: WebElement = element.find_element(By.CLASS_NAME, 'image')
-        image: str = raw_image.find_element(By.TAG_NAME, 'img').get_attribute('src')
-        return image
-    
-    @staticmethod
-    def get_Entry_URL(element:WebElement) -> str:
-        raw_title: WebElement = element.find_element(By.CLASS_NAME, 'title')
-        a_tag:WebElement = raw_title.find_element(By.TAG_NAME, 'a')
-        result: str = a_tag.get_attribute('href')
-        return result
-    
-    @staticmethod
-    def get_Media_Type(element: WebElement) -> str:
-        type_class: WebElement = element.find_element(By.CLASS_NAME, 'type')
-        result: str = type_class.text
-        return result
-    
-    @staticmethod
-    def get_Progress(element: WebElement) -> list: #Only use this method when calling watch on currently watching
-        progress_class: WebElement = element.find_element(By.CLASS_NAME, 'progress')
-        elements: list[WebElement] =  progress_class.find_elements(By.TAG_NAME, 'span')
-        initial_text: WebElement = elements[0].find_element(By.TAG_NAME, 'a').text
-        initial: str = '0' if initial_text == '-' else initial_text
-        final: str = elements[1].text
-        result = [initial, final]
-        result = list(map(int,result))
-        return result
-    
-    @staticmethod
-    def press_Edit_Button(element: WebElement):
-        button_div: WebElement =  element.find_element(By.CLASS_NAME, 'add-edit-more')
-        button_a_tag: WebElement =  button_div.find_element(By.TAG_NAME, 'a')
-        button_a_tag.click()
     
     @staticmethod
     def get_Data(driver:WebDriver, username: str) -> list[dict]:
