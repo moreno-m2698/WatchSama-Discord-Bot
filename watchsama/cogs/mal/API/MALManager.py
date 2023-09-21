@@ -64,7 +64,7 @@ class MAL_Manager():
         driver.get(single_list_url)
     
     @staticmethod
-    def user_Account_Login(driver: WebDriver, username: str, password: str) -> None:
+    def selenium_Account_Login(driver: WebDriver, username: str, password: str) -> None:
         
         ''' This method will log the user stored in .env to enable the WebDriver to update any account information and be 
             redirected to MAL's main page
