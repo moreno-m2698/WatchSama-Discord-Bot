@@ -27,7 +27,6 @@ class MAL_Manager():
         Parameters:
         -------------
         isTesting:
-            boolean is used in testing to bring up a phyical browser to observer the order of operations
 
         Return:
         -------------
@@ -45,7 +44,7 @@ class MAL_Manager():
         return driver
     
     @staticmethod
-    def get_MAL_Anime_List(username: str, driver: WebDriver, status: int) -> WebDriver:
+    def get_MAL_Anime_List(username: str, driver: WebDriver, status: int) -> None:
 
         '''This method redirects us to called user's list.
 
@@ -54,22 +53,42 @@ class MAL_Manager():
         Parameters:
 
         username :class: `str`
-            The name of the user whos account we are observing.
         driver :class: `WebDriver`
-            The preexisting webdriver which we are using to navigate mal.
+            The preexisting webdriver which we are using to navigate MAL.
         status :class: `int`
             An interger that correlates with one of MAL's list query params.
         
-        Return: 
-        
-        driver :class: `WebDriver`
-            This is the inputted driver after redirecting it to the desired URI
-
         '''
 
         single_list_url = f'https://myanimelist.net/animelist/{username}?status={status}'
         driver.get(single_list_url)
-        return driver
+    
+    @staticmethod
+    def user_Account_Login(driver: WebDriver, username: str, password: str) -> None:
+        
+        ''' This method will log the user stored in .env to enable the WebDriver to update any account information and be 
+            redirected to MAL's main page
+
+            Note: This should be used sparingly and that the user should then be logged out once all information is up to date.
+
+        Parameters:
+
+        driver :class: `WebDriver`
+            A preexisting webdriver which we are using to navigate MAL.
+        username :class: `str`
+        password :class: `str`
+
+        '''
+
+        login_url = 'https://myanimelist.net/login.php?from=%2F&'
+        driver.get(login_url)
+        login_element: WebElement = driver.find_element(By.ID, 'loginUserName')
+        password_element: WebElement = driver.find_element(By.ID, 'login-password')
+        login_button: WebElement = driver.find_element(By.CLASS_NAME, "btn-recaptcha-submit")
+        login_element.send_keys(username)
+        password_element.send_keys(password)
+        login_button.click()
+        time.sleep(1) #This wait may not be necessary but it allows the webpage to load up all its assets
 
     
 
