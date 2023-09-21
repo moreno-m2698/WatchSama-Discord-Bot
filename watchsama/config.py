@@ -24,7 +24,7 @@ class App_Config():
             result = int(guild_Id)
             return result
         
-        except ValueError:
+        except TypeError:
             print("Guild ID cannot resolve to int")
         
         except: 
