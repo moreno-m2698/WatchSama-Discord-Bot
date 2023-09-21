@@ -41,12 +41,15 @@ class MAL_Manager():
             driver = webdriver.Chrome(options=options)
         else:
             driver = webdriver.Chrome()
+        print(f"WebDriver: {driver} has been created.")
         return driver
     
     @staticmethod
     def close_WebDriver(driver: WebDriver) -> None:
         ''' This method closes the webdriver'''
+        
         driver.close()
+        print(f"WebDriver: {driver} has been successfully closed")
         
     @staticmethod
     def get_MAL_Anime_List(username: str, driver: WebDriver, status: int) -> None:
