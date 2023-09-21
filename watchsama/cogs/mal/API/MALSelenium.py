@@ -65,11 +65,13 @@ def cache_anime_meta(key: str) -> None:
 class MALSeleniumWrapper(): #This class acts as a "namespace"  
 
     @staticmethod
-    def get_WebDriver() -> WebDriver:
-        # options = ChromeOptions()
-        # options.headless=True
-        # driver = webdriver.Chrome(options=options)
-        driver = webdriver.Chrome()
+    def get_WebDriver(isTesting = False) -> WebDriver:
+        if isTesting:
+            options = ChromeOptions()
+            options.headless=True
+            driver = webdriver.Chrome(options=options)
+        else:
+            driver = webdriver.Chrome()
         return driver
     
     @staticmethod
