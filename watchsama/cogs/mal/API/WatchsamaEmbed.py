@@ -10,7 +10,8 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver import ChromeOptions
 
-import watchsama.cogs.mal.API.MALSelenium as SeleniumWrapper
+
+import watchsama.cogs.mal.API.MALManager as SeleniumWrapper
 
 
 def get_Description(driver: WebDriver, url: str) -> str: #This uses the webdriver to connect and get the url
