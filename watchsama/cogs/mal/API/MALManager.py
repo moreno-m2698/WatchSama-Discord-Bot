@@ -91,6 +91,32 @@ class MAL_Manager():
         time.sleep(1) #This wait may not be necessary but it allows the webpage to load up all its assets
 
     
+    @staticmethod
+    def get_List_WebElements(driver: WebDriver) -> list:
+
+        ''' This method returns a list of Selenium WebElements for the list items in an anime list
+            
+            Note: This method can only be used if the WebDriver is on a profile animelist URI
+
+        Parameters:
+
+            driver :class: `WebDriver`
+                A preexisting webdriver which is observing a URL of the form `myanimelist.net/animelist/{profile}`
+        
+        Return:
+        
+            anime_Web_Elements :class: list[`WebElement`]
+                A list of WebElements that correspond to differnt MAL entries
+    
+            
+        '''
+        anime_Web_Elements = driver.find_elements(By.CLASS_NAME, 'list-item')
+        return anime_Web_Elements
+
+
+
+
+
 
 
 
