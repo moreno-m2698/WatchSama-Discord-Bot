@@ -1,11 +1,29 @@
 from dotenv import dotenv_values
 
-def bot_token() -> str:
-    return dotenv_values(".env")['BOT_TOKEN'] #file path has to be in reference to the one using it
+class App_Config():
 
-def mal_user() -> str:
-    return dotenv_values(".env")['MAL_USERNAME']
+    @staticmethod
+    def bot_token() -> str:
+        return dotenv_values(".env")['BOT_TOKEN'] #file path has to be in reference to the one using it
 
-def mal_password() -> str:
-    return dotenv_values(".env")['MAL_PASSWORD']
+    @staticmethod
+    def mal_user() -> str:
+        return dotenv_values(".env")['MAL_USERNAME']
 
+    @staticmethod
+    def mal_password() -> str:
+        return dotenv_values(".env")['MAL_PASSWORD']
+
+    @staticmethod
+    def my_guild() -> int:
+        
+        guild_Id = dotenv_values(".env")["MY_GUILD"]
+        try:
+            result = int(guild_Id)
+            return result
+        
+        except ValueError:
+            print("Guild ID cannot resolve to int")
+        
+        except: 
+            print("Something else went wrong")
