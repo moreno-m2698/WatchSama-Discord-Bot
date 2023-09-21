@@ -123,8 +123,26 @@ class MAL_Manager():
         title: str = title_a_tag.text
         return title
 
+    @staticmethod
+    def get_Item_Status(element: WebElement) -> str:
 
+        ''' This method retrieves the current watch status of an entry'''
 
+        status_element: WebElement = element.find_element(By.CLASS_NAME, 'status')
+        raw_classes: str = status_element.get_attribute('class')
+        class_list: list[str] = list(raw_classes.split(" "))
+        status: str = class_list[2]
+        return status
+
+    @staticmethod
+    def get_Image(element: WebElement) -> str:
+
+        ''' This method retrieves the image source of an entry'''
+
+        raw_image: WebElement = element.find_element(By.CLASS_NAME, 'image')
+        element_img_tag: WebElement = raw_image.find_element(By.TAG_NAME, 'img')
+        image_src: str = element_img_tag.get_attribute('src')
+        return image_src
 
 
 
