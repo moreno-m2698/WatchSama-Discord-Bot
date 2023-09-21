@@ -143,9 +143,55 @@ class MAL_Manager():
         element_img_tag: WebElement = raw_image.find_element(By.TAG_NAME, 'img')
         image_src: str = element_img_tag.get_attribute('src')
         return image_src
+    
+    @staticmethod
+    def get_Entry_URL(element:WebElement) -> str:
 
+        ''' Returns the url for an entry that can be used to process more information for the bot'''
 
+        raw_title: WebElement = element.find_element(By.CLASS_NAME, 'title')
+        a_tag:WebElement = raw_title.find_element(By.TAG_NAME, 'a')
+        result: str = a_tag.get_attribute('href')
+        return result
 
+    @staticmethod
+    def get_Media_Type(element: WebElement) -> str:
+
+        ''' Gets the media type of an entry such as `Movie` or `TV` '''
+
+        type_class: WebElement = element.find_element(By.CLASS_NAME, 'type')
+        result: str = type_class.text
+        return result
+
+    @staticmethod
+    def get_Watch_Progress(element: WebElement) -> list:
+
+        ''' This method will return the current watch progress of a show.
+        
+            Note: This can only be called on a show in Currently Watching
+            
+        Return
+            result :class: list[`int`]
+                The result is the start and stop index of show after being converted to int
+        '''
+
+        progress_class: WebElement = element.find_element(By.CLASS_NAME, 'progress')
+        elements: list[WebElement] =  progress_class.find_elements(By.TAG_NAME, 'span')
+        initial_text: WebElement = elements[0].find_element(By.TAG_NAME, 'a').text
+        initial: str = '0' if initial_text == '-' else initial_text
+        final: str = elements[1].text
+        result = [initial, final]
+        result = list(map(int,result))
+        return result
+
+    @staticmethod
+    def press_Entry_Edit_Button(element: WebElement):
+
+        ''' This method finds and clicks on edit button of a webelement anime entry in a list'''
+
+        button_div: WebElement =  element.find_element(By.CLASS_NAME, 'add-edit-more')
+        button_a_tag: WebElement =  button_div.find_element(By.TAG_NAME, 'a')
+        button_a_tag.click()
 
 
 
