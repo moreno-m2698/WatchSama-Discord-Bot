@@ -44,6 +44,11 @@ class MAL_Manager():
         return driver
     
     @staticmethod
+    def close_WebDriver(driver: WebDriver) -> None:
+        ''' This method closes the webdriver'''
+        driver.close()
+        
+    @staticmethod
     def get_MAL_Anime_List(username: str, driver: WebDriver, status: int) -> None:
 
         '''This method redirects us to called user's list.
