@@ -66,7 +66,7 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
 
     @staticmethod
     def get_WebDriver(isTesting = False) -> WebDriver:
-        if isTesting:
+        if not isTesting:
             options = ChromeOptions()
             options.headless=True
             driver = webdriver.Chrome(options=options)
