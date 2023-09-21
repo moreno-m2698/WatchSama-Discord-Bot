@@ -10,14 +10,12 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver import ChromeOptions
 from selenium.webdriver.support.ui import Select
-import discord
-
 
 import watchsama
 
 #-------------------------------------------------------------------------------------------------------------------------------------------
 
-def write_to_anime_list() -> WebDriver: #This allows us to get to the anime list after logging in
+def write_to_anime_list() -> WebDriver: #Returns a driver with write capability
 
     url: str ='https://myanimelist.net/login.php?from=%2F&'
     wrapper = MALSeleniumWrapper
@@ -25,12 +23,13 @@ def write_to_anime_list() -> WebDriver: #This allows us to get to the anime list
     wrapper.account_Login(driver=driver, url=url, username=watchsama.config.mal_user(), password=watchsama.mal_password())
     return driver
 
-def get_to_anime_list(driver:WebDriver, status:int): #This only gets us to the pages that have the anime list
+def get_to_anime_list(driver:WebDriver, status:int): #returns a driver with read-only capability
     wrapper=MALSeleniumWrapper
     wrapper.get_MAL_Anime_List(username=watchsama.config.mal_user(), driver=driver, status=status)
 
 
 #TODO: MAKE THIS INTO A STATIC METHOD THAT PASSES IN A DRIVER
+#ALTERNATIVLY TRY AND MAKE THIS NONBLOCKING
 def cache_anime_meta(key: str) -> None:
     
     #TODO break up the json
@@ -101,7 +100,6 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         title: str = raw_title.find_element(By.TAG_NAME, 'a').text
         return title
     
-    
     @staticmethod
     def get_Status(element: WebElement) -> str:
         status_element: WebElement = element.find_element(By.CLASS_NAME, 'status')
@@ -133,21 +131,18 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
     def get_Progress(element: WebElement) -> list: #Only use this method when calling watch on currently watching
         progress_class: WebElement = element.find_element(By.CLASS_NAME, 'progress')
         elements: list[WebElement] =  progress_class.find_elements(By.TAG_NAME, 'span')
-        initial_element: WebElement = elements[0].find_element(By.TAG_NAME, 'a')
-        initial: str = initial_element.text
-        if initial == '-':
-            initial = '0'
+        initial_text: WebElement = elements[0].find_element(By.TAG_NAME, 'a').text
+        initial: str = '0' if initial_text == '-' else initial_text
         final: str = elements[1].text
         result = [initial, final]
         result = list(map(int,result))
         return result
     
+    @staticmethod
     def press_Edit_Button(element: WebElement):
         button_div: WebElement =  element.find_element(By.CLASS_NAME, 'add-edit-more')
         button_a_tag: WebElement =  button_div.find_element(By.TAG_NAME, 'a')
         button_a_tag.click()
-    
-    #---------------------------------------------------------------------------------------------
     
     @staticmethod
     def get_Data(driver:WebDriver, username: str) -> list[dict]:
@@ -156,12 +151,14 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         result: list[dict] = [m.create_Base_Entry_Dict(username, element) for element in raw_data]
         return result
     
+    @staticmethod
     def get_Extended_Data(driver:WebDriver, username: str) -> list[dict]:
         m = MALSeleniumWrapper
         raw_data: WebElement = m.get_WebElements(driver)
         result: list[dict] = [m.create_Currently_Watching_Dict(username, element) for element in raw_data]
         return result
     
+    @staticmethod
     def edit_Anime_Status(driver: WebDriver, embed_index: int, status: int) -> None:
         m = MALSeleniumWrapper
         raw_data: list[WebElement] = m.get_WebElements(driver)
@@ -175,10 +172,9 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         print('button located')
         #TODO: press button later
         time.sleep(5)
-        
 
-    
-    def create_Base_Entry_Dict(username: str, element: WebElement) -> dict:
+    @staticmethod 
+    def create_Base_Entry_Dict(element: WebElement) -> dict:
         m = MALSeleniumWrapper
         result = {
             'name': m.get_Title(element),
@@ -189,6 +185,7 @@ class MALSeleniumWrapper(): #This class acts as a "namespace"
         }
         return result
     
+    @staticmethod 
     def create_Currently_Watching_Dict(username: str, element: WebElement) -> dict:
         m=MALSeleniumWrapper
         result = m.create_Base_Entry_Dict(username, element)

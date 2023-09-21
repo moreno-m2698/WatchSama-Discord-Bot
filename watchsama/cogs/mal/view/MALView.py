@@ -13,7 +13,6 @@ class MALView(View):
     def __init__(self, *, timeout: float | None = 180):
         super().__init__(timeout=timeout)
         
-        
     def message_awareness(self, message) -> None:
         self.message = message
     
@@ -25,6 +24,7 @@ class MALView(View):
 
     def embed_range_awareness(self, range: list[int]) -> None:
         self.range = range
+
 
 
 #TODO: work on these buttons

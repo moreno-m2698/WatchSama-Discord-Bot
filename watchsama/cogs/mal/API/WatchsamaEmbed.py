@@ -35,7 +35,6 @@ def general_embed_from_dict(data: dict, driver: WebDriver) -> discord.Embed:  # 
 def make_general_embeds(key: str) -> list[discord.Embed]: # Take a list from the json and create the general embeds
 
     #See if a generator will work so that we can load only a few at a time
-    
 
     json_map: dict = {
         '2': 'watchsama/cogs/mal/JSON/anime_complete_data.json',
@@ -51,12 +50,12 @@ def make_general_embeds(key: str) -> list[discord.Embed]: # Take a list from the
     with open(cache_json, 'r') as openfile:
         anime_json = json.load(openfile)
     anime_list: list[dict] = anime_json
-    embeds =[]
-    for entry in anime_list:
-        embed = general_embed_from_dict(data=entry, driver=driver)
-        embeds.append(embed)
+
+    embeds: list[discord.Embed] = [general_embed_from_dict(data=entry, driver=driver) for entry in anime_list]
+
     driver.close()
     return embeds
+
 
 # What if we make them in batches and then load more when the user gets to that point?
 

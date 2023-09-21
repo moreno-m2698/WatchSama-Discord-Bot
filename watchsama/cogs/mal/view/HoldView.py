@@ -25,12 +25,14 @@ class UnholdButton(discord.ui.Button):
         self.watching_view = watching_view
           
     async def callback(self, interaction: discord.Interaction):
+
         self.disabled=True
         v: HoldView = self.watching_view
         hold_status: str = '3'
         watching_status: str = '1'
         watching_select_index: int = 0
         m = MALSeleniumWrapper
+        
         await interaction.response.edit_message(content="This is a test", view = v)
         driver: WebDriver = m.get_WebDriver()
         m.account_Login(driver=driver,username = mal_user(), password=mal_password())

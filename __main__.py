@@ -5,15 +5,6 @@ import discord
 from discord.ext import commands
 
 import watchsama
-
-
-
-#TODO: Choicing random anime feature
-#Add timeout
-#Add description to first <br>
-
-#Needs to have a single track reroll thats tracked with date
-#Should I synthesize or make from a cached list
 #----------------------------------------------------------------------------------
 print('''
      __      __         __         .__                _________                      
@@ -32,25 +23,28 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
 async def on_ready() -> None:
+
+    bot_commands = watchsama.bot_commands.__init__
+    bot_cogs = watchsama.cogs.mal.MAL.cog_setup
+    allowed_cache_size_check = [0, 2]
+    testing_output = bot.get_guild(1103400705995329566).text_channels[0].send
+
     print("Connected to discord API")
+    
+    bot_commands(bot)
+    await bot_cogs(bot)
 
-    watchsama.cogs.cmds.__init__(bot)
-    await watchsama.cogs.mal.MAL.cog_setup(bot)
-
-
-    #TODO: find another way to figure out if there is already stuff in the cache
-
-    check_file = os.stat('watchsama/cogs/mal/JSON/anime_complete_data.json').st_size
-    if check_file == 0 or check_file == 2:
+    #TODO: Research alternatives for caching
+    cache_file = os.stat('watchsama/cogs/mal/JSON/anime_complete_data.json').st_size
+    if cache_file == allowed_cache_size_check[0] or cache_file == allowed_cache_size_check[1]:
         watchsama.cogs.mal.API.MALSelenium.cache_anime_meta()
         print("Creating embeds json")
-    await bot.get_guild(1103400705995329566).text_channels[0].send('Watch-sama is running') #Find out how to get her to talk properly
+
+    await testing_output('Watch-sama is running') #Find out how to get her to talk properly
 
     await bot.change_presence(status = discord.Status.online)
 
-
 try:
-
     bot.run(watchsama.config.bot_token())
 
 except Exception as e:
@@ -58,7 +52,4 @@ except Exception as e:
     time.sleep(5)
     exit(1)
 
-#TODO: find a way to implement into the file structure instead of the bot connection
-# def get_emotes(): 
-#     emojis = bot.get_guild(1103400705995329566).emojis
-#     return emojis
+
