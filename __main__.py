@@ -19,6 +19,7 @@ print('''
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
+app_config = watchsama.config.App_Config
 
 
 @bot.event
@@ -27,7 +28,7 @@ async def on_ready() -> None:
     bot_commands = watchsama.bot_commands.__init__
     bot_cogs = watchsama.cogs.mal.MAL.cog_setup
     allowed_cache_size_check = [0, 2]
-    testing_output = bot.get_guild(1103400705995329566).text_channels[0].send
+    testing_output = bot.get_guild(app_config.my_guild()).text_channels[0].send
 
     print("Connected to discord API")
     
@@ -45,7 +46,7 @@ async def on_ready() -> None:
     await bot.change_presence(status = discord.Status.online)
 
 try:
-    bot.run(watchsama.config.bot_token())
+    bot.run(app_config.bot_token())
 
 except Exception as e:
     print(f"[/!\\] Error: Failed to connect to DiscordAPI. Please check your bot token!\n{e}")
