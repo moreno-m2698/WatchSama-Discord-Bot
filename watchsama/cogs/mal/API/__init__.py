@@ -1,1 +1,2 @@
-from .MALManager import *
+from .MALController import *
+from .MALManager import * 
