@@ -20,20 +20,23 @@ def write_to_anime_list() -> WebDriver: #Returns a driver with write capability
     url: str ='https://myanimelist.net/login.php?from=%2F&'
     wrapper = MALSeleniumWrapper
     driver: WebDriver = wrapper.get_WebDriver()
-    wrapper.account_Login(driver=driver, url=url, username=watchsama.config.mal_user(), password=watchsama.mal_password())
+    app_config = watchsama.config.App_Config
+    wrapper.account_Login(driver=driver, url=url, username=app_config.mal_user(), password=app_config.mal_password())
     return driver
 
 def get_to_anime_list(driver:WebDriver, status:int): #returns a driver with read-only capability
     wrapper=MALSeleniumWrapper
-    wrapper.get_MAL_Anime_List(username=watchsama.config.mal_user(), driver=driver, status=status)
+    app_config = watchsama.config.App_Config
+    wrapper.get_MAL_Anime_List(username=app_config.mal_user(), driver=driver, status=status)
 
 
 #TODO: MAKE THIS INTO A STATIC METHOD THAT PASSES IN A DRIVER
 #ALTERNATIVLY TRY AND MAKE THIS NONBLOCKING
 def cache_anime_meta(key: str) -> None:
+    app_config = watchsama.config.App_Config
     
     #TODO break up the json
-    username=watchsama.config.mal_user()
+    username=app_config.mal_user()
     wrapper = MALSeleniumWrapper
     driver: WebDriver = wrapper.get_WebDriver()
 
