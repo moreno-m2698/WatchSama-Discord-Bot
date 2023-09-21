@@ -10,7 +10,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from .MALView import MALView
 from watchsama.cogs.mal.API.MALSelenium import MALSeleniumWrapper, cache_anime_meta
-from watchsama.config import mal_user, mal_password
+from watchsama.config import App_Config
 
 class HoldView(MALView):
     def __init__(self, *, timeout: float | None = 180):
@@ -34,12 +34,12 @@ class UnholdButton(discord.ui.Button):
         m = MALSeleniumWrapper
         
         await interaction.response.edit_message(content="This is a test", view = v)
-        driver: WebDriver = m.get_WebDriver()
-        m.account_Login(driver=driver,username = mal_user(), password=mal_password())
+        driver: WebDriver = m.get_WebDriver(isTesting=True)
+        m.account_Login(driver=driver,username = App_Config.mal_user(), password=App_Config.mal_password())
 
         #Not sure if i should use this or go the followup webhook route
 
-        m.get_MAL_Anime_List(username = mal_user(), driver=driver, status = hold_status)
+        m.get_MAL_Anime_List(username = App_Config.mal_user(), driver=driver, status = hold_status)
         m.edit_Anime_Status(driver=driver, embed_index=v.embed_index, status = watching_select_index)
         v.embeds.pop(v.embed_index)
         cache_anime_meta(hold_status)

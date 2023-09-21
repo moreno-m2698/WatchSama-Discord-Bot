@@ -15,8 +15,6 @@ class MALCog(commands.Cog):
     
     def __init__(self, bot):
         self.bot = bot
-
-    #TODO: convert watchsama command into cog
     
     @commands.command()
     async def watch(self, ctx: commands.Context) -> discord.Message: #Look into making this a singleton instance so that it cant be cheesed

@@ -17,6 +17,47 @@ import watchsama
 
 
 
+class MAL_Manager():
+    
+    @staticmethod
+    def create_WebDriver(isTesting = False) -> WebDriver:
+
+        """This method creates a Chrome WebDriver which will be used to navigate around MAL
+
+        Parameters:
+        -------------
+        isTesting:
+            boolean is used in testing to bring up a phyical browser to observer the order of operations
+
+        Return:
+        -------------
+        :class: WebDriver
+            Returns a basic Chrome WebDriver
+        
+        """
+
+        if not isTesting:
+            options = ChromeOptions()
+            options.headless=True
+            driver = webdriver.Chrome(options=options)
+        else:
+            driver = webdriver.Chrome()
+        return driver
+    
+    @staticmethod
+    def get_MAL_Anime_List(username: str, driver: WebDriver, status: int) -> WebDriver:
+
+        '''This method takes in a driver and redirects it to one of the lists'''
+
+        single_list_url = f'https://myanimelist.net/animelist/{username}?status={status}'
+        driver.get(single_list_url)
+        return driver
+
+    
+
+
+
+
 
 def write_to_anime_list() -> WebDriver: #Returns a driver with write capability
 

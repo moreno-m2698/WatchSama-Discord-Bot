@@ -2,6 +2,8 @@ from dotenv import dotenv_values
 
 class App_Config():
 
+   
+
     @staticmethod
     def bot_token() -> str:
         return dotenv_values(".env")['BOT_TOKEN'] #file path has to be in reference to the one using it
@@ -27,3 +29,4 @@ class App_Config():
         
         except: 
             print("Something else went wrong")
+
