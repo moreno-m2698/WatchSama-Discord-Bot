@@ -47,7 +47,25 @@ class MAL_Manager():
     @staticmethod
     def get_MAL_Anime_List(username: str, driver: WebDriver, status: int) -> WebDriver:
 
-        '''This method takes in a driver and redirects it to one of the lists'''
+        '''This method redirects us to called user's list.
+
+            Note: This does not log a user in for updates.
+        
+        Parameters:
+
+        username :class: `str`
+            The name of the user whos account we are observing.
+        driver :class: `WebDriver`
+            The preexisting webdriver which we are using to navigate mal.
+        status :class: `int`
+            An interger that correlates with one of MAL's list query params.
+        
+        Return: 
+        
+        driver :class: `WebDriver`
+            This is the inputted driver after redirecting it to the desired URI
+
+        '''
 
         single_list_url = f'https://myanimelist.net/animelist/{username}?status={status}'
         driver.get(single_list_url)
