@@ -14,16 +14,9 @@ from selenium.webdriver import ChromeOptions
 import watchsama.cogs.mal.API.MALManager as SeleniumWrapper
 
 
-def get_Description(driver: WebDriver, url: str) -> str: #This uses the webdriver to connect and get the url
-    driver.get(url)
-    table_element = driver.find_element(By.TAG_NAME, 'table')
-    p_tag = table_element.find_element(By.TAG_NAME, 'p')
-    result = p_tag.text
-    
-    return result
 
 def general_embed_from_dict(data: dict, driver: WebDriver) -> discord.Embed:  # This converts the data from the JSON into a general Embed foir discord 
-    description:str = get_Description(driver=driver, url=data['reference'])
+    description:str = SeleniumWrapper.MAL_Manager.get_Description(driver=driver, url=data['reference'])
     embed = discord.Embed(title=data['name'],
                           url=data['reference'],
                           description=description,
