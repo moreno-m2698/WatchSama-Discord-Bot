@@ -112,6 +112,16 @@ class MAL_Manager():
         '''
         anime_Web_Elements = driver.find_elements(By.CLASS_NAME, 'list-item')
         return anime_Web_Elements
+    
+    @staticmethod
+    def get_Item_Title(element: WebElement) -> str:
+
+        ''' This method retrieves the title from a WebElement'''
+
+        raw_title: WebElement = element.find_element(By.CLASS_NAME, 'title')
+        title_a_tag: WebElement = raw_title.find_element(By.TAG_NAME, 'a')
+        title: str = title_a_tag.text
+        return title
 
 
 
