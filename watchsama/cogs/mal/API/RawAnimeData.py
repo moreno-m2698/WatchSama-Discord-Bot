@@ -36,14 +36,13 @@ class SeleniumRawData(RawAnimeData):
             return []
         
         s = SeleniumRawData
+        ctrlr = MAL_Controller
 
         driver = webdriver.Chrome()
         print("A WebDriver has been initiated")
 
-        ctrlr = MAL_Controller
         ctrlr.go_To_Anime_List(driver = driver, username = username, status=status)
         anime_list_web_elements: list[WebDriver] = ctrlr.get_Anime_List_WebElements(driver = driver)
-
         result = []
 
         for element in anime_list_web_elements:
@@ -61,12 +60,9 @@ class SeleniumRawData(RawAnimeData):
             }
             result.append(anime_dict)
 
-        print(result[0])
-
         driver.close()
         print("WebDriver is now closed")
-
-        result = []
+        print(result)
         return result 
     
     def _get_Title(element: WebElement) -> str:
