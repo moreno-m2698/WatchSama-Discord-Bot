@@ -7,7 +7,6 @@ from discord.ext import commands
 
 from .view.MALView import MALView
 
-from .view.HoldView import HoldView
 from .API.RawAnimeData import RawAnimeData
 
 class MALCog(commands.Cog):

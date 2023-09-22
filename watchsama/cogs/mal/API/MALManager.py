@@ -1,4 +1,4 @@
-from MALController import MAL_Controller 
+# from MALController import MAL_Controller
 
 class MAL_Manager():
 
@@ -17,15 +17,15 @@ class MAL_Manager():
     def webdriver(self, driver):
         self._webdriver = driver
 
-    def create_Anime_WebElement_List(self, *args):
+    # def create_Anime_WebElement_List(self, *args):
 
-        ''' This method will create a list of webElements for further processing'''
+    #     ''' This method will create a list of webElements for further processing'''
 
-        if self._webdriver == None:
-            raise TypeError("WebDriver was not initialized")
+    #     if self._webdriver == None:
+    #         raise TypeError("WebDriver was not initialized")
 
-        ctrlr = MAL_Controller
-        result = ctrlr.get_List_WebElements()
+    #     ctrlr = MAL_Controller
+    #     result = ctrlr.get_List_WebElements()
 
     def create_Anime_Dict(self, web_element):
 
