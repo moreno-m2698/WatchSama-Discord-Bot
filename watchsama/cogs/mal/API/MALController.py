@@ -78,17 +78,6 @@ class MAL_Controller():
         '''
         anime_Web_Elements = driver.find_elements(By.CLASS_NAME, 'list-item')
         return anime_Web_Elements
-    
-    @staticmethod
-    def get_Item_Status(element: WebElement) -> str:
-
-        ''' This method retrieves the current watch status of an entry'''
-
-        status_element: WebElement = element.find_element(By.CLASS_NAME, 'status')
-        raw_classes: str = status_element.get_attribute('class')
-        class_list: list[str] = list(raw_classes.split(" "))
-        status: str = class_list[2]
-        return status
 
     @staticmethod
     def get_Image(element: WebElement) -> str:
