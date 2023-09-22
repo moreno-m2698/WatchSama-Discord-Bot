@@ -78,16 +78,6 @@ class MAL_Controller():
         '''
         anime_Web_Elements = driver.find_elements(By.CLASS_NAME, 'list-item')
         return anime_Web_Elements
-
-    @staticmethod
-    def get_Image(element: WebElement) -> str:
-
-        ''' This method retrieves the image source of an entry'''
-
-        raw_image: WebElement = element.find_element(By.CLASS_NAME, 'image')
-        element_img_tag: WebElement = raw_image.find_element(By.TAG_NAME, 'img')
-        image_src: str = element_img_tag.get_attribute('src')
-        return image_src
     
     @staticmethod
     def get_Entry_URL(element:WebElement) -> str:
