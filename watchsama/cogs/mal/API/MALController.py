@@ -80,15 +80,6 @@ class MAL_Controller():
         return anime_Web_Elements
 
     @staticmethod
-    def get_Media_Type(element: WebElement) -> str:
-
-        ''' Gets the media type of an entry such as `Movie` or `TV` '''
-
-        type_class: WebElement = element.find_element(By.CLASS_NAME, 'type')
-        result: str = type_class.text
-        return result
-
-    @staticmethod
     def get_Watch_Progress(element: WebElement) -> list:
 
         ''' This method will return the current watch progress of a show.

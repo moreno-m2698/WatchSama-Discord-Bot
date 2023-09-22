@@ -88,3 +88,11 @@ class SeleniumRawData(RawAnimeData):
         url: str = a_tag.get_attribute('href')
         return url
     
+    def _get_Media(element: WebElement) -> str:
+
+        ''' Gets the media type of an entry such as `Movie` or `TV` '''
+
+        type_class: WebElement = element.find_element(By.CLASS_NAME, 'type')
+        media: str = type_class.text
+        return media
+    
