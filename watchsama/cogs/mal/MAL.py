@@ -7,7 +7,7 @@ from discord.ext import commands
 
 from .view.MALView import MALView
 
-from .API.RawAnimeData import RawAnimeData
+from .API.RawAnimeData import SeleniumRawData
 
 class MALCog(commands.Cog):
 
@@ -27,6 +27,10 @@ class MALCog(commands.Cog):
     async def complete(self, ctx: commands.Context) -> discord.Message:
 
         ''' This command will give the user back a discord message that shows what shows they have completed'''
+
+
+        rawData = SeleniumRawData.create_Anime_List()
+
         message: discord.Message = ctx.send(content = "Testing this function")
         await message
    

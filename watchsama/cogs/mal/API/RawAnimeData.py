@@ -10,6 +10,8 @@ from selenium.webdriver import ChromeOptions
 from selenium.webdriver.support.ui import Select
 
 
+from watchsama.cogs.mal.API.MALController import MAL_Controller
+
 
 class RawAnimeData(ABC):
     
@@ -24,18 +26,28 @@ class SeleniumRawData(RawAnimeData):
     def __init__(self):
         pass
 
-
-    def create_Anime_List(self, username) -> list[dict]:
+    def create_Anime_List(username='gabslittlepogger', status = 0) -> list[dict]:
 
         ''' This method creates a webDriver and then navigates it around for the data'''
 
-        driver = webdriver.Chrome()
+        allowed_status = [0, 1, 2, 3, 4, 6]
 
+        if status not in allowed_status:
+            return []
+
+        driver = webdriver.Chrome()
+        print("A WebDriver has been initiated")
+
+        ctrlr = MAL_Controller
+        ctrlr.get_Anime_List(driver = driver, username = username)
 
         time.sleep(5)
 
 
         driver.close()
+        print("WebDriver is now closed")
 
         result = []
-        return result
+        return result 
+    
+    

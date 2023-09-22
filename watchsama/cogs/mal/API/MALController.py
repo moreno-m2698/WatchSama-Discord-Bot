@@ -18,38 +18,14 @@ import watchsama
 class MAL_Controller():
 
     ''' This namespace manages Selenium's WebDriver to interact with MAL '''
-    
+
     @staticmethod
-    def create_WebDriver(isTesting = False) -> WebDriver:
+    def get_Anime_List(driver: WebDriver, username: str, status = 0) -> None:
 
-        """This method creates a Chrome WebDriver which will be used to navigate around MAL
+        ''' This method will by default will access the entire anime list unless specified'''
 
-        Parameters:
-        -------------
-        isTesting:
-
-        Return:
-        -------------
-        :class: WebDriver
-            Returns a basic Chrome WebDriver
-        
-        """
-
-        if not isTesting:
-            options = ChromeOptions()
-            options.headless=True
-            driver = webdriver.Chrome(options=options)
-        else:
-            driver = webdriver.Chrome()
-        print(f"WebDriver: {driver} has been created.")
-        return driver
-    
-    @staticmethod
-    def close_WebDriver(driver: WebDriver) -> None:
-        ''' This method closes the webdriver'''
-        
-        driver.close()
-        print(f"WebDriver: {driver} has been successfully closed")
+        list_url = f'https://myanimelist.net/animelist/{username}?status={status}'
+        driver.get(list_url)
         
 
     
