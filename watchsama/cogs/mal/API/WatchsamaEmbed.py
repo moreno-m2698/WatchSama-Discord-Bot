@@ -16,7 +16,7 @@ import watchsama.cogs.mal.API.MALController as SeleniumWrapper
 
 
 def general_embed_from_dict(data: dict, driver: WebDriver) -> discord.Embed:  # This converts the data from the JSON into a general Embed foir discord 
-    description:str = SeleniumWrapper.MAL_Manager.get_Description(driver=driver, url=data['reference'])
+    description:str = SeleniumWrapper.MAL_Controller.get_Description(driver=driver, url=data['reference'])
     embed = discord.Embed(title=data['name'],
                           url=data['reference'],
                           description=description,
@@ -40,7 +40,7 @@ def make_general_embeds(key: str) -> list[discord.Embed]: # Take a list from the
     map_key = str(key)
     cache_json: str = json_map[map_key]
 
-    driver: WebDriver = SeleniumWrapper.MALSeleniumWrapper.get_WebDriver()    
+    driver: WebDriver = SeleniumWrapper.MAL_Controller.create_WebDriver()    
     with open(cache_json, 'r') as openfile:
         anime_json = json.load(openfile)
     anime_list: list[dict] = anime_json

@@ -36,10 +36,10 @@ async def on_ready() -> None:
     await bot_cogs(bot)
 
     #TODO: Research alternatives for caching
-    cache_file = os.stat('watchsama/cogs/mal/JSON/anime_complete_data.json').st_size
-    if cache_file == allowed_cache_size_check[0] or cache_file == allowed_cache_size_check[1]:
-        watchsama.cogs.mal.API.MALSelenium.cache_anime_meta()
-        print("Creating embeds json")
+    # cache_file = os.stat('watchsama/cogs/mal/JSON/anime_complete_data.json').st_size
+    # if cache_file == allowed_cache_size_check[0] or cache_file == allowed_cache_size_check[1]:
+    #     watchsama.cogs.mal.API.MALSelenium.cache_anime_meta()
+    #     print("Creating embeds json")
 
     await testing_output('Watch-sama is running') #Find out how to get her to talk properly
 

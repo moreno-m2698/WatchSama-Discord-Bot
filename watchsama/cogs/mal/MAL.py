@@ -9,11 +9,13 @@ from .view.MALView import MALView
 from .API.MALController import cache_anime_meta
 from .API.WatchsamaEmbed import make_general_embeds
 from .view.HoldView import HoldView
-
+from .API.RawAnimeData import RawAnimeData
 
 class MALCog(commands.Cog):
 
     ''' Honestly makes more sense for this cog to validate whether or not there is anything in cache'''
+
+    #NOTE: currently We shall assume no caching and will pull the data from MAL
     
     def __init__(self, bot):
         self.bot = bot
@@ -25,8 +27,11 @@ class MALCog(commands.Cog):
 
     @commands.command()
     async def complete(self, ctx: commands.Context) -> discord.Message:
+
         ''' This command will give the user back a discord message that shows what shows they have completed'''
-        pass
+        message: discord.Message = ctx.send(content = "Testing this function")
+        await message
+   
 
     @commands.command()
     async def refresh(self, ctx: commands.Context) -> discord.Message:

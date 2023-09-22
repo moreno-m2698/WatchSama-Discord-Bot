@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+import time
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -19,5 +20,22 @@ class RawAnimeData(ABC):
 
 
 class SeleniumRawData(RawAnimeData): 
-    def create_Anime_List() -> list[dict]:
+
+    def __init__(self):
         pass
+
+
+    def create_Anime_List(self, username) -> list[dict]:
+
+        ''' This method creates a webDriver and then navigates it around for the data'''
+
+        driver = webdriver.Chrome()
+
+
+        time.sleep(5)
+
+
+        driver.close()
+
+        result = []
+        return result
