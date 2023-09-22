@@ -12,10 +12,12 @@ from selenium.webdriver.support.ui import Select
 
 
 class Anime_List():
+
+    #NOTE: I think that realistically it should only take in userinfo and a webdriverr and then spit out dictionary info for anime
     ''' This class will brings us to a MAL Lists to process web information'''
     
-    @staticmethod
-    def get_MAL_Anime_List(username: str, driver: WebDriver, status: int) -> None:
+
+    def _get_MAL_Anime_List(username: str, driver: WebDriver, status: int) -> None:
 
         '''This method redirects us to called user's list.
 

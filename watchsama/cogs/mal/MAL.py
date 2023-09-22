@@ -12,27 +12,34 @@ from .view.HoldView import HoldView
 
 
 class MALCog(commands.Cog):
+
+    ''' Honestly makes more sense for this cog to validate whether or not there is anything in cache'''
     
     def __init__(self, bot):
         self.bot = bot
-    
+
     @commands.command()
-    async def watch(self, ctx: commands.Context) -> discord.Message: #Look into making this a singleton instance so that it cant be cheesed
-    #TODO: persist datetime into text
+    async def watching(self, ctx: commands.Context) -> discord.Message:
+        ''' This command will give the user back a discord message that shows some of the shows they are watching'''
+        pass
 
-        with open('watchsama/cogs/mal/JSON/anime_embed.json', 'r') as openfile:
-            cache_json = json.load(openfile)
+    @commands.command()
+    async def complete(self, ctx: commands.Context) -> discord.Message:
+        ''' This command will give the user back a discord message that shows what shows they have completed'''
+        pass
 
-        anime_range = cache_json["plan_to_watch_range"]
-        embeds = make_general_embeds(2)
-        view = WatchingView()
-        index = random.randint(anime_range[0], anime_range[1])
-        message: discord.Message = ctx.send(embed=embeds[index], view = view)
-        view.message_awareness(message)
-        view.embeds_awareness(embeds)
-        view.embed_index_awareness(index)
-        view.embed_range_awareness(anime_range)
-        await message
+    @commands.command()
+    async def refresh(self, ctx: commands.Context) -> discord.Message:
+        ''' This command will give refresh the anime that is currently being cached if caching is implemented and the give user feedback'''
+        pass
+
+    @commands.command()
+    async def search(self, ctx: commands.Context) -> discord.Message:
+        ''' This command will allow user to make a search on MAL and return a list of 5 shows that meet the description'''
+        pass
+
+    
+
 
     @commands.command()
     async def hold(self, ctx: commands.Context) -> discord.Message:
@@ -45,9 +52,6 @@ class MALCog(commands.Cog):
         view.embed_index_awareness(embed_index)
         await message
 
-    @commands.command()
-    async def watching(self, ctx: commands.Context):
-        embeds: list[discord.Embed]
 
     @commands.command()
     async def refresh(self, ctx: commands.Context) -> discord.Message: #Allows user to refresh embed list if there was a manual update to MAL after startup
@@ -55,19 +59,6 @@ class MALCog(commands.Cog):
         for key in keys:
             cache_anime_meta(key)
         await ctx.send("Anime List has been updated")
-
-    @commands.command()
-    async def test(self, ctx: commands.Context) -> discord.Message:
-        key = 'Planning'
-        #if too many embeds might not work |10|
-        embeds = make_general_embeds(key)
-        rand = random.randint(0, len(embeds)-1)
-        test=embeds[rand]
-        await ctx.send(content=f"Here is an example embed of {key}", embed=test)
-        
-        #TODO: talk to marcel about if im being blocked or if something else is happening that is killing this feature
-        #Maybe leave the embed creation to the view to slow down load
-        #Has to do with blocking?
 
 
 async def cog_setup(bot: commands.Bot):
