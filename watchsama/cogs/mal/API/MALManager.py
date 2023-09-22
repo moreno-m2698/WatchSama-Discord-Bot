@@ -6,9 +6,9 @@ class MAL_Manager():
         to integrate with Discord.py
     '''
 
-    def __init__(self):
-        self._webdriver = None
-
+    #TODO: Create singleton for webdriver
+    def __init__(self, webdriver):
+        self._webdriver = webdriver
     @property
     def webdriver(self):
         return self._webdriver
