@@ -40,7 +40,7 @@ class SeleniumRawData(RawAnimeData):
 
         ctrlr = MAL_Controller
         ctrlr.go_To_Anime_List(driver = driver, username = username)
-        anime_list_web_elements = ctrlr.get_Anime_List_WebElements(driver = driver)
+        anime_list_web_elements: list[WebDriver] = ctrlr.get_Anime_List_WebElements(driver = driver)
 
         print(anime_list_web_elements[0])
 
@@ -51,5 +51,12 @@ class SeleniumRawData(RawAnimeData):
         result = []
         return result 
     
+    def _get_Title(element: WebElement) -> str:
+        ''' This method retrieves the title from a WebElement'''
+
+        raw_title: WebElement = element.find_element(By.CLASS_NAME, 'title')
+        title_a_tag: WebElement = raw_title.find_element(By.TAG_NAME, 'a')
+        title: str = title_a_tag.text
+        return title
     
     
