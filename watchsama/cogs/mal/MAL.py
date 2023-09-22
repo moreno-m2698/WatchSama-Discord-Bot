@@ -4,7 +4,7 @@ import random
 import discord
 from discord.ext import commands
 
-from .view.WatchingView import WatchingView
+
 from .view.MALView import MALView
 from .API.MALController import cache_anime_meta
 from .API.WatchsamaEmbed import make_general_embeds
