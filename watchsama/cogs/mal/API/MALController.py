@@ -20,7 +20,7 @@ class MAL_Controller():
     ''' This namespace manages Selenium's WebDriver to interact with MAL '''
 
     @staticmethod
-    def get_Anime_List(driver: WebDriver, username: str, status = 0) -> None:
+    def go_To_Anime_List(driver: WebDriver, username: str, status = 0) -> None:
 
         ''' This method will by default will access the entire anime list unless specified'''
 
@@ -58,7 +58,7 @@ class MAL_Controller():
 
     
     @staticmethod
-    def get_List_WebElements(driver: WebDriver) -> list:
+    def get_Anime_List_WebElements(driver: WebDriver) -> list:
 
         ''' This method returns a list of Selenium WebElements for the list items in an anime list
             

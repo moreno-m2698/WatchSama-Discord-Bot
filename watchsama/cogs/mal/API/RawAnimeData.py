@@ -39,9 +39,10 @@ class SeleniumRawData(RawAnimeData):
         print("A WebDriver has been initiated")
 
         ctrlr = MAL_Controller
-        ctrlr.get_Anime_List(driver = driver, username = username)
+        ctrlr.go_To_Anime_List(driver = driver, username = username)
+        anime_list_web_elements = ctrlr.get_Anime_List_WebElements(driver = driver)
 
-        time.sleep(5)
+        print(anime_list_web_elements[0])
 
 
         driver.close()
@@ -49,5 +50,6 @@ class SeleniumRawData(RawAnimeData):
 
         result = []
         return result 
+    
     
     
