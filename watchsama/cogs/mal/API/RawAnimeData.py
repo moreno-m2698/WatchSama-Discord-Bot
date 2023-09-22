@@ -62,7 +62,7 @@ class SeleniumRawData(RawAnimeData):
 
         driver.close()
         print("WebDriver is now closed")
-        print(result)
+        
         return result 
     
     def _get_Title(element: WebElement) -> str:

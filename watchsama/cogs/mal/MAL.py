@@ -8,7 +8,7 @@ from discord.ext import commands
 from .view.MALView import MALView
 
 from .API.RawAnimeData import SeleniumRawData
-
+from .API.Embeds import BasicEmbed
 class MALCog(commands.Cog):
 
     ''' Honestly makes more sense for this cog to validate whether or not there is anything in cache'''
@@ -30,8 +30,11 @@ class MALCog(commands.Cog):
 
         status = 2
         rawData = SeleniumRawData.create_Anime_List(status=status)
+        example = rawData[0]
+        embed = BasicEmbed(url = example['reference'],title = example['name'], media = example['type'], status = example['status'], description=None)
+        print(embed)
 
-        message: discord.Message = ctx.send(content = "Testing this function")
+        message: discord.Message = ctx.send(content = f"Testing this function:", embed=embed)
         await message
    
 
