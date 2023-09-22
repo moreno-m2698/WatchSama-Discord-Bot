@@ -1,7 +1,5 @@
-from dataclasses import dataclass
-import time
-import json
 
+import time
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -17,7 +15,7 @@ import watchsama
 
 
 
-class MAL_Manager():
+class MAL_Controller():
 
     ''' This namespace manages Selenium's WebDriver to interact with MAL '''
     

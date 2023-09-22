@@ -11,7 +11,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver import ChromeOptions
 
 
-import watchsama.cogs.mal.API.MALManager as SeleniumWrapper
+import watchsama.cogs.mal.API.MALController as SeleniumWrapper
 
 
 
