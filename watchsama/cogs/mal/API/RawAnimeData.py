@@ -34,16 +34,34 @@ class SeleniumRawData(RawAnimeData):
 
         if status not in allowed_status:
             return []
+        
+        s = SeleniumRawData
 
         driver = webdriver.Chrome()
         print("A WebDriver has been initiated")
 
         ctrlr = MAL_Controller
-        ctrlr.go_To_Anime_List(driver = driver, username = username)
+        ctrlr.go_To_Anime_List(driver = driver, username = username, status=status)
         anime_list_web_elements: list[WebDriver] = ctrlr.get_Anime_List_WebElements(driver = driver)
 
-        print(anime_list_web_elements[0])
+        result = []
 
+        for element in anime_list_web_elements:
+            title = s._get_Title(element)
+            url_reference = s._get_Entry_URL(element)
+            status = s._get_Status(element)
+            image_src = s._get_Image_Src(element)
+            media = s._get_Media(element)
+            anime_dict = {
+                "name": title,
+                "reference": url_reference,
+                "status": status,
+                "image": image_src,
+                "type": media
+            }
+            result.append(anime_dict)
+
+        print(result[0])
 
         driver.close()
         print("WebDriver is now closed")

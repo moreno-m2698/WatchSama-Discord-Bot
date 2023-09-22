@@ -78,6 +78,11 @@ class MAL_Controller():
         '''
         anime_Web_Elements = driver.find_elements(By.CLASS_NAME, 'list-item')
         return anime_Web_Elements
+    
+    @staticmethod 
+    def go_To_MAL_Entry(driver:WebDriver, url: str) -> None:
+        driver.get(url)
+
 
     @staticmethod
     def get_Watch_Progress(element: WebElement) -> list:

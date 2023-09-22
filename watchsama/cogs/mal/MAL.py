@@ -28,8 +28,8 @@ class MALCog(commands.Cog):
 
         ''' This command will give the user back a discord message that shows what shows they have completed'''
 
-
-        rawData = SeleniumRawData.create_Anime_List()
+        status = 2
+        rawData = SeleniumRawData.create_Anime_List(status=status)
 
         message: discord.Message = ctx.send(content = "Testing this function")
         await message
