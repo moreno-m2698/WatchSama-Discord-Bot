@@ -70,10 +70,21 @@ class SeleniumRawData(RawAnimeData):
         return status
     
     def _get_Image_Src(element: WebElement) -> str:
-        
+
         ''' This method retrieves the image source of an entry'''
 
         raw_image: WebElement = element.find_element(By.CLASS_NAME, 'image')
         element_img_tag: WebElement = raw_image.find_element(By.TAG_NAME, 'img')
         image_src: str = element_img_tag.get_attribute('src')
         return image_src
+    
+    
+    def _get_Entry_URL(element:WebElement) -> str:
+
+        ''' Returns the url for an entry that can be used to process more information for the bot'''
+
+        raw_title: WebElement = element.find_element(By.CLASS_NAME, 'title')
+        a_tag:WebElement = raw_title.find_element(By.TAG_NAME, 'a')
+        url: str = a_tag.get_attribute('href')
+        return url
+    

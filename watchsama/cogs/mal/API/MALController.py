@@ -78,16 +78,6 @@ class MAL_Controller():
         '''
         anime_Web_Elements = driver.find_elements(By.CLASS_NAME, 'list-item')
         return anime_Web_Elements
-    
-    @staticmethod
-    def get_Entry_URL(element:WebElement) -> str:
-
-        ''' Returns the url for an entry that can be used to process more information for the bot'''
-
-        raw_title: WebElement = element.find_element(By.CLASS_NAME, 'title')
-        a_tag:WebElement = raw_title.find_element(By.TAG_NAME, 'a')
-        result: str = a_tag.get_attribute('href')
-        return result
 
     @staticmethod
     def get_Media_Type(element: WebElement) -> str:
