@@ -31,7 +31,7 @@ class MALCog(commands.Cog):
         status = 2
         rawData = SeleniumRawData.create_Anime_List(status=status)
         example = rawData[0]
-        embed = BasicEmbed(url = example['reference'],title = example['name'], media = example['type'], status = example['status'], description=None)
+        embed = BasicEmbed(url = example['reference'],title = example['name'], media = example['type'], status = example['status'], description=None, image = example['image'])
         print(embed)
 
         message: discord.Message = ctx.send(content = f"Testing this function:", embed=embed)
