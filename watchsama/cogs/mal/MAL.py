@@ -9,6 +9,7 @@ from .view.MALView import MALView
 
 from .API.RawAnimeData import SeleniumRawData
 from .API.Embeds import BasicEmbed
+from .API.ui.ViewBuilder import ViewBuilder
 class MALCog(commands.Cog):
 
     ''' Honestly makes more sense for this cog to validate whether or not there is anything in cache'''
@@ -28,13 +29,16 @@ class MALCog(commands.Cog):
 
         ''' This command will give the user back a discord message that shows what shows they have completed'''
 
-        status = 2
-        rawData = SeleniumRawData.create_Anime_List(status=status)
-        example = rawData[0]
-        embed = BasicEmbed(url = example['reference'],title = example['name'], media = example['media'], status = example['status'], description=None, image = example['image'])
-        print(embed)
+        # status = 2
+        # rawData = SeleniumRawData.create_Anime_List(status=status)
+        # example = rawData[0]
+        # embed = BasicEmbed(url = example['reference'],title = example['name'], media = example['media'], status = example['status'], description=None, image = example['image'])
+        # print(embed)
 
-        message: discord.Message = ctx.send(content = f"Testing this function:", embed=embed)
+        view = ViewBuilder.create_View()
+       
+
+        message: discord.Message = ctx.send(content = f"Testing this function:", view = view)
         await message
    
 
@@ -47,9 +51,6 @@ class MALCog(commands.Cog):
     async def search(self, ctx: commands.Context) -> discord.Message:
         ''' This command will allow user to make a search on MAL and return a list of 5 shows that meet the description'''
         pass
-
-
-
 
 async def cog_setup(bot: commands.Bot):
     await bot.add_cog(MALCog(bot))
