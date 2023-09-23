@@ -3,7 +3,7 @@ from discord import Embed, Colour
 class BasicEmbed(Embed):
     
     def __init__(self, url: str , title: str, description, media, status, image):
-        super().__init__(url = url, title = title, description = description)
+        super().__init__(url = url, title = title, description = description, color=Colour.from_str('#FFB7C5'))
         self._media = media
         self._status = status
         self.set_image(url = image)
