@@ -56,7 +56,7 @@ class SeleniumRawData(RawAnimeData):
                 "reference": url_reference,
                 "status": status,
                 "image": image_src,
-                "type": media
+                "media": media
             }
             result.append(anime_dict)
 
