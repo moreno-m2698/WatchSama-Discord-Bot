@@ -12,9 +12,6 @@ from selenium.webdriver.support.ui import Select
 import watchsama
 
 #-------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
 class MAL_Controller():
 
     ''' This namespace manages Selenium's WebDriver to interact with MAL '''
@@ -78,13 +75,6 @@ class MAL_Controller():
         '''
         anime_Web_Elements = driver.find_elements(By.CLASS_NAME, 'list-item')
         return anime_Web_Elements
-    
-    @staticmethod 
-    def go_To_MAL_Entry(driver:WebDriver, url: str) -> None:
-        driver.get(url)
-
-    
-
 
     @staticmethod
     def get_Watch_Progress(element: WebElement) -> list:
@@ -105,17 +95,6 @@ class MAL_Controller():
         final: str = elements[1].text
         result = [initial, final]
         result = list(map(int,result))
-        return result
-    
-    @staticmethod
-    def get_Description(driver: WebDriver, entry_url: str) -> str: #This uses the webdriver to connect and get the url
-
-        ''' This method navigates a webdriver to the url an anime entries information page and returns its description'''
-        
-        driver.get(entry_url)
-        table_element: WebElement = driver.find_element(By.TAG_NAME, 'table')
-        p_tag: WebElement = table_element.find_element(By.TAG_NAME, 'p')
-        result = p_tag.text
         return result
 
     @staticmethod

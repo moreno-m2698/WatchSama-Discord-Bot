@@ -114,5 +114,10 @@ class SeleniumRawData(RawAnimeData):
     
     @staticmethod
     def get_Description(driver: WebDriver, url) ->str:
-        pass
+        driver.get(url)
+        table_element: WebElement = driver.find_element(By.TAG_NAME, 'table')
+        p_tag: WebElement = table_element.find_element(By.TAG_NAME, 'p')
+        result = p_tag.text
+        return result
+    
     
