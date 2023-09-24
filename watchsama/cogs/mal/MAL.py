@@ -27,6 +27,10 @@ class MALCog(commands.Cog):
 
         ''' This command will give the user back a discord message that shows what shows they have completed'''
 
+        #TODO: WE NEED TO CREATE ALTERNATIVE FOR CACHING
+        # TODO: FOLLOW PROPER OBJECT FACTORY CONVENTION
+
+
         status = 2
         driver = webdriver.Chrome()
         print("A WebDriver has been initiated")
@@ -57,9 +61,9 @@ class MALCog(commands.Cog):
         pass
 
     @commands.command()
-    async def search(self, ctx: commands.Context) -> discord.Message:
+    async def search(self, ctx: commands.Context, *args) -> discord.Message:
         ''' This command will allow user to make a search on MAL and return a list of 5 shows that meet the description'''
-        pass
+        await ctx.send('`{}` arguments: `{}`'.format(len(args), ', '.join(args)))
 
 async def cog_setup(bot: commands.Bot):
     await bot.add_cog(MALCog(bot))
