@@ -84,6 +84,9 @@ class LeftButton(Button):
         new_index = parent.embed_index - 1
         if new_index < 0:
             parent.embed_index = len(embeds) - 1
+        
+        else:
+            parent.embed_index = new_index
 
         await interaction.response.edit_message(content="pressed left button", embed = embeds[parent.embed_index])
 
