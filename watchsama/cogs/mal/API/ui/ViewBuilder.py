@@ -36,17 +36,12 @@ class MALView(View):
     
     def __init__(self, embeds = [], embed_index = 0, data = [], timeout: float | None = 180):
         super().__init__()
-        self._embed_index = embed_index
+
         self._embeds = embeds
         self._data = data
+        self._data_index = 0
 
-    @property
-    def embed_index(self):
-        return self._embed_index
 
-    @embed_index.setter
-    def embed_index(self, embed_index):
-        self._embed_index = embed_index
 
     @property
     def embeds(self):
@@ -55,6 +50,14 @@ class MALView(View):
     @embeds.setter
     def embeds(self, embeds):
         self._embeds = embeds
+    
+    @property
+    def data_index(self):
+        return self._data_index
+    
+    @data_index.setter
+    def data_index(self, data_index):
+        self._data_index = data_index
 
     def embed_generator(self) -> list[Embed]:
 
