@@ -1,5 +1,6 @@
 from discord.ui import View, Button
 from discord import ButtonStyle, Interaction, Embed
+import asyncio
 
 from selenium import webdriver
 
@@ -8,12 +9,12 @@ from watchsama.cogs.mal.API.Embeds import BasicEmbed
 
 class MALView(View):
     
-    def __init__(self, embeds = [], embed_index = 0, data = [], timeout: float | None = 180):
+    def __init__(self, embeds = [], embed_index = 0, data = [], data_index = 0, timeout: float | None = 180):
         super().__init__()
         self._embed_index = embed_index
         self._embeds = embeds
         self._data = data
-        self._data_index = 0
+        self._data_index = data_index
 
     @property
     def embed_index(self):
@@ -64,7 +65,7 @@ class RightButton(Button):
             parent.embed_index = 0
 
 
-        await interaction.response.edit_message(content="pressed right button", embed = embeds[parent.embed_index])
+        await interaction.response.edit_message(embed = embeds[parent.embed_index])
         # Issues is that embed index is on children but we need to point to the adult
     
 
@@ -83,7 +84,7 @@ class LeftButton(Button):
         if parent.embed_index < 0:
             parent.embed_index = len(embeds) - 1
         
-        await interaction.response.edit_message(content="pressed left button", embed = embeds[parent.embed_index])
+        await interaction.response.edit_message(embed = embeds[parent.embed_index])
 
 class LoadButton(Button):
 
@@ -115,28 +116,26 @@ class LoadButton(Button):
 
         driver.close()
         print(f'Driver: {driver} has been closed')
+
         return embeds
 
     async def callback(self, interaction: Interaction):
 
+        await interaction.response.defer()
         parent: MALView = self._parent
-        del parent.embeds
-        new_embeds = self._embed_generator()
-        parent.embeds = new_embeds
-        embeds = parent.embeds
+        embeds = self._embed_generator()
 
-        #Discord interaction is not working for some reason?
-        # Hypothesize that it may hve to do with changing the embeds entirely
-        # Might need to remake a new view each time
+        new_view = MALViewBuilder.create_View(embeds = embeds,data= parent.data, data_index = parent.data_index)
 
-        await interaction.response.edit_message(content="pressed More button", embed = embeds[parent.embed_index])
-
+        #TODO destory old view
+        
+        await interaction.followup.send(content="Loaded more content", view=new_view, embed = embeds[0])
 
 class MALViewBuilder():
 
     @staticmethod
-    def create_View(embed_index = 0, embeds = [], data:list[list] = []) -> MALView:
-        view = MALView(embed_index = embed_index, embeds = embeds, data=data)
+    def create_View(embed_index = 0, embeds = [], data:list[list] = [], data_index = 0) -> MALView:
+        view = MALView(embed_index = embed_index, embeds = embeds, data=data, data_index = data_index)
         right_button = RightButton(parent = view)
         load_button = LoadButton(parent =  view)
         left_button= LeftButton(parent = view)

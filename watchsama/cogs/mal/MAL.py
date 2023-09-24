@@ -33,7 +33,7 @@ class MALCog(commands.Cog):
         # rawData = SeleniumRawData.create_Anime_List(driver = driver, status=status)
         # driver.close()
         # print("WebDriver is now closed")
-        chunker = 3
+        chunker = 2
         rawData = [
             {
                 "name": "Cells at Work!",
@@ -47,6 +47,20 @@ class MALCog(commands.Cog):
                 "reference": "https://myanimelist.net/anime/28223/Death_Parade",
                 "status": "completed",
                 "image": "https://cdn.myanimelist.net/r/192x272/images/anime/5/71553.webp?s=9ff22a629b680f6051e9aceb312e88d6",
+                "media": "TV"
+            },
+            {
+                "name": "Demon Slayer: Kimetsu no Yaiba",
+                "reference": "https://myanimelist.net/anime/38000/Kimetsu_no_Yaiba",
+                "status": "completed",
+                "image": "https://cdn.myanimelist.net/r/192x272/images/anime/1286/99889.webp?s=ebf7111941928e3b31b60bd6bb2e591a",
+                "media": "TV"
+            },
+            {
+                "name": "Dr. Stone",
+                "reference": "https://myanimelist.net/anime/38691/Dr_Stone",
+                "status": "completed",
+                "image": "https://cdn.myanimelist.net/r/192x272/images/anime/1613/102576.webp?s=18ec186ce9b809b0ad99304b8d4bdb1a",
                 "media": "TV"
             }
         ]
@@ -69,7 +83,7 @@ class MALCog(commands.Cog):
     
         driver.close()
         index = 0
-        view = MALViewBuilder.create_View(embed_index=index, embeds = embeds, data = data_for_view)
+        view = MALViewBuilder.create_View(embeds = embeds, data = data_for_view)
        
 
         message: discord.Message = ctx.send(content = f"Testing this function:", view = view, embed = embeds[index])
