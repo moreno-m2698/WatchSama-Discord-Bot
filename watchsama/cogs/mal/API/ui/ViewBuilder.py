@@ -120,15 +120,14 @@ class LoadButton(Button):
         return embeds
 
     async def callback(self, interaction: Interaction):
-
-        await interaction.response.defer()
         parent: MALView = self._parent
+        await interaction.response.defer(thinking=True)
+       
         embeds = self._embed_generator()
+        parent.stop()
 
         new_view = MALViewBuilder.create_View(embeds = embeds,data= parent.data, data_index = parent.data_index)
-
-        #TODO destory old view
-        
+    
         await interaction.followup.send(content="Loaded more content", view=new_view, embed = embeds[0])
 
 class MALViewBuilder():

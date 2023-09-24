@@ -28,48 +28,11 @@ class MALCog(commands.Cog):
         ''' This command will give the user back a discord message that shows what shows they have completed'''
 
         status = 2
-        # driver = webdriver.Chrome()
-        # print("A WebDriver has been initiated")
-        # rawData = SeleniumRawData.create_Anime_List(driver = driver, status=status)
-        # driver.close()
-        # print("WebDriver is now closed")
-        chunker = 2
-        rawData = [
-            {
-                "name": "Cells at Work!",
-                "reference": "https://myanimelist.net/anime/37141/Hataraku_Saibou",
-                "status": "completed",
-                "image": "https://cdn.myanimelist.net/r/192x272/images/anime/1141/117446.webp?s=507f46109160673787d31ab1ca40227d",
-                "media": "TV"
-            },
-            {
-                "name": "Death Parade",
-                "reference": "https://myanimelist.net/anime/28223/Death_Parade",
-                "status": "completed",
-                "image": "https://cdn.myanimelist.net/r/192x272/images/anime/5/71553.webp?s=9ff22a629b680f6051e9aceb312e88d6",
-                "media": "TV"
-            },
-            {
-                "name": "Demon Slayer: Kimetsu no Yaiba",
-                "reference": "https://myanimelist.net/anime/38000/Kimetsu_no_Yaiba",
-                "status": "completed",
-                "image": "https://cdn.myanimelist.net/r/192x272/images/anime/1286/99889.webp?s=ebf7111941928e3b31b60bd6bb2e591a",
-                "media": "TV"
-            },
-            {
-                "name": "Dr. Stone",
-                "reference": "https://myanimelist.net/anime/38691/Dr_Stone",
-                "status": "completed",
-                "image": "https://cdn.myanimelist.net/r/192x272/images/anime/1613/102576.webp?s=18ec186ce9b809b0ad99304b8d4bdb1a",
-                "media": "TV"
-            }
-        ]
-
-        data_for_view = list(SeleniumRawData.list_chunking(rawData, chunker))
-
         driver = webdriver.Chrome()
-
-
+        print("A WebDriver has been initiated")
+        rawData = SeleniumRawData.create_Anime_List(driver = driver, status=status)
+        chunker = 5
+        data_for_view = list(SeleniumRawData.list_chunking(rawData, chunker))
         embeds = []
         for anime in data_for_view[0]:
             url = anime['reference']
@@ -80,12 +43,10 @@ class MALCog(commands.Cog):
             description = SeleniumRawData.get_Description(driver, url)
             embed = BasicEmbed(url = url, title = title, media = media, status = status, description = description, image = image)
             embeds.append(embed)
-    
         driver.close()
+        print("WebDriver is now closed")
         index = 0
         view = MALViewBuilder.create_View(embeds = embeds, data = data_for_view)
-       
-
         message: discord.Message = ctx.send(content = f"Testing this function:", view = view, embed = embeds[index])
         await message
    
