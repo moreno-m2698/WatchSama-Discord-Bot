@@ -8,6 +8,7 @@ from selenium import webdriver
 from .API.RawAnimeData import SeleniumRawData
 from .API.Embeds import BasicEmbed
 from .API.ui.ViewBuilder import MALViewBuilder
+from .API.MALController import MAL_Controller
 class MALCog(commands.Cog):
 
     ''' Honestly makes more sense for this cog to validate whether or not there is anything in cache'''
@@ -63,6 +64,14 @@ class MALCog(commands.Cog):
     @commands.command()
     async def search(self, ctx: commands.Context, *args) -> discord.Message:
         ''' This command will allow user to make a search on MAL and return a list of 5 shows that meet the description'''
+
+        driver = webdriver.Chrome()
+        print("A WebDriver has been initiated")
+        ctrlr = MAL_Controller
+        ctrlr.search_MAL(driver=driver, search = "Hellow how are you")
+        
+        driver.close()
+        print("WebDriver is now closed")
         await ctx.send('`{}` arguments: `{}`'.format(len(args), ', '.join(args)))
 
 async def cog_setup(bot: commands.Bot):

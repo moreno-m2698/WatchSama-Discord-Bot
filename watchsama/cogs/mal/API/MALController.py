@@ -106,3 +106,12 @@ class MAL_Controller():
         button_a_tag: WebElement =  button_div.find_element(By.TAG_NAME, 'a')
         button_a_tag.click()
 
+    @staticmethod
+    def search_MAL(driver: WebDriver, search: str):
+        query = search.replace(' ', '%20')
+        print(query)
+        query_url=f'https://myanimelist.net/anime.php?q={query}&cat=anime'
+        driver.get(query_url)
+        time.sleep(5)
+
+
