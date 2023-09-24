@@ -57,7 +57,7 @@ class MALCog(commands.Cog):
 
 
         embeds = []
-        for anime in chunked_data[0]:
+        for anime in data_for_view[0]:
             url = anime['reference']
             title= anime['name']
             media =  anime['media']

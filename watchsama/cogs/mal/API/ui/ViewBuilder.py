@@ -5,9 +5,10 @@ from selenium import webdriver
 
 class RightButton(Button):
 
-    def __init__(self, embed_index, style = ButtonStyle.primary, label = None, disabled = False, custom_id = 'right-button', url = None, emoji = '▶️', row = None):
+    def __init__(self, embed_index, embeds, parent, style = ButtonStyle.primary, label = None, disabled = False, custom_id = 'right-button', url = None, emoji = '▶️', row = None):
         super().__init__(style=style, label=label, disabled=disabled,custom_id=custom_id,url=url,emoji=emoji,row=row)
         self._embed_index = embed_index
+        self._embeds = embeds
 
     @property
     def embed_index(self):
@@ -15,14 +16,21 @@ class RightButton(Button):
         return self._embed_index
     
     async def callback(self, interaction: Interaction):
-        await interaction.response.edit_message(content="pressed right button")
+
+        self._embed_index += 1
+        if self._embed_index > len(self._embeds) - 1:
+            self._embed_index = 0
+
+        await interaction.response.edit_message(content="pressed right button", embed = self._embeds[self._embed_index])
+        # Issues is that embed index is on children but we need to point to the adult
     
 
 class LeftButton(Button):
 
-    def __init__(self, embed_index, style = ButtonStyle.primary, label = None, disabled = False, custom_id = 'left-button', url = None, emoji = '◀️', row = None):
+    def __init__(self, embed_index, embeds, parent, style = ButtonStyle.primary, label = None, disabled = False, custom_id = 'left-button', url = None, emoji = '◀️', row = None):
         super().__init__(style=style, label=label, disabled=disabled,custom_id=custom_id,url=url,emoji=emoji,row=row)
         self._embed_index = embed_index
+        self._embeds = embeds
 
     @property
     def embed_index(self):
@@ -30,7 +38,12 @@ class LeftButton(Button):
         return self._embed_index
 
     async def callback(self, interaction: Interaction):
-        await interaction.response.edit_message(content="pressed left button")
+        
+        self._embed_index -= 1
+        if self._embed_index < 0:
+            self._embed_index = len(self._embeds) - 1
+
+        await interaction.response.edit_message(content="pressed left button", embed = self._embeds[self._embed_index])
 
 class LoadButton(Button):
     def __init__(self, embed_index, style = ButtonStyle.green, label = 'More', disabled = False, custom_id = 'load-button', url = None, emoji = None, row = None):
@@ -90,10 +103,11 @@ class MALViewBuilder():
     @staticmethod
     def create_View(embed_index = 0, embeds = [], data:list[list] = []) -> MALView:
         view = MALView(embed_index = embed_index, embeds = embeds, data=data)
-        right_button = RightButton(embed_index=0)
+        right_button = RightButton(embed_index=0, embeds = embeds)
         load_button = LoadButton(embed_index=0)
-        left_button= LeftButton(embed_index=0)
+        left_button= LeftButton(embed_index=0, embeds = embeds)
         view.add_item(left_button)
+        view.add_item(load_button)
         view.add_item(right_button)
         return view
     
