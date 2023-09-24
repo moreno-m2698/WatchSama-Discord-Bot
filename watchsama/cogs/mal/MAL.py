@@ -51,8 +51,7 @@ class MALCog(commands.Cog):
             }
         ]
 
-        chunked_data = list(SeleniumRawData.list_chunking(rawData, chunker))
-        print(chunked_data)
+        data_for_view = list(SeleniumRawData.list_chunking(rawData, chunker))
 
         driver = webdriver.Chrome()
 
@@ -70,7 +69,7 @@ class MALCog(commands.Cog):
     
         driver.close()
         index = 0
-        view = MALViewBuilder.create_View(embed_index=index, embeds = embeds, anime_data = chunked_data)
+        view = MALViewBuilder.create_View(embed_index=index, embeds = embeds, data = data_for_view)
        
 
         message: discord.Message = ctx.send(content = f"Testing this function:", view = view, embed = embeds[index])
