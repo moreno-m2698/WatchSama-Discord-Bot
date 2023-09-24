@@ -23,10 +23,8 @@ class RawAnimeData(ABC):
 
 class SeleniumRawData(RawAnimeData): 
 
-    def __init__(self):
-        pass
-
-    def create_Anime_List(username='gabslittlepogger', status = 0) -> list[dict]:
+    @staticmethod
+    def create_Anime_List(driver: WebDriver, username='gabslittlepogger', status = 0) -> list[dict]:
 
         ''' This method creates a webDriver and then navigates it around for the data'''
 
@@ -38,8 +36,6 @@ class SeleniumRawData(RawAnimeData):
         s = SeleniumRawData
         ctrlr = MAL_Controller
 
-        driver = webdriver.Chrome()
-        print("A WebDriver has been initiated")
 
         ctrlr.go_To_Anime_List(driver = driver, username = username, status=status)
         anime_list_web_elements: list[WebDriver] = ctrlr.get_Anime_List_WebElements(driver = driver)
@@ -60,8 +56,7 @@ class SeleniumRawData(RawAnimeData):
             }
             result.append(anime_dict)
 
-        driver.close()
-        print("WebDriver is now closed")
+        
         
         return result 
     
@@ -109,4 +104,15 @@ class SeleniumRawData(RawAnimeData):
         type_class: WebElement = element.find_element(By.CLASS_NAME, 'type')
         media: str = type_class.text
         return media
+    
+    @staticmethod
+    def list_chunking(l:list, n:int) -> list[list]:
+        #TODO: move out of this since this will be a standard
+        #We could also move this into create_Anime_List
+        for i in range(0, len(l), n):
+            yield l[i:i+n]
+    
+    @staticmethod
+    def get_Description(driver: WebDriver, url) ->str:
+        pass
     

@@ -4,9 +4,6 @@ import random
 import discord
 from discord.ext import commands
 
-
-from .view.MALView import MALView
-
 from .API.RawAnimeData import SeleniumRawData
 from .API.Embeds import BasicEmbed
 from .API.ui.ViewBuilder import MALViewBuilder
@@ -30,7 +27,13 @@ class MALCog(commands.Cog):
         ''' This command will give the user back a discord message that shows what shows they have completed'''
 
         status = 2
-        # rawData = SeleniumRawData.create_Anime_List(status=status)
+        # driver = webdriver.Chrome()
+        
+        # print("A WebDriver has been initiated")
+        # rawData = SeleniumRawData.create_Anime_List(driver = driver, status=status)
+        # driver.close()
+        # print("WebDriver is now closed")
+        chunker = 3
         rawData = [
             {
                 "name": "Cells at Work!",
@@ -48,8 +51,11 @@ class MALCog(commands.Cog):
             }
         ]
 
+        chunked_data = list(SeleniumRawData.list_chunking(rawData, chunker))
+        print(chunked_data)
+
         embeds = []
-        for anime in rawData:
+        for anime in chunked_data[0]:
             url = anime['reference']
             print(url)
             title= anime['name']
@@ -61,9 +67,8 @@ class MALCog(commands.Cog):
             embeds.append(embed)
     
 
-        index = 1
-        view = MALViewBuilder.create_View(embed_index=index)
-        print(view.embed_index)
+        index = 0
+        view = MALViewBuilder.create_View(embed_index=index, embeds = embeds, data = chunked_data)
        
 
         message: discord.Message = ctx.send(content = f"Testing this function:", view = view, embed = embeds[index])
