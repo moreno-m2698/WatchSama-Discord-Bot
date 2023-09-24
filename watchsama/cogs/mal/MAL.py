@@ -3,6 +3,7 @@ import random
 
 import discord
 from discord.ext import commands
+from selenium import webdriver
 
 from .API.RawAnimeData import SeleniumRawData
 from .API.Embeds import BasicEmbed
@@ -28,7 +29,6 @@ class MALCog(commands.Cog):
 
         status = 2
         # driver = webdriver.Chrome()
-        
         # print("A WebDriver has been initiated")
         # rawData = SeleniumRawData.create_Anime_List(driver = driver, status=status)
         # driver.close()
@@ -54,21 +54,23 @@ class MALCog(commands.Cog):
         chunked_data = list(SeleniumRawData.list_chunking(rawData, chunker))
         print(chunked_data)
 
+        driver = webdriver.Chrome()
+
+
         embeds = []
         for anime in chunked_data[0]:
             url = anime['reference']
-            print(url)
             title= anime['name']
-            print(title)
             media =  anime['media']
             status = anime['status']
             image = anime['image']
-            embed = BasicEmbed(url = url, title = title, media = media, status = status, description = None, image = image)
+            description = SeleniumRawData.get_Description(driver, url)
+            embed = BasicEmbed(url = url, title = title, media = media, status = status, description = description, image = image)
             embeds.append(embed)
     
-
+        driver.close()
         index = 0
-        view = MALViewBuilder.create_View(embed_index=index, embeds = embeds, data = chunked_data)
+        view = MALViewBuilder.create_View(embed_index=index, embeds = embeds, anime_data = chunked_data)
        
 
         message: discord.Message = ctx.send(content = f"Testing this function:", view = view, embed = embeds[index])
