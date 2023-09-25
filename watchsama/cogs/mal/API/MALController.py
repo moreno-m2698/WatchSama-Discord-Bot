@@ -108,10 +108,9 @@ class MAL_Controller():
 
     @staticmethod
     def search_MAL(driver: WebDriver, search: str):
-        query = search.replace(' ', '%20')
-        print(query)
-        query_url=f'https://myanimelist.net/anime.php?q={query}&cat=anime'
-        driver.get(query_url)
-        time.sleep(5)
+        driver.get(search)
+        list_div = driver.find_element(By.CLASS_NAME, 'js-categories-seasonal')
+        anime_Web_Elements = list_div.find_elements(By.CLASS_NAME, 'hoverinfo_trigger')
 
-
+        #May want to look at explicit/implicit waits
+        return anime_Web_Elements
