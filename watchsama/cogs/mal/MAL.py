@@ -64,8 +64,11 @@ class MALCog(commands.Cog):
     @commands.command()
     async def search(self, ctx: commands.Context, *args) -> discord.Message:
         ''' This command will allow user to make a search on MAL and return a list of 5 shows that meet the description'''
+        #Need to check if search is less than 3
 
         search = '%20'.join(args)
+        if len(search) < 3:
+            await ctx.send(content = "Your keyword is too short")
         print("Here is the search string: ", search)
         driver = webdriver.Chrome()
         print("A WebDriver has been initiated")
