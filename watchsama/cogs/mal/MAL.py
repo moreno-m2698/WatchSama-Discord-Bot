@@ -72,7 +72,7 @@ class MALCog(commands.Cog):
         data = SeleniumSearchData.create_Anime_List(driver=driver, search=search)
         driver.quit()
         print("WebDriver is now closed")
-        await ctx.send(content = 'testing')
+        await ctx.send(content = data)
 
 async def cog_setup(bot: commands.Bot):
     await bot.add_cog(MALCog(bot))

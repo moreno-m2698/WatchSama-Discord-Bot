@@ -127,14 +127,16 @@ class SeleniumSearchData(RawAnimeData):
     def create_Anime_List(driver:WebDriver, search: str, amount = 5) -> list[dict]:
         
         ctrlr = MAL_Controller
-        search_url = f'https://myanimelist.net/anime.php?q={search}&cat=anime'
+        search_url = f'https://myanimelist.net/search/all?cat=anime&q={search}'
         search_webElements = ctrlr.search_MAL(driver, search_url)
         time.sleep(5)
-        results = search_webElements[0:amount]
+        first_results = search_webElements[0:amount - 1]
 
         result = []
-        for element in search_webElements:
-            result.append(1)
+        for entry in first_results:
+            a_tag:WebElement = entry.find_element(By.TAG_NAME, 'a')
+            url = a_tag.get_attribute('href')
+            result.append(url)
 
         return result
 

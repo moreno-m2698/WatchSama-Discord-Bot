@@ -109,8 +109,12 @@ class MAL_Controller():
     @staticmethod
     def search_MAL(driver: WebDriver, search: str):
         driver.get(search)
-        list_div = driver.find_element(By.CLASS_NAME, 'js-categories-seasonal')
-        anime_Web_Elements = list_div.find_elements(By.CLASS_NAME, 'hoverinfo_trigger')
+        time.sleep(5)
+        search_results = driver.find_element(By.CLASS_NAME, 'js-scrollfix-bottom-rel')
+        article:WebElement = search_results.find_element(By.TAG_NAME, 'article')
+        results: list[WebElement] = article.find_elements(By.CLASS_NAME, 'di-t')
+        
+
 
         #May want to look at explicit/implicit waits
-        return anime_Web_Elements
+        return results
