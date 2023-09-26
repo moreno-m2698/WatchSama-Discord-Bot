@@ -145,3 +145,53 @@ class SeleniumSearchData(RawAnimeData):
         a_tag: WebElement = element.find_element(By.TAG_NAME, 'a')
         url = a_tag.get_attribute('href')
         return url
+    
+class ExtendedSeleniumRawData(SeleniumRawData):
+
+    @staticmethod
+    def create_Anime_List(driver: WebDriver, username='gabslittlepogger', status=1) -> list[dict]:
+       
+        allowed_status = [0, 1, 2, 3, 4, 6]
+
+        if status not in allowed_status:
+            return []
+        
+        e = ExtendedSeleniumRawData
+        ctrlr = MAL_Controller
+
+
+        ctrlr.go_To_Anime_List(driver = driver, username = username, status=status)
+        anime_list_web_elements: list[WebDriver] = ctrlr.get_Anime_List_WebElements(driver = driver)
+        result = []
+
+        for element in anime_list_web_elements:
+            title = e._get_Title(element)
+            url_reference = e._get_Entry_URL(element)
+            status = e._get_Status(element)
+            image_src = e._get_Image_Src(element)
+            media = e._get_Media(element)
+            progress = e._get_Progress(element)
+            anime_dict = {
+                "name": title,
+                "reference": url_reference,
+                "status": status,
+                "image": image_src,
+                "media": media,
+                "progress": progress
+            }
+            result.append(anime_dict)
+
+        
+        
+        return result 
+
+    def _get_Progress(element: WebElement) -> list[str]:
+        progress_td: WebElement = element.find_element(By.CLASS_NAME, 'progress')
+        span_elements: list[WebElement] = progress_td.find_elements(By.TAG_NAME, 'span')
+        text = lambda x : x.text
+        progress = list(map(text,span_elements))
+        current = progress[0]
+        if current == '-':
+            progress[0] = '0'
+        
+        return progress

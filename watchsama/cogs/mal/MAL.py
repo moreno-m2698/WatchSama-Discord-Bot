@@ -6,7 +6,7 @@ from discord.ext import commands
 from selenium import webdriver
 
 from .API.RawAnimeData import SeleniumRawData, SeleniumSearchData
-from .API.Embeds import BasicEmbed
+from .API.Embeds import BasicEmbed, ExtendedEmbed
 
 from .API.ui.ViewBuilder import MALViewBuilder
 from .API.MALController import MAL_Controller
@@ -22,7 +22,28 @@ class MALCog(commands.Cog):
     @commands.command()
     async def watching(self, ctx: commands.Context) -> discord.Message:
         ''' This command will give the user back a discord message that shows some of the shows they are watching'''
-        pass
+        status = 1
+        driver = webdriver.Chrome()
+        print(f"WebDriver: {driver} has been initiated")
+        rawData = None #need to make extended rawdata
+        chunker = 5
+        data_for_view = list(SeleniumRawData.list_chunking(rawData, chunker))
+        embeds = []
+        for anime in data_for_view[0]:
+            url = anime['reference']
+            title= anime['name']
+            media =  anime['media']
+            status = anime['status']
+            image = anime['image']
+            description = SeleniumRawData.get_Description(driver, url)
+            embed = ExtendedEmbed(url = url, title = title, media = media, status = status, description = description, image = image)
+            embeds.append(embed)
+        driver.close()
+        print(f"WebDriver: {driver} is now closed")
+        index = 0
+        view = MALViewBuilder.create_View(embeds = embeds, data = data_for_view) #create extended
+        message: discord.Message = ctx.send(content = f"Testing this function:", view = view, embed = embeds[index]) #create extended
+        await message
 
     @commands.command()
     async def complete(self, ctx: commands.Context) -> discord.Message:
@@ -76,3 +97,6 @@ class MALCog(commands.Cog):
 
 async def cog_setup(bot: commands.Bot):
     await bot.add_cog(MALCog(bot))
+
+
+#TODO: ADD TIMEOUTS TO VIEWS
