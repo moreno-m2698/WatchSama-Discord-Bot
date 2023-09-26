@@ -8,7 +8,7 @@ from selenium import webdriver
 from .API.RawAnimeData import SeleniumRawData, SeleniumSearchData
 from .API.Embeds import BasicEmbed
 
-from .API.ui.ViewBuilder import MALViewBuilder, 
+from .API.ui.ViewBuilder import MALViewBuilder
 from .API.MALController import MAL_Controller
 class MALCog(commands.Cog):
 
@@ -65,22 +65,20 @@ class MALCog(commands.Cog):
     @commands.command()
     async def search(self, ctx: commands.Context, *args) -> discord.Message:
         ''' This command will allow user to make a search on MAL and return a list of 5 shows that meet the description'''
-        #Need to check if search is less than 3
 
         search = '%20'.join(args)
         if len(search) < 3:
             await ctx.send(content = "Your keyword is too short")
-        print("Here is the search string: ", search)
-        driver = webdriver.Chrome()
-        print("A WebDriver has been initiated")
-        url_list = SeleniumSearchData.create_Anime_List(driver=driver, search=search)
-        driver.quit()
-        print("WebDriver is now closed")
+        else:
+            print("Here is the search string: ", search)
+            driver = webdriver.Chrome()
+            print("A WebDriver has been initiated")
+            url_list = SeleniumSearchData.create_Anime_List(driver=driver, search=search)
+            driver.quit()
+            print("WebDriver is now closed")
+            view = MALViewBuilder.create_Search_View(url_list)
 
-
-        view = MALViewBuilder.create_Search_View(url_list)
-
-        await ctx.send(url = url_list[0], view = view)
+            await ctx.send(content = url_list[0], view = view)
 
 async def cog_setup(bot: commands.Bot):
     await bot.add_cog(MALCog(bot))

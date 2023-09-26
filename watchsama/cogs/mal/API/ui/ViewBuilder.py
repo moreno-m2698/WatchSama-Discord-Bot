@@ -43,7 +43,7 @@ class RightSearchButton(Button):
             parent.url_index = 0
 
 
-        await interaction.response.edit_message(url = 'https://google.com')
+        await interaction.response.edit_message(content= parent.urls[parent.url_index])
 
 class LeftSearchButton(Button):
 
@@ -60,7 +60,7 @@ class LeftSearchButton(Button):
         if parent.url_index < 0:
             parent.url_index = len(urls) - 1
         
-        await interaction.response.edit_message(url = 'https://youtube.com')
+        await interaction.response.edit_message(content= parent.urls[parent.url_index])
 
 
 
@@ -204,6 +204,7 @@ class MALViewBuilder():
         view = SearchView(urls = urls)
         right_button = RightSearchButton(parent=view)
         left_button = LeftSearchButton(parent = view)
-        view.add_item(right_button)
         view.add_item(left_button)
+        view.add_item(right_button)
+        
         return view

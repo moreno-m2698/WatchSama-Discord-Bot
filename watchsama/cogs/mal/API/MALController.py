@@ -109,12 +109,9 @@ class MAL_Controller():
     @staticmethod
     def search_MAL(driver: WebDriver, search: str):
         driver.get(search)
-        time.sleep(5)
         search_results = driver.find_element(By.CLASS_NAME, 'js-scrollfix-bottom-rel')
         article:WebElement = search_results.find_element(By.TAG_NAME, 'article')
         results: list[WebElement] = article.find_elements(By.CLASS_NAME, 'di-t')
-        
-
-
+    
         #May want to look at explicit/implicit waits
         return results
