@@ -191,7 +191,7 @@ class ExtendedSeleniumRawData(SeleniumRawData):
         text = lambda x : x.text
         progress = list(map(text,span_elements))
         current = progress[0]
-        if current == '-':
-            progress[0] = '0'
+        if current == '- /':
+            progress[0] = '0 /'
         
         return progress

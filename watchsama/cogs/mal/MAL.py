@@ -5,7 +5,7 @@ import discord
 from discord.ext import commands
 from selenium import webdriver
 
-from .API.RawAnimeData import SeleniumRawData, SeleniumSearchData
+from .API.RawAnimeData import SeleniumRawData, SeleniumSearchData, ExtendedSeleniumRawData
 from .API.Embeds import BasicEmbed, ExtendedEmbed
 
 from .API.ui.ViewBuilder import MALViewBuilder
@@ -25,7 +25,7 @@ class MALCog(commands.Cog):
         status = 1
         driver = webdriver.Chrome()
         print(f"WebDriver: {driver} has been initiated")
-        rawData = None #need to make extended rawdata
+        rawData = ExtendedSeleniumRawData.create_Anime_List(driver=driver, status = status)
         chunker = 5
         data_for_view = list(SeleniumRawData.list_chunking(rawData, chunker))
         embeds = []
@@ -35,14 +35,15 @@ class MALCog(commands.Cog):
             media =  anime['media']
             status = anime['status']
             image = anime['image']
+            progress= anime['progress']
             description = SeleniumRawData.get_Description(driver, url)
-            embed = ExtendedEmbed(url = url, title = title, media = media, status = status, description = description, image = image)
+            embed = BasicEmbed(url = url, title = title, media = media, status = status, description = description, image = image)
             embeds.append(embed)
         driver.close()
         print(f"WebDriver: {driver} is now closed")
         index = 0
         view = MALViewBuilder.create_View(embeds = embeds, data = data_for_view) #create extended
-        message: discord.Message = ctx.send(content = f"Testing this function:", view = view, embed = embeds[index]) #create extended
+        message: discord.Message = ctx.send(content = f"Progress: {progress}", view = view, embed = embeds[index]) #create extended
         await message
 
     @commands.command()
