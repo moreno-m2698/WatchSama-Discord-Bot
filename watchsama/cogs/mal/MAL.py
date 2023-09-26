@@ -55,12 +55,6 @@ class MALCog(commands.Cog):
         view = MALViewBuilder.create_View(embeds = embeds, data = data_for_view)
         message: discord.Message = ctx.send(content = f"Testing this function:", view = view, embed = embeds[index])
         await message
-   
-
-    @commands.command()
-    async def refresh(self, ctx: commands.Context) -> discord.Message:
-        ''' This command will give refresh the anime that is currently being cached if caching is implemented and the give user feedback'''
-        pass
 
     @commands.command()
     async def search(self, ctx: commands.Context, *args) -> discord.Message:
