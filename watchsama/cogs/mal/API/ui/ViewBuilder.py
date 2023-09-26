@@ -7,10 +7,69 @@ from selenium import webdriver
 from watchsama.cogs.mal.API.RawAnimeData import SeleniumRawData
 from watchsama.cogs.mal.API.Embeds import BasicEmbed
 
+class SearchView(View):
+    
+    def __init__(self, urls = [], url_index = 0 ,timeout: float | None = 180):
+        super().__init__(timeout=timeout)
+        self._urls = urls
+        self._url_index = url_index
+
+    @property
+    def urls(self):
+        return self._urls
+
+    @property
+    def url_index(self):
+        return self._url_index
+    
+    @url_index.setter
+    def url_index(self, url_index):
+        self._url_index = url_index
+
+class RightSearchButton(Button):
+
+    def __init__(self, parent, style = ButtonStyle.primary, label = None, disabled = False, custom_id = 'right-button', url = None, emoji = '▶️', row = None):
+        super().__init__(style=style, label=label, disabled=disabled,custom_id=custom_id,url=url,emoji=emoji,row=row)
+        self._parent = parent
+
+    
+    async def callback(self, interaction: Interaction):
+
+        parent: SearchView = self._parent
+        urls = parent.urls
+        parent.url_index += 1
+
+        if parent.url_index > len(urls) - 1:
+            parent.url_index = 0
+
+
+        await interaction.response.edit_message(url = 'https://google.com')
+
+class LeftSearchButton(Button):
+
+    def __init__(self, parent, style = ButtonStyle.primary, label = None, disabled = False, custom_id = 'left-button', url = None, emoji = '◀️', row = None):
+        super().__init__(style=style, label=label, disabled=disabled,custom_id=custom_id,url=url,emoji=emoji,row=row)
+        self._parent = parent
+
+
+    async def callback(self, interaction: Interaction):
+        
+        parent: SearchView = self._parent
+        urls = parent.urls
+        parent.url_index -= 1
+        if parent.url_index < 0:
+            parent.url_index = len(urls) - 1
+        
+        await interaction.response.edit_message(url = 'https://youtube.com')
+
+
+
+
+
 class MALView(View):
     
     def __init__(self, embeds = [], embed_index = 0, data = [], data_index = 0, timeout: float | None = 180):
-        super().__init__()
+        super().__init__(timeout=timeout)
         self._embed_index = embed_index
         self._embeds = embeds
         self._data = data
@@ -66,9 +125,6 @@ class RightButton(Button):
 
 
         await interaction.response.edit_message(embed = embeds[parent.embed_index])
-        # Issues is that embed index is on children but we need to point to the adult
-    
-
 class LeftButton(Button):
 
     def __init__(self, parent, style = ButtonStyle.primary, label = None, disabled = False, custom_id = 'left-button', url = None, emoji = '◀️', row = None):
@@ -143,3 +199,11 @@ class MALViewBuilder():
         view.add_item(right_button)
         return view
     
+    @staticmethod
+    def create_Search_View(urls) -> SearchView:
+        view = SearchView(urls = urls)
+        right_button = RightSearchButton(parent=view)
+        left_button = LeftSearchButton(parent = view)
+        view.add_item(right_button)
+        view.add_item(left_button)
+        return view

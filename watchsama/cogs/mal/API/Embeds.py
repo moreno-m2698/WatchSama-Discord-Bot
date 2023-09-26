@@ -18,3 +18,4 @@ class BasicEmbed(WatchSamaEmbed):
     @property
     def status(self) -> str:
         return self._status
+

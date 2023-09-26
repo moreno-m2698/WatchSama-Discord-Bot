@@ -7,7 +7,8 @@ from selenium import webdriver
 
 from .API.RawAnimeData import SeleniumRawData, SeleniumSearchData
 from .API.Embeds import BasicEmbed
-from .API.ui.ViewBuilder import MALViewBuilder
+
+from .API.ui.ViewBuilder import MALViewBuilder, 
 from .API.MALController import MAL_Controller
 class MALCog(commands.Cog):
 
@@ -72,10 +73,14 @@ class MALCog(commands.Cog):
         print("Here is the search string: ", search)
         driver = webdriver.Chrome()
         print("A WebDriver has been initiated")
-        data = SeleniumSearchData.create_Anime_List(driver=driver, search=search)
+        url_list = SeleniumSearchData.create_Anime_List(driver=driver, search=search)
         driver.quit()
         print("WebDriver is now closed")
-        await ctx.send(content = data)
+
+
+        view = MALViewBuilder.create_Search_View(url_list)
+
+        await ctx.send(url = url_list[0], view = view)
 
 async def cog_setup(bot: commands.Bot):
     await bot.add_cog(MALCog(bot))
