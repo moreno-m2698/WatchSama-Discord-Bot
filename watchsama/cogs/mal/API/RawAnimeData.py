@@ -16,7 +16,7 @@ from watchsama.cogs.mal.API.MALController import MAL_Controller
 class RawAnimeData(ABC):
     
     @abstractmethod
-    def create_Anime_List() -> list[dict]:
+    def create_Anime_List(driver: WebDriver, username: str, status: int) -> list[dict]:
         ''' This will be the only method which return the anime data as a list of dicts'''
         pass
 
@@ -188,10 +188,9 @@ class ExtendedSeleniumRawData(SeleniumRawData):
     def _get_Progress(element: WebElement) -> list[str]:
         progress_td: WebElement = element.find_element(By.CLASS_NAME, 'progress')
         span_elements: list[WebElement] = progress_td.find_elements(By.TAG_NAME, 'span')
-        text = lambda x : x.text
-        progress = list(map(text,span_elements))
-        current = progress[0]
-        if current == '- /':
-            progress[0] = '0 /'
+        progress = list(map(lambda x : x.text,span_elements))
+        progress[0] = progress[0][0:1]
+        
+        #progress[0] = '0 /' if progress[0] == '- /' else progress[0]
         
         return progress

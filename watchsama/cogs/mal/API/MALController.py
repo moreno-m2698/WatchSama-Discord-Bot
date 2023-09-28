@@ -1,20 +1,17 @@
-
 import time
 
-from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver import ChromeOptions
-from selenium.webdriver.support.ui import Select
 
 import watchsama
 
 #-------------------------------------------------------------------------------------------------------------------------------------------
-class MAL_Controller():
+class MAL_Controller(): 
 
     ''' This namespace manages Selenium's WebDriver to interact with MAL '''
+
 
     @staticmethod
     def go_To_Anime_List(driver: WebDriver, username: str, status = 0) -> None:

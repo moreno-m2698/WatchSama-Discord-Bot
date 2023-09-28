@@ -1,5 +1,4 @@
-import json
-import random
+
 
 import discord
 from discord.ext import commands
@@ -10,7 +9,7 @@ from .API.Embeds import BasicEmbed, ExtendedEmbed
 
 from .API.ui.ViewBuilder import MALViewBuilder
 from .API.MALController import MAL_Controller
-class MALCog(commands.Cog):
+class MALCog(commands.Cog): #singleton thingy
 
     ''' Honestly makes more sense for this cog to validate whether or not there is anything in cache'''
 
@@ -18,17 +17,18 @@ class MALCog(commands.Cog):
     
     def __init__(self, bot):
         self.bot = bot
+        #self.driver = driver
 
     @commands.command()
     async def watching(self, ctx: commands.Context) -> discord.Message:
         ''' This command will give the user back a discord message that shows some of the shows they are watching'''
         status = 1
-        driver = webdriver.Chrome()
+        driver = webdriver.Chrome() #canditate to be injected
         print(f"WebDriver: {driver} has been initiated")
         rawData = ExtendedSeleniumRawData.create_Anime_List(driver=driver, status = status)
         chunker = 5
         data_for_view = list(SeleniumRawData.list_chunking(rawData, chunker))
-        embeds = []
+        embeds = [] #can be a method or embeds can be injected
         for anime in data_for_view[0]:
             url = anime['reference']
             title= anime['name']
@@ -39,21 +39,20 @@ class MALCog(commands.Cog):
             description = SeleniumRawData.get_Description(driver, url)
             embed = BasicEmbed(url = url, title = title, media = media, status = status, description = description, image = image)
             embeds.append(embed)
-        driver.close()
+        driver.quit()
         print(f"WebDriver: {driver} is now closed")
         index = 0
         view = MALViewBuilder.create_View(embeds = embeds, data = data_for_view) #create extended
         message: discord.Message = ctx.send(content = f"Progress: {progress}", view = view, embed = embeds[index]) #create extended
         await message
 
+
     @commands.command()
     async def complete(self, ctx: commands.Context) -> discord.Message:
 
         ''' This command will give the user back a discord message that shows what shows they have completed'''
 
-        #TODO: WE NEED TO CREATE ALTERNATIVE FOR CACHING
         # TODO: FOLLOW PROPER OBJECT FACTORY CONVENTION
-
 
         status = 2
         driver = webdriver.Chrome()
