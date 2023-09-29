@@ -14,7 +14,7 @@ class MALCog(commands.Cog): #singleton thingy
     #NOTE: currently We shall assume no caching and will pull the data from MAL
 
     #TODO: create singleton driver, proper selenium waiting, convert selenium lines to non-blocking with awaits, create optional args for watching/complete search query
-    
+    #TODO: ADD view timeouts
     def __init__(self, bot):
         self.bot = bot
         #self.driver = driver
