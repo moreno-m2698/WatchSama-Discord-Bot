@@ -1,5 +1,4 @@
 from watchsama.tools import WatchSamaEmbed
-
 class BasicEmbed(WatchSamaEmbed):
     
     ''' Base Embeds for MAL Cog'''

@@ -5,8 +5,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 
-import watchsama
-
 #-------------------------------------------------------------------------------------------------------------------------------------------
 class MAL_Controller(): 
 
