@@ -13,23 +13,26 @@ class BasicEmbed(WatchSamaEmbed):
 class ExtendedEmbed(WatchSamaEmbed):
 
     def __init__(self, url: str , title: str, description, media, status, image, current, end):
-        super().__init__(url = url, title = title, description = None, media = media, status= status)
+        super().__init__(url = url, title = title, description = None)
         self._current = current
         self._end = end
         self.set_image(url = image)
-        self.add_field(name= "Progress")
-        self.add_field(name = "Description", value = description, inline=False)
-        self.add_field(name="Type:", value=media,inline=True)
-        self.add_field(name="Watch status:", value=status, inline=True)  
         self._emoji_bar_dict = {
-            'e1': "<:Empty_Bar_1:1115750121913733232>",
-            'e2': "<:Empty_Bar_2:1115750137747210240>",
-            'f1': "<:Filled_Bar_1:1115750151194165269>",
-            'f2': "<:Filled_Bar_2:1115750166364954655>",
-            'h1': "<:Heart_Bar_1:1115750030956044338>",
-            'h2': "<:Heart_Bar_2:1115750086761250876>",
-            'h3': "<:Heart_Bar_3:1115750104041803916>"
+            'e1': "<:e1:1157125885619621948>",
+            'e2': "<:e2:1157125946407649330>",
+            'f1': "<:f1:1157126002166747177>",
+            'f2': "<:f2:1157126019950575627>",
+            'h1': "<:e1:1157125768577548388>",
+            'h2': "<:e2:1157125816682033202>",
+            'h3': "<:e3:1157125868859166730>"
         }
+        self.add_field(name= "Progress", value = self.progress_bar)
+        if len(description) > 1024:
+            description=description[0:1021] + '...'
+        self.add_field(name = "Description", value = description, inline=False)
+        self.add_field(name="Type:", value=media, inline=True)
+        self.add_field(name="Watch status:", value=status, inline=True)  
+        
 
 
     @property
@@ -41,9 +44,29 @@ class ExtendedEmbed(WatchSamaEmbed):
         return self._end
     
     @property
-    def progress(self):
-        return f"{self.current} / {self.end}"
-    
-    @property
-    def progress(bar):
-        pass
+    def progress_bar(self) -> str:
+        
+        ratio = self._current/self._end
+        em = self._emoji_bar_dict
+        if ratio == 1:
+            return em['f1'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['h3']
+        if ratio >= .9:
+            return em['f1'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['h2'] + em['e2']
+        if ratio >= .8:
+            return em['f1'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['h2'] + em['e1'] + em['e2']
+        if ratio >= .7:
+            return em['f1'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['h2'] + em['e1'] + em['e1'] + em['e2']
+        if ratio >= .6:
+            return em['f1'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['h2'] + em['e1'] + em['e1'] + em['e1'] + em['e2']
+        if ratio >= .5:
+            return em['f1'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['h2'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e2']
+        if ratio >= .4:
+            return em['f1'] + em['f2'] + em['f2'] + em['f2'] + em['h2'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e2']
+        if ratio >= .3:
+            return em['f1'] + em['f2'] + em['f2'] + em['h2'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e2']
+        if ratio >= .2:
+            return em['f1'] + em['f2'] + em['h2'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e2']
+        if ratio >= .1:
+            return em['f1'] + em['h2'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e2']
+        else:
+            return em['h1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e2']

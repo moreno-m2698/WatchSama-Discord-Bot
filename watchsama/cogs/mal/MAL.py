@@ -37,7 +37,7 @@ class MALCog(commands.Cog): #singleton thingy
             image = anime['image']
             progress= anime['progress']
             description = SeleniumRawData.get_Description(driver, url)
-            embed = BasicEmbed(url = url, title = title, media = media, status = status, description = description, image = image)
+            embed = ExtendedEmbed(url = url, title = title, media = media, status = status, description = description, image = image, current=progress[0], end=progress[1])
             embeds.append(embed)
         driver.quit()
         print(f"WebDriver: {driver} is now closed")
