@@ -18,7 +18,7 @@ print('''
 
 intents = discord.Intents.default()
 intents.message_content = True
-bot = commands.Bot(command_prefix="!", intents=intents)
+bot = commands.Bot(command_prefix="/", intents=intents)
 app_config = watchsama.config.App_Config
 
 
@@ -37,7 +37,7 @@ async def on_ready() -> None:
     
     bot_commands(bot)
     await bot_cogs(bot)
-    await testing_output('Watch-sama is running') #Find out how to get her to talk properly
+    await testing_output('WatchSama is running') #Find out how to get her to talk properly
     await bot.change_presence(status = discord.Status.idle)
 
 @bot.event
@@ -45,6 +45,11 @@ async def on_guild_join(guild:discord.Guild) -> None:
 
     embed = watchsama.tools.WatchSamaEmbed(title="WatchSama Bot Info", description = "Thank you for choosing to use WatchSama! To get started, type '/help' to see my commands.")
     await guild.text_channels[0].send(embed=embed)
+
+@bot.event
+async def on_guild_remove(guild: discord.Guild) -> None:
+    # This should be done for logging/feedback in  a main guild or console
+    pass
 
 
 try:

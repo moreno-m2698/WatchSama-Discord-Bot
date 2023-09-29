@@ -43,7 +43,7 @@ class RightSearchButton(Button):
             parent.url_index = 0
 
 
-        await interaction.response.edit_message(content= parent.urls[parent.url_index])
+        await interaction.response.edit_message(content= f'Here are some entries that might fit your search: {parent.urls[parent.url_index]}')
 
 class LeftSearchButton(Button):
 
@@ -60,7 +60,7 @@ class LeftSearchButton(Button):
         if parent.url_index < 0:
             parent.url_index = len(urls) - 1
         
-        await interaction.response.edit_message(content= parent.urls[parent.url_index])
+        await interaction.response.edit_message(content= f'Here are some entries that might fit your search: {parent.urls[parent.url_index]}')
 
 
 

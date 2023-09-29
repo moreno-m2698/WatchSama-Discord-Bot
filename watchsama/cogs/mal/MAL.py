@@ -81,6 +81,8 @@ class MALCog(commands.Cog): #singleton thingy
     @commands.command()
     async def search(self, ctx: commands.Context, *args) -> discord.Message:
         ''' This command will allow user to make a search on MAL and return a list of 5 shows that meet the description'''
+
+        #TODO: MAKE EPHEMERAL
         async with ctx.typing():
             search = '%20'.join(args)
             if len(search) < 3:
@@ -94,7 +96,7 @@ class MALCog(commands.Cog): #singleton thingy
                 print("WebDriver is now closed")
                 view = MALViewBuilder.create_Search_View(url_list)
 
-        await ctx.send(content = url_list[0], view = view)
+        await ctx.send(content = f'Here are some entries that might fit your search: {url_list[0]}', view = view)
 
 async def cog_setup(bot: commands.Bot):
     await bot.add_cog(MALCog(bot))
