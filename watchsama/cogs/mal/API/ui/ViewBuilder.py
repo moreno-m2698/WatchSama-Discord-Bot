@@ -5,7 +5,7 @@ import asyncio
 from selenium import webdriver
 
 from watchsama.cogs.mal.API.RawAnimeData import SeleniumRawData
-from watchsama.cogs.mal.API.Embeds import BasicEmbed
+from watchsama.cogs.mal.API.Embeds import BasicEmbed, ExtendedEmbed
 
 class SearchView(View):
     
@@ -107,6 +107,8 @@ class MALView(View):
     @data_index.setter
     def data_index(self, data_index):
         self._data_index = data_index
+
+
 class RightButton(Button):
 
     def __init__(self, parent, style = ButtonStyle.primary, label = None, disabled = False, custom_id = 'right-button', url = None, emoji = '▶️', row = None):
@@ -165,6 +167,7 @@ class LoadButton(Button):
             media =  anime['media']
             status = anime['status']
             image = anime['image']
+            
             description = SeleniumRawData.get_Description(driver, url)
             embed = BasicEmbed(url = url, title = title, media = media, status = status, description = description, image=image)
             embeds.append(embed)
@@ -174,6 +177,7 @@ class LoadButton(Button):
         print(f'Driver: {driver} has been closed')
 
         return embeds
+    
 
     async def callback(self, interaction: Interaction):
         parent: MALView = self._parent
@@ -185,6 +189,52 @@ class LoadButton(Button):
         new_view = MALViewBuilder.create_View(embeds = embeds,data= parent.data, data_index = parent.data_index)
     
         await interaction.followup.send(content="Loaded more content", view=new_view, embed = embeds[0])
+
+
+class WatchingLoadButton(LoadButton):
+
+    def __init__(self, parent, style=ButtonStyle.green, label='More', disabled=False, custom_id='load-button', url=None, emoji=None, row=None):
+        super().__init__(parent, style, label, disabled, custom_id, url, emoji, row)
+
+    def _embed_generator(self) -> list[ExtendedEmbed]:
+        parent: MALView = self._parent
+        driver = webdriver.Chrome()
+        print(f'Driver: {driver} has been opened')
+        parent.data_index += 1
+        if parent.data_index > len(parent.data) - 1:
+            parent.data_index = 0
+        
+        data = parent.data[parent.data_index]
+    
+        embeds = []
+        for anime in data:
+            url = anime['reference']
+            title= anime['name']
+            media =  anime['media']
+            status = anime['status']
+            image = anime['image']
+            progress = anime['progress']
+            description = SeleniumRawData.get_Description(driver, url)
+            embed = ExtendedEmbed(url = url, title = title, media = media, status = status, description = description, image=image, current=progress[0], end=progress[1])
+            embeds.append(embed)
+        
+
+        driver.close()
+        print(f'Driver: {driver} has been closed')
+
+        return embeds
+    
+    async def callback(self, interaction: Interaction):
+        parent: MALView = self._parent
+        await interaction.response.defer(thinking=True)
+       
+        embeds = self._embed_generator()
+        parent.stop()
+
+        new_view = MALViewBuilder.create_Watching_View(embeds = embeds,data= parent.data, data_index = parent.data_index)
+    
+        await interaction.followup.send(content="Loaded more content", view=new_view, embed = embeds[0])
+
 
 class MALViewBuilder():
 
@@ -202,9 +252,20 @@ class MALViewBuilder():
     @staticmethod
     def create_Search_View(urls) -> SearchView:
         view = SearchView(urls = urls)
-        right_button = RightSearchButton(parent=view)
+        right_button = RightSearchButton(parent = view)
         left_button = LeftSearchButton(parent = view)
         view.add_item(left_button)
         view.add_item(right_button)
         
+        return view
+    
+    @staticmethod
+    def create_Watching_View(embed_index = 0, embeds = [], data:list[list] = [], data_index = 0) -> MALView:
+        view = MALView(embed_index = embed_index, embeds = embeds, data=data, data_index = data_index)
+        right_button = RightButton(parent = view)
+        load_button = WatchingLoadButton(parent = view)
+        left_button= LeftButton(parent = view)
+        view.add_item(left_button)
+        view.add_item(load_button)
+        view.add_item(right_button)
         return view

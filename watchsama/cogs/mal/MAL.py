@@ -11,7 +11,7 @@ from .API.ui.ViewBuilder import MALViewBuilder
 from .API.MALController import MAL_Controller
 class MALCog(commands.Cog): #singleton thingy
 
-    ''' Honestly makes more sense for this cog to validate whether or not there is anything in cache'''
+    #Honestly makes more sense for this cog to validate whether or not there is anything in cache
 
     #NOTE: currently We shall assume no caching and will pull the data from MAL
     
@@ -42,8 +42,8 @@ class MALCog(commands.Cog): #singleton thingy
         driver.quit()
         print(f"WebDriver: {driver} is now closed")
         index = 0
-        view = MALViewBuilder.create_View(embeds = embeds, data = data_for_view) #create extended
-        message: discord.Message = ctx.send(content = f"Progress: {progress}", view = view, embed = embeds[index]) #create extended
+        view = MALViewBuilder.create_Watching_View(embeds = embeds, data = data_for_view) #create extended
+        message: discord.Message = ctx.send(content = f"Here are some of the show you are watching!", view = view, embed = embeds[index]) #create extended
         await message
 
 
@@ -74,7 +74,7 @@ class MALCog(commands.Cog): #singleton thingy
         print("WebDriver is now closed")
         index = 0
         view = MALViewBuilder.create_View(embeds = embeds, data = data_for_view)
-        message: discord.Message = ctx.send(content = f"Testing this function:", view = view, embed = embeds[index])
+        message: discord.Message = ctx.send(content = f"Here are the shows that you've completed!", view = view, embed = embeds[index])
         await message
 
     @commands.command()

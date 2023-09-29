@@ -5,6 +5,8 @@ class BasicEmbed(WatchSamaEmbed):
     ''' Base Embeds for MAL Cog'''
 
     def __init__(self, url: str , title: str, description, media, status, image):
+        if len(description) > 4096:
+            description = description[0:4093] + '...'
         super().__init__(url = url, title = title, description = description)
         self.set_image(url = image)
         self.add_field(name="Type:", value=media,inline=True)
@@ -49,24 +51,24 @@ class ExtendedEmbed(WatchSamaEmbed):
         ratio = self._current/self._end
         em = self._emoji_bar_dict
         if ratio == 1:
-            return em['f1'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['h3']
+            return em['f1'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['h3'] + f"  {self._current} / {self._end}"
         if ratio >= .9:
-            return em['f1'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['h2'] + em['e2']
+            return em['f1'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['h2'] + em['e2'] + f"  {self._current} / {self._end}"
         if ratio >= .8:
-            return em['f1'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['h2'] + em['e1'] + em['e2']
+            return em['f1'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['h2'] + em['e1'] + em['e2'] + f"  {self._current} / {self._end}"
         if ratio >= .7:
-            return em['f1'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['h2'] + em['e1'] + em['e1'] + em['e2']
+            return em['f1'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['h2'] + em['e1'] + em['e1'] + em['e2'] + f"  {self._current} / {self._end}"
         if ratio >= .6:
-            return em['f1'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['h2'] + em['e1'] + em['e1'] + em['e1'] + em['e2']
+            return em['f1'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['h2'] + em['e1'] + em['e1'] + em['e1'] + em['e2'] + f"  {self._current} / {self._end}"
         if ratio >= .5:
-            return em['f1'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['h2'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e2']
+            return em['f1'] + em['f2'] + em['f2'] + em['f2'] + em['f2'] + em['h2'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e2'] + f"  {self._current} / {self._end}"
         if ratio >= .4:
-            return em['f1'] + em['f2'] + em['f2'] + em['f2'] + em['h2'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e2']
+            return em['f1'] + em['f2'] + em['f2'] + em['f2'] + em['h2'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e2'] + f"  {self._current} / {self._end}"
         if ratio >= .3:
-            return em['f1'] + em['f2'] + em['f2'] + em['h2'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e2']
+            return em['f1'] + em['f2'] + em['f2'] + em['h2'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e2'] + f"  {self._current} / {self._end}"
         if ratio >= .2:
-            return em['f1'] + em['f2'] + em['h2'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e2']
+            return em['f1'] + em['f2'] + em['h2'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e2'] + f"  {self._current} / {self._end}"
         if ratio >= .1:
-            return em['f1'] + em['h2'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e2']
+            return em['f1'] + em['h2'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e2'] + f"  {self._current} / {self._end}"
         else:
-            return em['h1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e2']
+            return em['h1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e1'] + em['e2'] + f"  {self._current} / {self._end}"
