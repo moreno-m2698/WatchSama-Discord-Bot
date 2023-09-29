@@ -19,7 +19,7 @@ class MALCog(commands.Cog): #singleton thingy
         self.bot = bot
         #self.driver = driver
 
-    @commands.command()
+    @commands.command(aliases=['watch', 'current', "Watch", "Watching", "Current"])
     async def watching(self, ctx: commands.Context) -> discord.Message:
         ''' This command will give the user back a discord message that shows some of the shows they are watching'''
         async with ctx.typing():
@@ -48,7 +48,7 @@ class MALCog(commands.Cog): #singleton thingy
         await message
 
 
-    @commands.command()
+    @commands.command(aliases = ['done', 'finished', 'Complete', "Done", "Finished"])
     async def complete(self, ctx: commands.Context) -> discord.Message:
 
         ''' This command will give the user back a discord message that shows what shows they have completed'''

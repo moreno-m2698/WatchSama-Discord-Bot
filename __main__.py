@@ -26,17 +26,16 @@ app_config = watchsama.config.App_Config
 @bot.event
 async def on_ready() -> None:
 
-    bot_commands = watchsama.bot_commands.__init__
-    bot_cogs = watchsama.cogs.mal.MAL.cog_setup
     
-
     #TODO: get the bot to only spit out to main server if we are wanting to host
     testing_output = bot.get_guild(app_config.my_guild()).text_channels[0].send
 
-    print("Connected to discord API")
+    await watchsama.cogs.mal.MAL.cog_setup(bot)
+    watchsama.cogs.general.__init__(bot)
     
-    bot_commands(bot)
-    await bot_cogs(bot)
+    print("Connected to discord API")
+
+
     await testing_output('WatchSama is running') #Find out how to get her to talk properly
     await bot.change_presence(status = discord.Status.idle)
 
