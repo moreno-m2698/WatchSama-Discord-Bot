@@ -12,9 +12,6 @@ class App_Config():
     def mal_user() -> str:
         return dotenv_values(".env")['MAL_USERNAME']
 
-    @staticmethod
-    def mal_password() -> str:
-        return dotenv_values(".env")['MAL_PASSWORD']
 
     @staticmethod
     def dev_guild() -> int:
