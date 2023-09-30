@@ -46,5 +46,20 @@ def user_Info(bot:discord.Client):
         embed.add_field(name="Bot?", value = member.bot)
         await ctx.send(embed=embed)
 
+def server_Info(bot:discord.Client):
+    @bot.command(aliases = ['sinfo', 'server'])
+    async def serverinfo(ctx: commands.Context):
 
+        guild = ctx.guild
+        embed = WatchSamaEmbed(title="Server Info:", description=f"Here is the server info for {guild.name}:", timestamp=ctx.message.created_at)
+        if guild.icon != None:
+            embed.set_thumbnail(url = guild.icon)
+        embed.add_field(name="Member Count", value = guild.member_count)
+        embed.add_field(name= "Channels", value = f'{len(guild.text_channels)} : text | {len(guild.voice_channels)} : voice')
+        embed.add_field(name="Owner", value=guild.owner.display_name)
+        if guild.banner != None:
+            embed.set_image(url = guild.banner.url)
 
+        await ctx.send(embed=embed)
+        
+    
