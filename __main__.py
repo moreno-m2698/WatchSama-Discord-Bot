@@ -31,7 +31,12 @@ class WatchSama(commands.Bot):
         )
 
     async def setup_hook(self) -> None:
+        
+        #NOTE: selenium will  not enable me to allow for MAL slash commands atm. Might need to look at threading package
+        #REFERENCE: https://www.youtube.com/watch?v=U0Us5NHG-nY for slash commands and cogs
+
         await self.load_extension(f"watchsama.cogs.mal.MAL")
+        
 
 
 
@@ -44,15 +49,15 @@ app_config = watchsama.config.App_Config
 async def on_ready() -> None:
 
     
-    #TODO: get the bot to only spit out to main server if we are wanting to host
-    testing_output = bot.get_guild(app_config.my_guild()).text_channels[0].send
+
+    dev_guild = bot.get_guild(app_config.my_guild()).text_channels[0].send
 
     watchsama.cogs.general.__init__(bot)
     
     print("Connected to discord API")
 
 
-    await testing_output('WatchSama is running') #Find out how to get her to talk properly
+    await dev_guild('WatchSama is running')
     await bot.change_presence(status = discord.Status.idle)
 
 @bot.event
