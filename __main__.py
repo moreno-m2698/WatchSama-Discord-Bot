@@ -1,8 +1,12 @@
 import os
 import time
+from typing import Any, List, Mapping, Optional
 
 import discord
 from discord.ext import commands
+from discord.ext.commands.cog import Cog
+from discord.ext.commands.core import Command, Group, Callable
+
 
 import watchsama
 #----------------------------------------------------------------------------------
@@ -22,12 +26,32 @@ intents.message_content = True
 intents = discord.Intents.default()
 intents.message_content = True
 
+class MyHelpCommand(commands.HelpCommand):
+    
+    def __init__(self) -> None:
+        super().__init__()
+    
+    async def send_bot_help(self, mapping: Mapping[Cog | None, List[Command[Any, Callable[..., Any], Any]]]) -> None:
+        for cog in mapping:
+            await self.get_destination().send(f'{cog.qualified_name}: {[command.name for command in mapping[cog]]}')
+        
+
+    async def send_cog_help(self, cog: Cog) -> None:
+        await self.get_destination().send(f'{cog.qualified_name}: {[command.name for command in cog.get_commands()]}')
+     
+    async def send_group_help(self, group: Group[Any, Callable[..., Any], Any]) -> None:
+        await self.get_destination().send(f'{group.name}: {[command.name for index, command in enumerate(group.commands)]}')
+    
+    async def send_command_help(self, command: Command[Any, Callable[..., Any], Any]) -> None:
+        await self.get_destination().send(command.name)
+
 class WatchSama(commands.Bot):
 
     def __init__(self):
         super().__init__(
             command_prefix='!',
-            intents = intents
+            intents = intents,
+            help_command=MyHelpCommand()
         )
 
     async def setup_hook(self) -> None:
@@ -36,9 +60,6 @@ class WatchSama(commands.Bot):
         #REFERENCE: https://www.youtube.com/watch?v=U0Us5NHG-nY for slash commands and cogs
 
         await self.load_extension(f"watchsama.cogs.mal.MAL")
-        
-
-
 
 
 bot = WatchSama()
@@ -63,7 +84,7 @@ async def on_ready() -> None:
 @bot.event
 async def on_guild_join(guild:discord.Guild) -> None:
 
-    embed = watchsama.tools.WatchSamaEmbed(title="WatchSama Bot Info", description = "Thank you for choosing to use WatchSama! To get started, type '/help' to see my commands.")
+    embed = watchsama.tools.WatchSamaEmbed(title="WatchSama Bot Info", description = "Thank you for choosing to use WatchSama!")
     await guild.text_channels[0].send(embed=embed)
 
 @bot.event

@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 import time
 
+from watchsama.config import App_Config
 
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -9,7 +10,6 @@ from selenium.webdriver.remote.webelement import WebElement
 
 
 from watchsama.cogs.mal.API.MALController import MAL_Controller
-
 
 class RawAnimeData(ABC):
     
@@ -22,7 +22,7 @@ class RawAnimeData(ABC):
 class SeleniumRawData(RawAnimeData): 
 
     @staticmethod
-    def create_Anime_List(driver: WebDriver, username='gabslittlepogger', status = 0) -> list[dict]:
+    def create_Anime_List(driver: WebDriver, username=App_Config.mal_user(), status = 0) -> list[dict]:
 
         ''' This method creates a webDriver and then navigates it around for the data'''
 
@@ -35,7 +35,7 @@ class SeleniumRawData(RawAnimeData):
         ctrlr = MAL_Controller
 
 
-        ctrlr.go_To_Anime_List(driver = driver, username = username, status=status)
+        ctrlr.go_To_Anime_List(driver = driver, username = App_Config.mal_user(), status=status)
         anime_list_web_elements: list[WebDriver] = ctrlr.get_Anime_List_WebElements(driver = driver)
         result = []
 
@@ -147,7 +147,7 @@ class SeleniumSearchData(RawAnimeData):
 class ExtendedSeleniumRawData(SeleniumRawData):
 
     @staticmethod
-    def create_Anime_List(driver: WebDriver, username='gabslittlepogger', status=1) -> list[dict]:
+    def create_Anime_List(driver: WebDriver, username=App_Config.mal_user(), status=1) -> list[dict]:
        
         allowed_status = [0, 1, 2, 3, 4, 6]
 
