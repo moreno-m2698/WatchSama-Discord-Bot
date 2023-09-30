@@ -22,6 +22,8 @@ class MALCog(commands.Cog): #singleton thingy
     @commands.command(aliases=['watch', 'current', "Watch", "Watching", "Current"])
     async def watching(self, ctx: commands.Context) -> discord.Message:
         ''' This command will give the user back a discord message that shows some of the shows they are watching'''
+
+        #Need to do an empty check
         async with ctx.typing():
             status = 1
             driver = webdriver.Chrome() #canditate to be injected
@@ -54,6 +56,7 @@ class MALCog(commands.Cog): #singleton thingy
         ''' This command will give the user back a discord message that shows what shows they have completed'''
 
         # TODO: FOLLOW PROPER OBJECT FACTORY CONVENTION
+        #Need to do an empty check
         async with ctx.typing():
             status = 2
             driver = webdriver.Chrome()

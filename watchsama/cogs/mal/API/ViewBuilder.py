@@ -1,4 +1,5 @@
-from discord.ui import View, Button
+from discord import ui
+from discord.ui import View, Button, Item
 from discord import ButtonStyle, Interaction, Embed
 import asyncio
 
@@ -13,6 +14,16 @@ class SearchView(View):
         super().__init__(timeout=timeout)
         self._urls = urls
         self._url_index = url_index
+
+    async def on_timeout(self) -> None:
+        # Step 2
+        children: list[Button] = self.children
+        for item in children:
+            item.disabled = True
+
+        # Step 3
+        await self.message.edit(view=self)
+
 
     @property
     def urls(self):
@@ -74,6 +85,15 @@ class MALView(View):
         self._embeds = embeds
         self._data = data
         self._data_index = data_index
+
+    async def on_timeout(self) -> None:
+        # Step 2
+        children: list[Button] = self.children
+        for item in children:
+            item.disabled = True
+
+        # Step 3
+        await self.message.edit(view=self)
 
     @property
     def embed_index(self):
