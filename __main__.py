@@ -69,16 +69,16 @@ app_config = watchsama.config.App_Config
 @bot.event
 async def on_ready() -> None:
 
-    
-
-    dev_guild = bot.get_guild(app_config.my_guild()).text_channels[0].send
+   
 
     watchsama.cogs.general.__init__(bot)
     
     print("Connected to discord API")
+    dev_guild = bot.get_guild(app_config.dev_guild())
+    if dev_guild != None:
 
-
-    await dev_guild('WatchSama is running')
+        
+        await dev_guild.text_channels[0].send('WatchSama is running')
     await bot.change_presence(status = discord.Status.idle)
 
 @bot.event

@@ -17,9 +17,9 @@ class App_Config():
         return dotenv_values(".env")['MAL_PASSWORD']
 
     @staticmethod
-    def my_guild() -> int:
+    def dev_guild() -> int:
         
-        guild_Id = dotenv_values(".env")["MY_GUILD"]
+        guild_Id = dotenv_values(".env")["DEV_GUILD"]
         try:
             result = int(guild_Id)
             return result
@@ -28,5 +28,5 @@ class App_Config():
             print("Guild ID cannot resolve to int")
         
         except: 
-            print("Something else went wrong")
+            print("Something went wrong with stored guild ID")
 
