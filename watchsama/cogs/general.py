@@ -11,6 +11,7 @@ def __init__(bot):
     stop(bot)
     info(bot)
     user_Info(bot)
+    server_Info(bot)
 
 def stop(bot: discord.Client):
     @bot.command()
@@ -56,7 +57,7 @@ def server_Info(bot:discord.Client):
             embed.set_thumbnail(url = guild.icon)
         embed.add_field(name="Member Count", value = guild.member_count)
         embed.add_field(name= "Channels", value = f'{len(guild.text_channels)} : text | {len(guild.voice_channels)} : voice')
-        embed.add_field(name="Owner", value=guild.owner.display_name)
+
         if guild.banner != None:
             embed.set_image(url = guild.banner.url)
 
