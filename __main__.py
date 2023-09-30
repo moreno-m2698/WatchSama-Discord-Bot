@@ -18,9 +18,26 @@ print('''
 
 intents = discord.Intents.default()
 intents.message_content = True
-bot = commands.Bot(command_prefix="/", intents=intents)
-app_config = watchsama.config.App_Config
 
+intents = discord.Intents.default()
+intents.message_content = True
+
+class WatchSama(commands.Bot):
+
+    def __init__(self):
+        super().__init__(
+            command_prefix='!',
+            intents = intents
+        )
+
+    async def setup_hook(self) -> None:
+        await self.load_extension(f"watchsama.cogs.mal.MAL")
+
+
+
+
+bot = WatchSama()
+app_config = watchsama.config.App_Config
 
 
 @bot.event
@@ -30,7 +47,6 @@ async def on_ready() -> None:
     #TODO: get the bot to only spit out to main server if we are wanting to host
     testing_output = bot.get_guild(app_config.my_guild()).text_channels[0].send
 
-    await watchsama.cogs.mal.MAL.cog_setup(bot)
     watchsama.cogs.general.__init__(bot)
     
     print("Connected to discord API")

@@ -101,6 +101,6 @@ class MALCog(commands.Cog): #singleton thingy
 
         await ctx.send(content = f'Here are some entries that might fit your search: {url_list[0]}', view = view)
 
-async def cog_setup(bot: commands.Bot):
+async def setup(bot: commands.Bot):
     await bot.add_cog(MALCog(bot))
 
